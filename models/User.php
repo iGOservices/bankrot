@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
+ * @property string $phone
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -62,8 +63,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'ФИО',
+            'username' => 'Имя',
             'email' => 'Email',
+            'phone' => 'Телефон',
             'group' => 'Роль',
             'status' => 'Статус',
             'updated_at' => 'Обновлен',
@@ -77,7 +79,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
+            [['phone'], 'integer'],
+            [['username','phone'], 'required'],
             [['email'], 'email'],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким email уже существует'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -115,6 +118,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByEmail($email)
     {
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    public static function findByPhone($phone)
+    {
+        return static::findOne(['phone' => $phone, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -203,5 +211,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Получаем все файлы пользователя по всем его тикетам(скорее это нужно будет админку в личный кабинет о пользователе)
+     */
+    public function getClientOffers()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->viaTable('client_main_info', ['user_id' => 'id']);
     }
 }

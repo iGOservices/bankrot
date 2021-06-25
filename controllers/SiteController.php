@@ -2,21 +2,30 @@
 
 namespace app\controllers;
 
+use Yii;
+
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
+use app\models\LoginForm;
+use app\models\ContactForm;
+use app\models\UploadForm;
+
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
-use Yii;
+use yii\web\UploadedFile;
+
+
 
 class SiteController extends Controller
 {
+
+    public $layout = '/user';
+
     /**
      * {@inheritdoc}
      */
@@ -195,4 +204,21 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+
 }

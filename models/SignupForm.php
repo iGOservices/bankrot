@@ -12,7 +12,7 @@ class SignupForm extends Model
 {
 
     public $username;
-    public $email;
+    public $phone;
     public $password;
 
     /**
@@ -24,11 +24,11 @@ class SignupForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'min' => 2, 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким email уже существует'],
+            ['phone', 'trim'],
+            ['phone', 'required'],
+            ['phone', 'integer'],
+//            ['phone', 'string', 'min' => 2, 'max' => 255],
+            ['phone', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким телефоном уже существует'],
             ['password', 'required'],
             ['password', 'string', 'min' => 4],
         ];
@@ -48,9 +48,10 @@ class SignupForm extends Model
 
         $user = new User();
         $user->username = $this->username;
-        $user->email = $this->email;
+        $user->phone = $this->phone;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        //$user->generateAccessToken();
         return $user->save() ? $user : null;
     }
 

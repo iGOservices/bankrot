@@ -62,6 +62,19 @@ $config = [
             'defaultTimeZone' => 'Europe/Samara',
             'locale' => 'ru-RU'
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'js' => ["js/jquery-3.3.1.min.js"] // тут путь до Вашего экземпляра jquery
+                ],
+            ],
+        ],
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
     ],
     'params' => $params,
 ];

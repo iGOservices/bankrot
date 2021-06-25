@@ -13,7 +13,7 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $email;
+    public $phone;
     public $password;
     public $rememberMe = true;
 
@@ -26,12 +26,21 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['email', 'password'], 'required'],
-            [['email'], 'email'],
+            [['phone', 'password'], 'required'],
+            [['phone'], 'integer'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'phone' => 'Телефон',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить',
         ];
     }
 
@@ -48,7 +57,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неверный телефон или пароль');
             }
         }
     }
@@ -73,7 +82,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByEmail($this->email);
+            $this->_user = User::findByPhone($this->phone);
         }
 
         return $this->_user;

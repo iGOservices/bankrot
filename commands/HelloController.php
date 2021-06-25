@@ -39,7 +39,7 @@ class HelloController extends Controller
             $user = new User();
             $user->username = 'admin';
             $user->email = 'admin@mail.ru';
-            $user->setPassword('123');
+            $user->setPassword('1234');
             $user->generateAuthKey();
             if ($user->save()) {
                 echo 'good';
