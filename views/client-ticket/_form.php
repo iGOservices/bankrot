@@ -4,13 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ClientMainInfo */
+/* @var $model app\models\ClientTicket */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="client-main-info-form">
+<div class="client-ticket-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -31,10 +33,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'registr_address')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'fact_address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'passport_id')->textInput() ?>
-
-    <?= $form->field($model, 'inter_passsport_id')->textInput() ?>
 
     <?= $form->field($model, 'mail')->textInput(['maxlength' => true]) ?>
 

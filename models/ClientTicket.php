@@ -6,9 +6,10 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "client_main_info".
+ * This is the model class for table "client_ticket".
  *
  * @property int $id
+ * @property int|null $user_id
  * @property string $name
  * @property string $surname
  * @property string $patronymic
@@ -19,24 +20,33 @@ use yii\behaviors\TimestampBehavior;
  * @property string $snils
  * @property string $registr_address
  * @property string $fact_address
- * @property int $passport_id
- * @property int $inter_passsport_id
  * @property string $mail
  * @property int $phone
  * @property int $is_ip
- * @property string $changed_fio
+ * @property string|null $changed_fio
  * @property int $facsimile
  * @property int $created_at
  * @property int $updated_at
  */
-class ClientMainInfo extends \yii\db\ActiveRecord
+class ClientTicket extends \yii\db\ActiveRecord
 {
+
+    public static $gender = [
+        '0' => 'Мужской',
+        '1' => 'Женский',
+    ];
+
+    public static $is_ip = [
+        '0' => 'Нет',
+        '1' => 'Да',
+    ];
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'client_main_info';
+        return 'client_ticket';
     }
 
     /**
@@ -45,15 +55,13 @@ class ClientMainInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'surname', 'patronymic', 'gender', 'birthday', 'birth_place', 'inn', 'snils', 'registr_address', 'fact_address', 'passport_id', 'inter_passsport_id', 'mail', 'phone', 'is_ip', 'changed_fio', 'facsimile'], 'required'],
-            [['gender', 'passport_id', 'inter_passsport_id', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'gender', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'surname', 'patronymic', 'gender', 'birthday', 'birth_place', 'inn', 'snils', 'registr_address', 'fact_address', 'mail', 'phone', 'is_ip', 'facsimile'], 'required'],
             [['birthday'], 'safe'],
             [['name', 'surname', 'patronymic'], 'string', 'max' => 50],
             [['birth_place', 'registr_address', 'fact_address', 'mail', 'changed_fio'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 12],
             [['snils'], 'string', 'max' => 14],
-            [['passport_id'], 'unique'],
-            [['inter_passsport_id'], 'unique'],
             [['mail'], 'unique'],
             [['phone'], 'unique'],
         ];
@@ -66,22 +74,21 @@ class ClientMainInfo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id' => 'Пользователь',
             'name' => 'Имя',
             'surname' => 'Фамилия',
             'patronymic' => 'Отчество',
             'gender' => 'Пол',
-            'birthday' => 'Дата рождения',
+            'birthday' => 'День рождения',
             'birth_place' => 'Место рождения',
             'inn' => 'ИНН',
             'snils' => 'Снилс',
             'registr_address' => 'Адресс регистрации',
-            'fact_address' => 'Адресс проижвания',
-            'passport_id' => 'Пасспорт',
-            'inter_passsport_id' => 'Загранпасспорт',
+            'fact_address' => 'Фактический адресс',
             'mail' => 'Email',
             'phone' => 'Телефон',
             'is_ip' => 'ИП',
-            'changed_fio' => 'Смена имени',
+            'changed_fio' => 'Смени имени',
             'facsimile' => 'Факсимиле',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -112,5 +119,4 @@ class ClientMainInfo extends \yii\db\ActiveRecord
         return $this->hasOne(Upload::className(), ['model_id' => 'id'])
             ->where(['model' => 'inn']);
     }
-
 }

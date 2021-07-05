@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\ClientMainInfo;
+use app\models\ClientTicket;
 
 /**
- * ClientMainInfoSearch represents the model behind the search form of `app\models\ClientMainInfo`.
+ * ClientTicketSearch represents the model behind the search form of `app\models\ClientTicket`.
  */
-class ClientMainInfoSearch extends ClientMainInfo
+class ClientTicketSearch extends ClientTicket
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class ClientMainInfoSearch extends ClientMainInfo
     public function rules()
     {
         return [
-            [['id', 'gender', 'passport_id', 'inter_passsport_id', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'user_id', 'gender', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
             [['name', 'surname', 'patronymic', 'birthday', 'birth_place', 'inn', 'snils', 'registr_address', 'fact_address', 'mail', 'changed_fio'], 'safe'],
         ];
     }
@@ -40,7 +40,7 @@ class ClientMainInfoSearch extends ClientMainInfo
      */
     public function search($params)
     {
-        $query = ClientMainInfo::find();
+        $query = ClientTicket::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +59,9 @@ class ClientMainInfoSearch extends ClientMainInfo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'gender' => $this->gender,
             'birthday' => $this->birthday,
-            'passport_id' => $this->passport_id,
-            'inter_passsport_id' => $this->inter_passsport_id,
             'phone' => $this->phone,
             'is_ip' => $this->is_ip,
             'facsimile' => $this->facsimile,

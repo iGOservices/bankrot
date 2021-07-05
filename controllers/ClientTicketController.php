@@ -3,21 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\ClientMainInfo;
-use app\models\ClientMainInfoSearch;
+use app\models\ClientTicket;
+use app\models\ClientTicketSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ClientMainInfoController implements the CRUD actions for ClientMainInfo model.
+ * ClientTicketController implements the CRUD actions for ClientTicket model.
  */
-class ClientMainInfoController extends Controller
+class ClientTicketController extends Controller
 {
-
-
-    public $layout = '/user';
-
     /**
      * {@inheritdoc}
      */
@@ -34,12 +30,12 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Lists all ClientMainInfo models.
+     * Lists all ClientTicket models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ClientMainInfoSearch();
+        $searchModel = new ClientTicketSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +45,7 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Displays a single ClientMainInfo model.
+     * Displays a single ClientTicket model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -62,13 +58,13 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Creates a new ClientMainInfo model.
+     * Creates a new ClientTicket model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ClientMainInfo();
+        $model = new ClientTicket();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -80,7 +76,7 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Updates an existing ClientMainInfo model.
+     * Updates an existing ClientTicket model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -100,7 +96,7 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Deletes an existing ClientMainInfo model.
+     * Deletes an existing ClientTicket model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -114,15 +110,15 @@ class ClientMainInfoController extends Controller
     }
 
     /**
-     * Finds the ClientMainInfo model based on its primary key value.
+     * Finds the ClientTicket model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return ClientMainInfo the loaded model
+     * @return ClientTicket the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ClientMainInfo::findOne($id)) !== null) {
+        if (($model = ClientTicket::findOne($id)) !== null) {
             return $model;
         }
 

@@ -608,7 +608,7 @@ $(document).ready(function(){
 	  return {
 	    // pass configurable object literal
 	    init: function($settings) {
-	      $accordion_header.on('click', function() {
+		$(document).on('click','.js-accordion-header',function(){
 	        accordion.toggle($(this));
 	      });
 	      

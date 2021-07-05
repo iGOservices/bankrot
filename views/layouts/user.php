@@ -432,6 +432,37 @@ AppAsset::register($this);
 <!-- Dashboard Container / End -->
 
 </div>
+
+
+
+<!-- Edit Review Popup
+================================================== -->
+<div id="small-dialog-1" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+
+	<!--Tabs -->
+	<div class="sign-in-form">
+
+		<ul class="popup-tabs-nav">
+		</ul>
+
+		<div class="popup-tabs-container">
+
+			<!-- Tab -->
+			<div class="popup-tab-content" id="tab1">
+				
+				
+				
+				<!-- Button -->
+				<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="change-review-form">Save Changes <i class="icon-material-outline-arrow-right-alt"></i></button>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Edit Review Popup / End -->
+
+
 <!-- Wrapper / End -->
 <?php $this->endBody() ?>
 </body>

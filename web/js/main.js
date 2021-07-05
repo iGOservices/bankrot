@@ -14,18 +14,17 @@ function showTab(n) {
   if (n == (x.length - 1)) {
     document.getElementById("nextBtn").innerHTML = "Submit";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").innerHTML = 'Далее<span class="icon-material-outline-keyboard-arrow-right"></span>';
   }
   // ... and run a function that displays the correct step indicator:
   fixStepIndicator(n)
 }
 
 function nextPrev(n) {
- 
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("tab");
   // Exit the function if any field in the current tab is invalid:
-  //if (n == 1 && !validateForm()) return false;
+ // if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
   x[currentTab].style.display = "none";
   // Increase or decrease the current tab by 1:
@@ -72,3 +71,26 @@ function fixStepIndicator(n) {
   //... and adds the "active" class to the current step:
   x[n].className += " active";
 }
+
+
+$(document).on('click','#add_creditor',function(){
+  const csrfToken = $('meta[name="csrf-token"]').attr("content");
+  let num = document.getElementById('creditor-point').value;
+  $.ajax({
+      url: '/creditor/add-new-creditor',
+      type: 'POST',
+      data: {
+          num : num,
+          _csrf : csrfToken,
+      },
+      success: function(res){
+              $('#creditor-accordion').append(res);
+              num = Number(num)+1;
+              $("#creditor-point").val(num);      
+      },
+      error: function(XMLHttpRequest){
+        console.log(XMLHttpRequest.responseText);
+      }
+  }); 
+});
+

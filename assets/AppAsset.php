@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle
     public $css = [
         "css/site.css",
         "css/style.css",
-        "css/colors/blue.css",
+        "css/colors/purple.css",
     ];
     public $js = [
         "js/jquery-3.3.1.min.js",

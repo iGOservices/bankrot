@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ClientMainInfoSearch */
+/* @var $model app\models\ClientTicketSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="client-main-info-search">
+<div class="client-ticket-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'user_id') ?>
+
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'surname') ?>
 
     <?= $form->field($model, 'patronymic') ?>
 
-    <?= $form->field($model, 'gender') ?>
+    <?php // echo $form->field($model, 'gender') ?>
 
     <?php // echo $form->field($model, 'birthday') ?>
 
@@ -36,10 +38,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'registr_address') ?>
 
     <?php // echo $form->field($model, 'fact_address') ?>
-
-    <?php // echo $form->field($model, 'passport_id') ?>
-
-    <?php // echo $form->field($model, 'inter_passsport_id') ?>
 
     <?php // echo $form->field($model, 'mail') ?>
 

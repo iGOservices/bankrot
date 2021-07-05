@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ClientMainInfo */
+/* @var $model app\models\ClientTicket */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Client Main Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Client Tickets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="client-main-info-view">
+<div class="client-ticket-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'user_id',
             'name',
             'surname',
             'patronymic',
@@ -40,8 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'snils',
             'registr_address',
             'fact_address',
-            'passport_id',
-            'inter_passsport_id',
             'mail',
             'phone',
             'is_ip',

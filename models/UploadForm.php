@@ -16,6 +16,11 @@ class UploadForm extends Model
     public $passport;
     public $inn;
     public $snils;
+    public $changed_fio;
+    public $is_ip;
+    public $facsimile;
+    public $inter_passport;
+    public $creditor;
 
     public $fileNames;
 
@@ -25,8 +30,8 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-            [['files','passport','inn','snils'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, gif', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 10, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
-            [['files','passport','inn','snils'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, gif', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 10, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
         ];
     }
 

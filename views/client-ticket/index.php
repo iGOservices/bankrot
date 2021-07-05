@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ClientMainInfoSearch */
+/* @var $searchModel app\models\ClientTicketSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Client Main Infos';
+$this->title = 'Client Tickets';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-main-info-index">
+<div class="client-ticket-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Client Main Info', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Client Ticket', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,18 +27,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            'user_id',
             'name',
             'surname',
             'patronymic',
-            'gender',
+            //'gender',
             //'birthday',
             //'birth_place',
             //'inn',
             //'snils',
             //'registr_address',
             //'fact_address',
-            //'passport_id',
-            //'inter_passsport_id',
             //'mail',
             //'phone',
             //'is_ip',
