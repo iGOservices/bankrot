@@ -18,11 +18,20 @@ use yii\behaviors\TimestampBehavior;
  * @property string $birth_place
  * @property string $inn
  * @property string $snils
- * @property string $registr_address
+ * @property string $region
+ * @property string $district
+ * @property string $city
+ * @property string $selo
+ * @property string $street
+ * @property string $house
+ * @property string $corpuse
+ * @property string $flat
+ * @property string $index
  * @property string $fact_address
  * @property string $mail
  * @property int $phone
  * @property int $is_ip
+ * @property int $is_work
  * @property string|null $changed_fio
  * @property int $facsimile
  * @property int $created_at
@@ -41,6 +50,11 @@ class ClientTicket extends \yii\db\ActiveRecord
         '1' => 'Да',
     ];
 
+    public static $is_work= [
+        '0' => 'Нет',
+        '1' => 'Да',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -55,11 +69,10 @@ class ClientTicket extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'gender', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'surname', 'patronymic', 'gender', 'birthday', 'birth_place', 'inn', 'snils', 'registr_address', 'fact_address', 'mail', 'phone', 'is_ip', 'facsimile'], 'required'],
+            [['user_id', 'gender', 'phone', 'is_ip', 'is_work', 'facsimile', 'created_at', 'updated_at','house','corpuse','flat','index'], 'integer'],
             [['birthday'], 'safe'],
             [['name', 'surname', 'patronymic'], 'string', 'max' => 50],
-            [['birth_place', 'registr_address', 'fact_address', 'mail', 'changed_fio'], 'string', 'max' => 255],
+            [['birth_place',  'fact_address', 'mail', 'changed_fio','region','district','city','selo','street'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 12],
             [['snils'], 'string', 'max' => 14],
             [['mail'], 'unique'],
@@ -83,11 +96,11 @@ class ClientTicket extends \yii\db\ActiveRecord
             'birth_place' => 'Место рождения',
             'inn' => 'ИНН',
             'snils' => 'Снилс',
-            'registr_address' => 'Адресс регистрации',
             'fact_address' => 'Фактический адресс',
             'mail' => 'Email',
             'phone' => 'Телефон',
             'is_ip' => 'ИП',
+            'is_work' => 'Статус безработного',
             'changed_fio' => 'Смени имени',
             'facsimile' => 'Факсимиле',
             'created_at' => 'Created At',
@@ -119,4 +132,35 @@ class ClientTicket extends \yii\db\ActiveRecord
         return $this->hasOne(Upload::className(), ['model_id' => 'id'])
             ->where(['model' => 'inn']);
     }
+
+    public function getPassportByTicket()
+    {
+        return $this->hasOne(Passport::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getPropertyByTicket()
+    {
+        return $this->hasMany(Property::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getBankByTicket()
+    {
+        return $this->hasMany(Bank::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getSharesByTicket()
+    {
+        return $this->hasMany(Shares::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getOtherSharesByTicket()
+    {
+        return $this->hasMany(OtherShares::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getValuablePropertyByTicket()
+    {
+        return $this->hasMany(ValuableProperty::className(), ['ticket_id' => 'id']);
+    }
+
 }

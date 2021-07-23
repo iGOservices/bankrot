@@ -6,37 +6,32 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
-$this->title = 'Логин';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="login-register-page">
+    <!-- Welcome Text -->
+    <div class="welcome-text">
+        <h3>Мы рады видеть вас снова!</h3>
+        <span>Еще нет аккаунта? <?= Html::a('Зарегистрироваться', ['site/signup']) ?></span>
+    </div>
 
-    <p>Введите свои данные для входа:</p>
+    <!-- Form -->
 
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
+        'id' => 'login-form'
     ]); ?>
-
-    <?= $form->field($model, 'phone')->textInput(['autofocus' => true]) ?>
-
-    <?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?= $form->field($model, 'rememberMe')->checkbox([
-        'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-    ]) ?>
-
-    <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-        </div>
+    <div class="input-with-icon-left">
+<!--        <i class="icon-material-baseline-mail-outline"></i>-->
+        <?= $form->field($model, 'phone')->textInput(['autofocus' => true,'class' => 'input-text with-border']) ?>
     </div>
+
+    <div class="input-with-icon-left">
+<!--        <i class="icon-material-outline-lock"></i>-->
+        <?= $form->field($model, 'password')->passwordInput(['class' => 'input-text with-border']) ?>
+    </div>
+    <a href="#" class="forgot-password">Забыли пароль?</a>
+
+    <?= Html::submitButton('Войти', ['class' => 'button full-width button-sliding-icon ripple-effect margin-top-10', 'name' => 'login-button']) ?>
+
     <!---->
     <!--        <div class="ks-text-center">-->
     <!--            Нет аккаунта? --><?//= Html::a('Зарегистрироваться', ['site/signup']) ?>

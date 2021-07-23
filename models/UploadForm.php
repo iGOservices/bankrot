@@ -21,6 +21,22 @@ class UploadForm extends Model
     public $facsimile;
     public $inter_passport;
     public $creditor;
+    public $debitor;
+    public $property;
+    public $other_property;
+    public $bank;
+    public $shares;
+    public $other_shares;
+    public $valuable_property;
+    public $deal;
+    public $ndfl;
+    public $brak;
+    public $razvod;
+    public $property_division;
+    public $brak_dogovor;
+    public $birth;
+    public $trud_book;
+    public $is_work;
 
     public $fileNames;
 
@@ -30,19 +46,19 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, gif', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 10, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
-            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','trud_book','is_work'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, gif', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 10, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','is_work','trud_book'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
         ];
     }
 
-    public function upload($model = null, $modelId = null)
+    public function upload($folder = null,$model = null, $modelId = null)
     {
         if ($this->validate()) {
             foreach ($this->files as $file) {
                 do{
                     $filename = Yii::$app->getSecurity()->generateRandomString(15);
-                }while ($this->checkExist($filename . '.' . $file->extension, $model, $modelId));
-                $file->saveAs($this->uploadPath . ($modelId ? $modelId . '/' : '') . $filename . '.' . $file->extension);
+                }while ($this->checkExist($filename . '.' . $file->extension, $model, $modelId,$folder));
+                $file->saveAs($this->uploadPath . ($modelId ? $modelId . '/' : '') . ($folder ? $folder . '/' : '') . $filename . '.' . $file->extension);
                 /*if(in_array($file->extension,['jpg','png','jpeg']))
                 {
                     //$path = $this->uploadPath . ($model ? $model . '/' : '') . $filename . '.' . $file->extension;
@@ -82,14 +98,14 @@ class UploadForm extends Model
         return $this->fileNames;
     }
 
-    public function checkExist($filename,$model = null , $modelId = null)
+    public function checkExist($filename,$model = null , $modelId = null,$folder = null)
     {
         $dir = $this->uploadPath;
-        if($modelId)
+        if($modelId && $folder)
         {
-            $dir = $this->uploadPath . $modelId . '/';
-            if(!is_dir($dir)) mkdir($dir);
-            if(!is_dir($this->thumbnailPath)) mkdir($this->thumbnailPath);
+            $dir = $this->uploadPath . $modelId . '/'. $folder . '/';
+            if(!is_dir($dir)) mkdir($dir, 0777, true);
+            if(!is_dir($this->thumbnailPath)) mkdir($this->thumbnailPath, 0777, true);
         }
         return file_exists($dir . $filename) ? true : false;
     }
@@ -101,7 +117,7 @@ class UploadForm extends Model
      * @param boolean $key - в случае нескольких форм передаем true? для использования модели как ключа
      * @return array
      */
-    public function save($model,$modelId,$deleteModel = null, $key = false)
+    public function save($folder,$model,$modelId,$deleteModel = null, $key = false)
     {
         $files = [];
         $this->files = UploadedFile::getInstances($this, $model);
@@ -109,7 +125,7 @@ class UploadForm extends Model
         {
             if($deleteModel) $deleteModel->deleteFile();
 
-            if ($this->upload($model,$modelId)) {
+            if ($this->upload($folder,$model,$modelId)) {
                 if($this->getFileNames()){
                     foreach ($this->getFileNames() as $file)
                     {

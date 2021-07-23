@@ -6,14 +6,21 @@ use app\models\Creditor;
 use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Creditor */
+/* @var $creditor app\models\Creditor */
+/* @var $uploadForm app\models\UploadForm*/
 /* @var $form yii\widgets\ActiveForm */
-
+/* @var $increment */
 ?>
 <!-- Accordion Item -->
-<div class="accordion__item js-accordion-item">
-	<div class="accordion-header js-accordion-header">Данные по кредитору №<?=$increment?>
-	</div> 
+<div id="<?="creditor-".$increment?>">
+<div class="del_icon">
+    <span class="icon-feather-trash-2" onclick='deleteItem(<?=$increment?>,"creditor");'></span>
+</div>
+<div class="accordion__item js-accordion-item" style="float:left;width:98%">
+	<div class="accordion-header js-accordion-header">
+        Данные по кредитору №<?=$increment+1?>
+	</div>
+
 	<!-- Accordtion Body -->
 	<div class="accordion-body js-accordion-body">
 		<!-- Accordion Content -->
@@ -22,15 +29,17 @@ use kartik\date\DatePicker;
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
 					<div class="submit-field ">
 						<h4>Группа задолженности</h4>
-						<?= $form->field($creditor, "[$increment]group")->dropDownList(Creditor::$group,[ 'class' => 'with-border '])->label(false)  ?>
+						<?= $form->field($creditor, "[$increment]group")->dropDownList(Creditor::$group,[ 'class' => 'with-border ','onchange' => 'changeStatment('.$increment.');'])->label(false)  ?>
 					</div>
 				</div>
 
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
 					<div class="submit-field ">
 						<h4>Содержание обязательства</h4>
-						<?= $form->field($creditor, "[$increment]commitment")->dropDownList(Creditor::$group,[ 'class' => 'with-border'])->label(false)  ?>
-					</div>
+                        <div id="creditor<?=$increment?>">
+						    <?= $form->field($creditor, "[$increment]commitment")->dropDownList(Creditor::$commitment,[ 'class' => 'with-border'])->label(false)  ?>
+                        </div>
+                    </div>
 				</div>
 
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
@@ -140,26 +149,28 @@ use kartik\date\DatePicker;
 					</div>
 				</div>
 
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-					<div class="submit-field ">
-						<h4>Сумма обязательства Всего(руб.)</h4>
-						<?= $form->field($creditor, "[$increment]sum_statment")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
-					</div>
-				</div>
 
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-					<div class="submit-field ">
-						<h4>Сумма обязательства Задолженность(руб.)</h4>
-						<?= $form->field($creditor, "[$increment]sum_dolg")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
-					</div>
-				</div>
+                    <div class="col-xl-4 pay_block" style="padding-left:30px;padding-right:30px;" >
+                        <div class="submit-field ">
+                            <h4>Сумма обязательства Всего(руб.)</h4>
+                            <?= $form->field($creditor, "[$increment]sum_statment")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
+                        </div>
+                    </div>
 
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-					<div class="submit-field ">
-						<h4>Штрафы,пени,иные санкции (руб.)</h4>
-						<?= $form->field($creditor, "[$increment]forfeit")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
-					</div>
-				</div>
+                    <div class="col-xl-4 pay_block" style="padding-left:30px;padding-right:30px;" >
+                        <div class="submit-field ">
+                            <h4>Сумма обязательства Задолженность(руб.)</h4>
+                            <?= $form->field($creditor, "[$increment]sum_dolg")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 pay_block" style="padding-left:30px;padding-right:30px;">
+                        <div class="submit-field ">
+                            <h4>Штрафы,пени,иные санкции (руб.)</h4>
+                            <?= $form->field($creditor, "[$increment]forfeit")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
+                        </div>
+                    </div>
+
 		
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
 					<div class="submit-field">
@@ -199,5 +210,5 @@ use kartik\date\DatePicker;
 	<!-- Accordion Body / End -->
 </div>
 <!-- Accordion Item / End -->
-
+</div>
 

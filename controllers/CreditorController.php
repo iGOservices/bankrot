@@ -127,6 +127,10 @@ class CreditorController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * Добавляем нового кредитора к тикету
+     * @return string
+     */
     public function actionAddNewCreditor(){
         {
             $i = Yii::$app->request->post('num');

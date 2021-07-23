@@ -137,6 +137,7 @@ a.desc:after {
   /* Mark input boxes that gets an error on validation: */
   input.invalid {
     background-color: #ffdddd;
+      border-color: #ffdddd;
   }
   
   /* Hide all steps by default: */
@@ -165,3 +166,13 @@ a.desc:after {
   .step.finish {
     background-color: #04AA6D;
   }
+
+  .del_icon {
+      float:left;
+      width:2%;
+      padding: 15px 8px 8px 8px;
+  }
+
+    .del_icon:hover {
+        cursor: pointer;
+    }

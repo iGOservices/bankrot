@@ -1,0 +1,150 @@
+<?php
+
+namespace app\controllers;
+
+use app\models\UploadForm;
+use Yii;
+use app\models\OtherShares;
+use app\models\OtherSharesSearch;
+use yii\base\BaseObject;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
+
+/**
+ * OtherSharesController implements the CRUD actions for OtherShares model.
+ */
+class OtherSharesController extends Controller
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all OtherShares models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new OtherSharesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single OtherShares model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new OtherShares model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new OtherShares();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing OtherShares model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing OtherShares model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the OtherShares model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return OtherShares the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = OtherShares::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Добавляем нового Иные ценные бумаги к тикету
+     * @return string
+     */
+    public function actionAddNewOtherShares(){
+        {
+            $i = Yii::$app->request->post('num');
+            $form = ActiveForm::begin([
+                'fieldConfig' => [
+                    'options' => [
+                        'class' => 'form-group row'
+                    ]]]);
+            $shares = new OtherShares();
+            $uploadForm = new UploadForm();
+
+            return $this->renderAjax('_new_other_shares', ['form' => $form, 'other_shares' => $shares, 'uploadForm' => $uploadForm,'increment' => $i]);
+        }
+
+    }
+}

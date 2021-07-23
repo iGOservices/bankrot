@@ -10,10 +10,23 @@ use yii\widgets\ActiveForm;
 
 <div class="directory-form">
 
+
     <?php $form = ActiveForm::begin(); ?>
 
     <h4>Личные данные клиента</h4>
     <hr>
+
+    <div class="switches-list">
+        <div class="switch-container">
+
+            <label class="switch"><input type="checkbox" checked=""><span class="switch-button"></span> Switch Button</label>
+        </div>
+
+        <div class="switch-container">
+            <label class="switch"><input type="checkbox"><span class="switch-button"></span> Switch Button</label>
+        </div>
+    </div>
+
 
     <?= $form->field($model, 'name')->checkbox() ?>
 

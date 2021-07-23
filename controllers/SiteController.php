@@ -94,6 +94,7 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
+        $this->layout = 'login';
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -152,6 +153,7 @@ class SiteController extends Controller
             }
         }
 
+        $this->layout = 'login';
         return $this->render('signup', [
             'model' => $model,
         ]);

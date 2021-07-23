@@ -37,12 +37,15 @@ class HelloController extends Controller
         $model = User::find()->where(['username' => 'admin'])->one();
         if (empty($model)) {
             $user = new User();
-            $user->username = 'admin';
+            $user->username = 'almaz';
+            $user->phone = '11';
             $user->email = 'admin@mail.ru';
             $user->setPassword('1234');
             $user->generateAuthKey();
             if ($user->save()) {
                 echo 'good';
+            }else{
+                print_r($user->errors);
             }
         }
     }

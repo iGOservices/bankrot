@@ -14,6 +14,20 @@ class SignupForm extends Model
     public $username;
     public $phone;
     public $password;
+    public $email;
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя',
+            'email' => 'Email',
+            'phone' => 'Телефон',
+            'password' => 'Пароль'
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -24,6 +38,8 @@ class SignupForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            [['email'], 'email'],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким email уже существует'],
             ['phone', 'trim'],
             ['phone', 'required'],
             ['phone', 'integer'],
@@ -49,6 +65,7 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->phone = $this->phone;
+        $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         //$user->generateAccessToken();

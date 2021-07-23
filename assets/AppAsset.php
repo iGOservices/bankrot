@@ -39,7 +39,7 @@ class AppAsset extends AssetBundle
         "js/slick.min.js",
         "js/custom.js",
         "js/chart.min.js",
-        "js/main.js",
+        "js/main.js?v={{ config('app.version') }}",
     ];
     public $depends = [
         //'yii\web\YiiAsset',
