@@ -16,7 +16,7 @@ $this->title = 'Сброс пароля';
         'labelOptions' => ['class' => 'col-lg-1 control-label'],
     ],
 ]); ?>
-    <h4 class="ks-header">Сброс пароля</h4>
+    <h5 class="ks-header">Сброс пароля</h5>
 
 <?= $form->field($model, 'email', ['template' => '<div class="input-icon icon-left icon-lg icon-color-primary">{input}<span class="icon-addon"><span class="fa fa-at"></span>
             </span></div>'])->textInput(['placeholder' => 'Email', 'autofocus' => true])->label(false) ?>

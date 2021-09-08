@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class DirectoryController extends Controller
 {
+
+    //public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -87,7 +89,7 @@ class DirectoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //тут можно алерт что данные сохранены
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

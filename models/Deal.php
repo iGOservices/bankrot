@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "deal".
@@ -77,12 +78,19 @@ class Deal extends \yii\db\ActiveRecord
     }
 
     public static function saveDeal($ticket_id){
+        $ids = ArrayHelper::getColumn(Deal::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Deal');
         $count = $data ? count($data) : 0;
         $deals = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $deals[$i] = new Deal();
+
+            if(isset($ids[$i])){
+                $deals[$i] = Deal::findOne($ids[$i]);
+            }else{
+                $deals[$i] = new Deal();
+            }
         }
         $uploadForm = new UploadForm();
 

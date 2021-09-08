@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "property".
@@ -151,13 +152,33 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getPropertyFile($model)
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => $model]);
+    }
+
+    public function getOtherPropertyFile($model)
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => $model]);
+    }
+
     public static function saveProperty($ticket_id){
+        $ids = ArrayHelper::getColumn(Property::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Property');
+
         $count = $data ? count($data) : 0;
         $property = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $property[$i] = new Property();
+            if(isset($ids[$i])){
+                $property[$i] = Property::findOne($ids[$i]);
+            }else{
+                $property[$i] = new Property();
+            }
+
         }
         $uploadForm = new UploadForm();
 
@@ -174,6 +195,7 @@ class Property extends \yii\db\ActiveRecord
                 }
             }
         }
+
 
         return $result;
     }

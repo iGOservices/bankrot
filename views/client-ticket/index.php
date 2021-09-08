@@ -3,20 +3,22 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ClientTicketSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Client Tickets';
+$this->title = 'Тикеты клиентов';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-ticket-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Client Ticket', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?//= Html::a('Create Client Ticket', ['create'], ['class' => 'btn btn-success']) ?>
+<!--    </p>-->
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -29,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'name',
-            'surname',
-            'patronymic',
+           // 'surname',
+            //'patronymic',
             //'gender',
             //'birthday',
             //'birth_place',
@@ -38,17 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
             //'snils',
             //'registr_address',
             //'fact_address',
-            //'mail',
-            //'phone',
+            'mail',
+            'phone',
             //'is_ip',
             //'changed_fio',
             //'facsimile',
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update}',
+
+            ],
         ],
     ]); ?>
+
+
 
 
 </div>

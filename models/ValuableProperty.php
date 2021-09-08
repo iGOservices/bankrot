@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "valuable_property".
@@ -53,7 +54,7 @@ class ValuableProperty extends \yii\db\ActiveRecord
     ];
 
     public static $location = [
-        '1' => 'Адресс',
+        '1' => 'Адрес',
         '2' => 'Бакновская ячейка',
     ];
 
@@ -124,12 +125,20 @@ class ValuableProperty extends \yii\db\ActiveRecord
     }
 
     public static function saveValuableProperty($ticket_id){
+        $ids = ArrayHelper::getColumn(ValuableProperty::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
+
         $data = Yii::$app->request->post('ValuableProperty');
         $count = $data ? count($data) : 0;
         $valuable_property = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $valuable_property[$i] = new ValuableProperty();
+            if(isset($ids[$i])){
+                $valuable_property[$i] = ValuableProperty::findOne($ids[$i]);
+            }else{
+                $valuable_property[$i] = new ValuableProperty();
+            }
+
         }
         $uploadForm = new UploadForm();
 

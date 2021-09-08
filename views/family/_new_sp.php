@@ -2,6 +2,7 @@
 
 use app\models\Bank;
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 use yii\widgets\ActiveForm;
 use app\models\Creditor;
 use kartik\date\DatePicker;
@@ -16,7 +17,7 @@ use kartik\date\DatePicker;
 <!-- Accordion Item -->
 <div id="<?="sp-".$increment?>">
     <div class="del_icon">
-        <span class="icon-feather-trash-2" onclick='deleteItem(<?=$increment?>,"sp");'></span>
+        <span class="icon-feather-trash-2" onclick='deleteItem(<?=$increment?>,"sp",<?=isset($brak->id) ? $brak->id : null?>,<?=isset($razvod->id) ? $razvod->id : null?>);'></span>
     </div>
     <div class="accordion__item js-accordion-item" style="float:left;width:98%">
 	<div class="accordion-header js-accordion-header">Данные по Семейному положению №<?=$increment+1?>
@@ -28,7 +29,7 @@ use kartik\date\DatePicker;
 			<div class="row">
                 <div class="col-xl-6 col-md-6">
                         <div class="section-headline">
-                            <h4> Свидетельство о браке</h4>
+                            <h5> Свидетельство о браке</h5>
                         </div>
                         <!-- Accordion -->
                         <div class="accordion js-accordion">
@@ -43,46 +44,34 @@ use kartik\date\DatePicker;
 
                                             <div class="col-xl-6">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Серия</h4>
+                                                    <h5>Серия</h5>
                                                     <?= $form->field($brak, "[$increment]series")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-xl-6">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Номер</h4>
+                                                    <h5>Номер</h5>
                                                     <?= $form->field($brak, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-xl-12">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Кем выдан</h4>
+                                                    <h5>Кем выдан</h5>
                                                     <?= $form->field($brak, "[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                                 </div>
                                             </div>
 
-                                            <div class="col-xl-6">
+                                            <div class="col-xl-12">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Дата выдачи</h4>
+                                                    <h5>Дата выдачи</h5>
                                                     <?= $form->field($brak, "[$increment]date")->widget(DatePicker::classname(), [
-                                                        'options' => ['placeholder' => 'Введите дату', 'autocomplete' => 'off'],
-                                                        'class' => 'with-border',
-                                                        'pluginOptions' => [
-                                                            'autoclose'=>true,
-                                                            'todayHighlight' => true,
-                                                            'format' => 'yyyy-mm-dd'
-                                                        ]
-                                                    ])->label(false)?>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xl-6">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Дата выдачи актовой записи</h4>
-                                                    <?= $form->field($brak, "[$increment]number_act_date")->widget(DatePicker::classname(), [
-                                                        'options' => ['placeholder' => 'Введите дату', 'autocomplete' => 'off'],
-                                                        'class' => 'with-border',
+                                                        'options' => [
+                                                            'placeholder' => 'Введите дату',
+                                                            'autocomplete' => 'off',
+                                                            'class' => 'with-border',
+                                                        ],
                                                         'pluginOptions' => [
                                                             'autoclose'=>true,
                                                             'todayHighlight' => true,
@@ -94,14 +83,53 @@ use kartik\date\DatePicker;
 
                                             <div class="col-xl-12">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h4>Номер актовой записи</h4>
+                                                    <h5>Дата выдачи актовой записи</h5>
+                                                    <?= $form->field($brak, "[$increment]number_act_date")->widget(DatePicker::classname(), [
+                                                        'options' => [
+                                                            'placeholder' => 'Введите дату',
+                                                            'autocomplete' => 'off',
+                                                            'class' => 'with-border',
+                                                        ],
+                                                        'pluginOptions' => [
+                                                            'autoclose'=>true,
+                                                            'todayHighlight' => true,
+                                                            'format' => 'yyyy-mm-dd'
+                                                        ]
+                                                    ])->label(false)?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-12">
+                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                    <h5>Номер актовой записи</h5>
                                                     <?= $form->field($brak, "[$increment]number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                                 </div>
                                             </div>
 
+
                                             <div class="col-xl-12">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <?= $form->field($uploadForm,"[$increment]brak")->fileInput(['multiple' => true])->label(false) ?>
+                                                    <h5>Скан свидетельства о браке</h5>
+                                                    <?= $form->field($uploadForm, "[$increment]brak[]", [
+                                                        'template' => '<div class="uploadButton">{input}
+											<label class="uploadButton-button ripple-effect" for="brak_upload'.$increment.'">Загрузить файл</label>
+											<span class="uploadButton-file-name brak_upload'.$increment.'">Файл не выбран</span>
+										
+										        </div>'])->fileInput(['multiple' => true, 'id' => "brak_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
+
+                                                    <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]brak")->all()): ?>
+                                                        <ul style="list-style: none;">
+                                                            <span>Загруженные файлы</span>
+                                                            <?foreach ($files as $file):?>
+                                                                <li id="<?=$file->id?>">
+                                                                    <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                                                        <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
+                                                                    </a>
+                                                                    <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                                </li>
+                                                            <?endforeach;?>
+                                                        </ul>
+                                                    <? endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +144,7 @@ use kartik\date\DatePicker;
                 </div>
                 <div class="col-xl-6 col-md-6">
                     <div class="section-headline">
-                        <h4> Свидетельство о разводе</h4>
+                        <h5> Свидетельство о разводе</h5>
                     </div>
                     <!-- Accordion -->
                     <div class="accordion js-accordion">
@@ -131,46 +159,34 @@ use kartik\date\DatePicker;
 
                                         <div class="col-xl-6">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Серия</h4>
+                                                <h5>Серия</h5>
                                                 <?= $form->field($razvod, "[$increment]series")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-6">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Номер</h4>
+                                                <h5>Номер</h5>
                                                 <?= $form->field($razvod, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Кем выдан</h4>
+                                                <h5>Кем выдан</h5>
                                                 <?= $form->field($razvod, "[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                             </div>
                                         </div>
 
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-12">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Дата выдачи</h4>
+                                                <h5>Дата выдачи</h5>
                                                 <?= $form->field($razvod, "[$increment]date")->widget(DatePicker::classname(), [
-                                                    'options' => ['placeholder' => 'Введите дату', 'autocomplete' => 'off'],
-                                                    'class' => 'with-border',
-                                                    'pluginOptions' => [
-                                                        'autoclose'=>true,
-                                                        'todayHighlight' => true,
-                                                        'format' => 'yyyy-mm-dd'
-                                                    ]
-                                                ])->label(false)?>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-6">
-                                            <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Дата выдачи актовой записи</h4>
-                                                <?= $form->field($razvod, "[$increment]number_act_date")->widget(DatePicker::classname(), [
-                                                    'options' => ['placeholder' => 'Введите дату', 'autocomplete' => 'off'],
-                                                    'class' => 'with-border',
+                                                    'options' => [
+                                                        'placeholder' => 'Введите дату',
+                                                        'autocomplete' => 'off',
+                                                        'class' => 'with-border',
+                                                    ],
                                                     'pluginOptions' => [
                                                         'autoclose'=>true,
                                                         'todayHighlight' => true,
@@ -182,14 +198,53 @@ use kartik\date\DatePicker;
 
                                         <div class="col-xl-12">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <h4>Номер актовой записи</h4>
+                                                <h5>Дата выдачи актовой записи</h5>
+                                                <?= $form->field($razvod, "[$increment]number_act_date")->widget(DatePicker::classname(), [
+                                                    'options' => [
+                                                        'placeholder' => 'Введите дату',
+                                                        'autocomplete' => 'off',
+                                                        'class' => 'with-border',
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'autoclose'=>true,
+                                                        'todayHighlight' => true,
+                                                        'format' => 'yyyy-mm-dd'
+                                                    ]
+                                                ])->label(false)?>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-12">
+                                            <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                <h5>Номер актовой записи</h5>
                                                 <?= $form->field($razvod, "[$increment]number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                             </div>
                                         </div>
 
+
                                         <div class="col-xl-12">
                                             <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                <?= $form->field($uploadForm,"[$increment]razvod")->fileInput(['multiple' => true])->label(false) ?>
+                                                <h5>Скан свидетельства о разводе </h5>
+                                                <?= $form->field($uploadForm, "[$increment]razvod[]", [
+                                                    'template' => '<div class="uploadButton">{input}
+											<label class="uploadButton-button ripple-effect" for="razvod_upload'.$increment.'">Загрузить файл</label>
+											<span class="uploadButton-file-name razvod_upload'.$increment.'">Файл не выбран</span>
+										
+										    </div>'])->fileInput(['multiple' => true, 'id' => "razvod_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
+
+                                                <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]razvod")->all()): ?>
+                                                    <ul style="list-style: none;">
+                                                        <span>Загруженные файлы</span>
+                                                        <?foreach ($files as $file):?>
+                                                            <li id="<?=$file->id?>">
+                                                                <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                                                    <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
+                                                                </a>
+                                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                            </li>
+                                                        <?endforeach;?>
+                                                    </ul>
+                                                <? endif; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -206,16 +261,55 @@ use kartik\date\DatePicker;
                     <hr>
                 </div>
                 <div class="col-xl-6">
-                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                        <h4>Брачный договор</h4>
-                        <?= $form->field($uploadForm,"[$increment]brak_dogovor")->fileInput(['multiple' => true])->label(false) ?>
-                    </div>
+                        <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                            <h5>Брачный договор</h5>
+                            <?= $form->field($uploadForm, "[$increment]brak_dogovor[]", [
+                                'template' => '<div class="uploadButton">{input}
+											<label class="uploadButton-button ripple-effect" for="brak_dogovor_upload'.$increment.'">Загрузить файл</label>
+											<span class="uploadButton-file-name rbrak_dogovor_upload'.$increment.'">Файл не выбран</span>
+										
+										    </div>'])->fileInput(['multiple' => true, 'id' => "brak_dogovor_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
+
+                            <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]brak_dogovor")->all()): ?>
+                                <ul style="list-style: none;">
+                                    <span>Загруженные файлы</span>
+                                    <?foreach ($files as $file):?>
+                                        <li id="<?=$file->id?>">
+                                            <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                                <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
+                                            </a>
+                                            <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                        </li>
+                                    <?endforeach;?>
+                                </ul>
+                            <? endif; ?>
+                        </div>
                 </div>
 
                 <div class="col-xl-6">
+
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                        <h4>Соглашение о разделе имущества</h4>
-                        <?= $form->field($uploadForm,"[$increment]property_division")->fileInput(['multiple' => true])->label(false) ?>
+                        <h5>Соглашение о разделе имущества</h5>
+                        <?= $form->field($uploadForm, "[$increment]property_division[]", [
+                            'template' => '<div class="uploadButton">{input}
+											<label class="uploadButton-button ripple-effect" for="property_division_upload'.$increment.'">Загрузить файл</label>
+											<span class="uploadButton-file-name property_division_upload'.$increment.'">Файл не выбран</span>
+										
+										    </div>'])->fileInput(['multiple' => true, 'id' => "property_division_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
+
+                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]property_division")->all()): ?>
+                            <ul style="list-style: none;">
+                                <span>Загруженные файлы</span>
+                                <?foreach ($files as $file):?>
+                                    <li id="<?=$file->id?>">
+                                        <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                            <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
+                                        </a>
+                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                    </li>
+                                <?endforeach;?>
+                            </ul>
+                        <? endif; ?>
                     </div>
                 </div>
 

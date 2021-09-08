@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "enforce_proc".
@@ -65,12 +66,19 @@ class EnforceProc extends \yii\db\ActiveRecord
     }
 
     public static function saveEnforceProc($ticket_id){
+        $ids = ArrayHelper::getColumn(EnforceProc::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('EnforceProc');
         $count = $data ? count($data) : 0;
         $enforce = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $enforce[$i] = new EnforceProc();
+
+            if(isset($ids[$i])){
+                $enforce[$i] = EnforceProc::findOne($ids[$i]);
+            }else{
+                $enforce[$i] = new EnforceProc();
+            }
         }
 
         $result = true;

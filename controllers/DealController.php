@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\Deal;
@@ -134,8 +136,14 @@ class DealController extends Controller
      */
     public function actionAddNewDeal(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'deal',
+                'action' => '/deal/save-model',
+                'enableClientValidation' => true,
+                'enableAjaxValidation' => true,
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -143,8 +151,18 @@ class DealController extends Controller
             $deal = new Deal();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_deal', ['form' => $form, 'deal' => $deal, 'uploadForm' => $uploadForm,'increment' => $i]);
+
+            return $this->renderAjax('_new_deal', ['form' => $form, 'deal' => $deal, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
+    }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Deal::saveDeal($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

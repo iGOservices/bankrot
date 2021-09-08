@@ -37,6 +37,10 @@ class UploadForm extends Model
     public $birth;
     public $trud_book;
     public $is_work;
+    public $other;
+    public $proxy;
+    public $proxy_publ;
+    public $proxy_dep;
 
     public $fileNames;
 
@@ -46,8 +50,8 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','trud_book','is_work'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, gif', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 10, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
-            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','is_work','trud_book'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','trud_book','is_work','other','proxy','proxy_publ','proxy_dep'], 'file', 'checkExtensionByMimeType' => false, 'extensions' => 'png, jpg, jpeg, pdf', 'wrongExtension' => 'разрешенные форматы файлов: {extensions}', 'maxFiles' => 3, 'maxSize' => 50 * 1024 * 1024, 'tooBig' => 'Максимальный размер файла 50MB'],
+            [['files','passport','inn','snils','changed_fio','is_ip','facsimile','inter_passport','creditor','debitor','other_property','property','bank','shares','other_shares','valuable_property','deal','ndfl','brak','razvod','property_division','brak_dogovor','birth','is_work','trud_book','other','proxy','proxy_publ','proxy_dep'], 'file', 'skipOnEmpty' => false, 'on' => 'hasNotSkip']//если поле обязательное ставим $model->setScenario('hasNotSkip');
         ];
     }
 
@@ -129,7 +133,7 @@ class UploadForm extends Model
                 if($this->getFileNames()){
                     foreach ($this->getFileNames() as $file)
                     {
-                        if($upload = Upload::saveFile($model,$modelId,$file))
+                        if($upload = Upload::saveFile($model,$modelId,$file,$folder))
                         {
                             $files[] = $upload;
                             $this->fileNames = [];

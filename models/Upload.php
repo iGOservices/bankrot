@@ -13,12 +13,29 @@ use yii\db\ActiveRecord;
  * @property int $model_id
  * @property string $origin
  * @property string $name
+ * @property string $folder
  * @property string $ext
  * @property string $user_id
  * @property string $created_at
  */
 class Upload extends \yii\db\ActiveRecord
 {
+    public static $folder = [
+        'main_info' => "Личные данные клиента",
+        'family' => "Семья и дети",
+        'sp' => "Список родственных отношений",
+        'creditor' => "Кредиторы",
+        'debitor' => "Дебиторы",
+        'property' => "Информация по имуществу и сделок за последние 3 года",
+        'bank' => "Сведения о счетах в банках и иных кредитных организациях",
+        'shares' => "Акции, ценные бумаги",
+        'other_shares' => "Иные ценные бумаги",
+        'valuable_property' => "Наличные денежные средства и иное ценное имущество",
+        'deal' => "Совершенные сделки за последние 3 года",
+        'nalog' => "Доходы и Налоги",
+        'other' => "Иные документы",
+        'proxy' => "Блок оплаты и получения услуг",
+    ];
     /**
      * {@inheritdoc}
      */
@@ -36,7 +53,7 @@ class Upload extends \yii\db\ActiveRecord
             [['model', 'model_id', 'origin', 'name', 'ext'], 'required'],
             [['model_id', 'user_id', 'created_at'], 'integer'],
             [['model'], 'string', 'max' => 100],
-            [['origin'], 'string', 'max' => 255],
+            [['origin','folder'], 'string', 'max' => 255],
             [['name'], 'string', 'max' => 50],
             [['ext'], 'string', 'max' => 20],
         ];
@@ -66,6 +83,7 @@ class Upload extends \yii\db\ActiveRecord
             'model_id' => 'Model ID',
             'origin' => 'Origin',
             'name' => 'Name',
+            'folder' => 'Folder',
             'ext' => 'Ext',
         ];
     }
@@ -75,13 +93,14 @@ class Upload extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public static function saveFile($model, $model_id, $file)
+    public static function saveFile($model, $model_id, $file, $folder = null)
     {
         $upload = new Upload();
         $upload->model = $model;
         $upload->model_id = $model_id;
         $upload->origin = $file['origin'];
         $upload->name = $file['name'];
+        $upload->folder = $folder;
         $upload->ext = $file['ext'];
         $upload->user_id = Yii::$app->user->id;
         $upload->created_at = time();
@@ -90,15 +109,15 @@ class Upload extends \yii\db\ActiveRecord
         return $upload->save() ? $upload : $upload->errors;
     }
 
-    public function deleteFile()
+    public function deleteFile($model)
     {
-        if(file_exists($this->getLink(false)))
+        if(file_exists($this->getLink(false,$model)))
         {
-            unlink($this->getLink(false));
+            unlink($this->getLink(false,$model));
         }
-        if(file_exists($this->getThumbnail(false)))
+        if(file_exists($this->getThumbnail(false,$model)))
         {
-            unlink($this->getThumbnail(false));
+            unlink($this->getThumbnail(false,$model));
         }
         return $this->delete();
     }
@@ -126,17 +145,17 @@ class Upload extends \yii\db\ActiveRecord
         return self::saveFile($model, $model_id, $file);
     }
 
-    public function getLink($absolute = true)
+    public function getLink($absolute = true, $model)
     {
-        return ($absolute ? '/' : '') . $this->tableName() .'/'. $this->model_id .'/' . $this->name . '.' . $this->ext;
+        return ($absolute ? '/' : '') . $this->tableName() .'/'. $this->model_id .'/'. $model .'/'. $this->name . '.' . $this->ext;
     }
 
-    public function getThumbnail($absolute = true)
+    public function getThumbnail($absolute = true,$model)
     {
         if(file_exists($this->tableName() .'/thumbnail/' . $this->name . '.' . $this->ext))
             return ($absolute ? '/' : '') . $this->tableName() .'/thumbnail/' . $this->name . '.' . $this->ext;
         else
-            return $this->getLink($absolute);
+            return $this->getLink($absolute,$model);
     }
 
     public function getPreview()

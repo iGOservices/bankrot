@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\Shares;
@@ -134,8 +136,14 @@ class SharesController extends Controller
      */
     public function actionAddNewShares(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'shares',
+                'action' => '/shares/save-model',
+                'enableClientValidation' => true,
+                'enableAjaxValidation' => true,
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -143,8 +151,17 @@ class SharesController extends Controller
             $shares = new Shares();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_shares', ['form' => $form, 'shares' => $shares, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_shares', ['form' => $form, 'shares' => $shares, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
+    }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Shares::saveShares($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

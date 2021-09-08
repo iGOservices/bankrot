@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\behaviors\TimestampBehavior;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "creditor".
@@ -55,6 +56,13 @@ class Creditor extends \yii\db\ActiveRecord
         '5' => 'Коммунальные платежи'
     ];
 
+    public static $commitment_ob = [
+        '1' => 'Налог на имущество физических лиц',
+        '2' => 'Земельный налог',
+        '3' => 'Транспортный налог',
+        '4' => 'Налог на доходы физических лиц',
+    ];
+
     public static $statment = [
         '1' => 'Физ. лицо',
         '2' => 'Организация',
@@ -85,8 +93,8 @@ class Creditor extends \yii\db\ActiveRecord
     {
         return [
             [['ticket_id'], 'required'],
-            [['ticket_id', 'group', 'commitment', 'is_predprin', 'statment', 'house', 'corpus', 'flat', 'post_index', 'sum_statment', 'sum_dolg', 'base', 'base_num', 'created_at', 'updated_at'], 'integer'],
-            [['base_date'], 'safe'],
+            [['ticket_id', 'group',  'is_predprin', 'statment', 'house', 'corpus', 'flat', 'post_index', 'sum_statment', 'sum_dolg', 'base', 'base_num', 'created_at', 'updated_at'], 'integer'],
+            [['base_date','commitment'], 'safe'],
             [['name', 'coutry', 'region', 'district', 'city', 'street', 'forfeit'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 12],
             [['other'], 'string', 'max' => 1000],
@@ -103,7 +111,7 @@ class Creditor extends \yii\db\ActiveRecord
             'ticket_id' => 'Ticket ID',
             'group' => 'Группа',
             'commitment' => 'Содержание обязательства',
-            'is_predprin' => 'Обязательство взоникло в результате предприн деятельсноти',
+            'is_predprin' => 'Обязательство возникло в результате предпринимательской деятельсноти',
             'statment' => 'Statment',
             'name' => 'Наименование кредитора',
             'inn' => 'Inn',
@@ -135,13 +143,26 @@ class Creditor extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getCreditorFile($model)
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => $model]);
+    }
+
     public static function saveCreditor($ticket_id){
+
+        $ids = ArrayHelper::getColumn(Creditor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Creditor');
         $count = $data ? count($data) : 0;
         $creditors = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $creditors[$i] = new Creditor();
+            if(isset($ids[$i])){
+                $creditors[$i] = Creditor::findOne($ids[$i]);
+            }else{
+                $creditors[$i] = new Creditor();
+            }
         }
         $uploadForm = new UploadForm();
 

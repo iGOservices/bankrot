@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\Nalog;
@@ -134,8 +136,14 @@ class NalogController extends Controller
      */
     public function actionAddNewNalog(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'nalog',
+                'action' => '/nalog/save-model',
+                'enableClientValidation' => true,
+                'enableAjaxValidation' => true,
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -143,8 +151,18 @@ class NalogController extends Controller
             $nalog = new Nalog();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_nalog', ['form' => $form, 'nalog' => $nalog, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_nalog', ['form' => $form, 'nalog' => $nalog, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
     }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Nalog::saveNalog($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
+    }
+
 }

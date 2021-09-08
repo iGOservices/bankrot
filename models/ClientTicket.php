@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Codeception\Module\Cli;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -75,8 +76,7 @@ class ClientTicket extends \yii\db\ActiveRecord
             [['birth_place',  'fact_address', 'mail', 'changed_fio','region','district','city','selo','street'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 12],
             [['snils'], 'string', 'max' => 14],
-            [['mail'], 'unique'],
-            [['phone'], 'unique'],
+            [['mail'], 'email'],
         ];
     }
 
@@ -86,13 +86,13 @@ class ClientTicket extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Номер тикета',
             'user_id' => 'Пользователь',
             'name' => 'Имя',
             'surname' => 'Фамилия',
             'patronymic' => 'Отчество',
             'gender' => 'Пол',
-            'birthday' => 'День рождения',
+            'birthday' => 'Дата рождения',
             'birth_place' => 'Место рождения',
             'inn' => 'ИНН',
             'snils' => 'Снилс',
@@ -101,10 +101,17 @@ class ClientTicket extends \yii\db\ActiveRecord
             'phone' => 'Телефон',
             'is_ip' => 'ИП',
             'is_work' => 'Статус безработного',
-            'changed_fio' => 'Смени имени',
+            'changed_fio' => 'Предыдущее ФИО',
             'facsimile' => 'Факсимиле',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'region' => 'Регион',
+            'district' => 'Район',
+            'city' => 'Город',
+            'street' => 'Улица',
+            'house' => 'Дом',
+            'flat' => 'Квартира',
+            'index' => 'Потчовый индекс',
         ];
     }
 
@@ -113,6 +120,65 @@ class ClientTicket extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getTicketStatus()
+    {
+        return $this->hasOne(TicketStatus::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getFacsimileFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'facsimile']);
+    }
+
+    public function getInnFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'inn']);
+    }
+
+    public function getSnilsFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'snils']);
+    }
+
+    public function getTrudBookFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'trud_book']);
+    }
+
+    public function getIsWorkFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'is_work']);
+    }
+
+    public function getIsIpFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'is_ip']);
+    }
+
+    public function getPassportFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'passport']);
+    }
+
+    public function getInterPassportFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'inter_passport']);
+    }
+
+    public function getChangedFioFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'changed_fio']);
     }
 
     public function getFiles()
@@ -131,6 +197,12 @@ class ClientTicket extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Upload::className(), ['model_id' => 'id'])
             ->where(['model' => 'inn']);
+    }
+
+    public function getUploadedFiles($model)
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => $model]);
     }
 
     public function getPassportByTicket()
@@ -161,6 +233,39 @@ class ClientTicket extends \yii\db\ActiveRecord
     public function getValuablePropertyByTicket()
     {
         return $this->hasMany(ValuableProperty::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getCreditorByTicket()
+    {
+        return $this->hasMany(Creditor::className(), ['ticket_id' => 'id']);
+    }
+
+    public function getDebitorByTicket()
+    {
+        return $this->hasMany(Debitor::className(), ['ticket_id' => 'id']);
+    }
+
+    public static function getUserTickets()
+    {
+        return ClientTicket::find()->where(['user_id' => Yii::$app->user->id])->orderBy('created_at DESC')->all();
+    }
+
+    public static function getActiveTicket(){
+        $tickets = ClientTicket::find()->where(['user_id' => Yii::$app->user->id])->all();
+
+        if($tickets){
+            foreach ($tickets as $ticket) {
+
+                $ticket_status = $ticket->ticketStatus;
+                //Если находим незавершенный тикет то продолжаем его
+                if($ticket_status && $ticket_status->status == 0){
+                    return $ticket->id;
+                }
+            }
+        }
+
+        return false;
+
     }
 
 }

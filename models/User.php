@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -123,6 +124,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByPhone($phone)
     {
         return static::findOne(['phone' => $phone, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    public static function activeList()
+    {
+        return ArrayHelper::map(self::find()->where(['status' => 1])->orderBy('username ASC')->all(), 'id', 'username');
     }
 
     /**

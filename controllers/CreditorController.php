@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use Yii;
 use app\models\Creditor;
 use app\models\CreditorSearch;
@@ -133,8 +135,14 @@ class CreditorController extends Controller
      */
     public function actionAddNewCreditor(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'creditor',
+                'action' => '/creditor/save-model',
+                'enableClientValidation' => true,
+                'enableAjaxValidation' => true,
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -142,8 +150,17 @@ class CreditorController extends Controller
             $creditor = new Creditor();
             $uploadForm = new UploadForm();
     
-            return $this->renderAjax('_new_creditor', ['form' => $form, 'creditor' => $creditor, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_creditor', ['form' => $form, 'creditor' => $creditor, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
+    }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Creditor::saveCreditor($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

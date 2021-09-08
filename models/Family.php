@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "family".
@@ -57,10 +58,10 @@ class Family extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ticket_id'], 'required'],
+            [['ticket_id','name'], 'required'],
             [['ticket_id', 'type', 'birth_country', 'created_at', 'updated_at'], 'integer'],
             [['birthday', 'birth_date', 'birth_number_act_date'], 'safe'],
-            [['name', 'surname', 'patronymic'], 'string', 'max' => 50],
+            [['name',  'patronymic'], 'string', 'max' => 50],
             [['inn'], 'string', 'max' => 12],
             [['birth_series'], 'string', 'max' => 10],
             [['birth_number'], 'string', 'max' => 20],
@@ -102,12 +103,19 @@ class Family extends \yii\db\ActiveRecord
     }
 
     public static function saveFamily($ticket_id){
+
+        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Family');
         $count = $data ? count($data) : 0;
         $family = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $family[$i] = new Family();
+            if(isset($ids[$i])){
+                $family[$i] = Family::findOne($ids[$i]);
+            }else{
+                $family[$i] = new Family();
+            }
         }
         $uploadForm = new UploadForm();
 
@@ -128,12 +136,20 @@ class Family extends \yii\db\ActiveRecord
     }
 
     public static function saveSp($ticket_id){
+
+        $ids = ArrayHelper::getColumn(Razvod::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Razvod');
         $count = $data ? count($data) : 0;
         $razvod = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $razvod[$i] = new Razvod();
+
+            if(isset($ids[$i])){
+                $razvod[$i] = Razvod::findOne($ids[$i]);
+            }else{
+                $razvod[$i] = new Razvod();
+            }
         }
         $uploadForm = new UploadForm();
 
@@ -154,12 +170,20 @@ class Family extends \yii\db\ActiveRecord
 
         if(!$result) return false;
 
+        $ids = ArrayHelper::getColumn(Brak::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
+
         $data = Yii::$app->request->post('Brak');
         $count = $data ? count($data) : 0;
         $brak = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $brak[$i] = new Brak();
+
+            if(isset($ids[$i])){
+                $brak[$i] = Brak::findOne($ids[$i]);
+            }else{
+                $brak[$i] = new Brak();
+            }
         }
         $uploadForm = new UploadForm();
 

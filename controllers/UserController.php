@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\ClientTicketSearch;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -16,7 +18,7 @@ class UserController extends Controller
 {
 
 
-    public $layout = '/user';
+    public $layout = '/admin';
 
     /**
      * {@inheritdoc}
@@ -56,8 +58,13 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new ClientTicketSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

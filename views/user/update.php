@@ -150,17 +150,19 @@ $this->params['breadcrumbs'][] = 'Update';*/
 									<div class="col-xl-4">
 										<div class="submit-field">
 											<h5>Attachments</h5>
+                                            echo '<a href="/upload/45/pdf/property.pdf">Скачать</a>';
 											
 											<!-- Attachments -->
 											<div class="attachments-container margin-top-0 margin-bottom-0">
+
 												<div class="attachment-box ripple-effect">
-													<span>Cover Letter</span>
+													<span>bankrot_blank</span>
 													<i>PDF</i>
-													<button class="remove-attachment" data-tippy-placement="top" title="Remove"></button>
+<!--													<button class="remove-attachment" data-tippy-placement="top" title="Remove"></button>-->
 												</div>
 												<div class="attachment-box ripple-effect">
 													<span>Contract</span>
-													<i>DOCX</i>
+													<i>PDF</i>
 													<button class="remove-attachment" data-tippy-placement="top" title="Remove"></button>
 												</div>
 											</div>
@@ -347,36 +349,6 @@ $this->params['breadcrumbs'][] = 'Update';*/
 			</div>
 			<!-- Row / End -->
 
-			<!-- Footer -->
-			<div class="dashboard-footer-spacer"></div>
-			<div class="small-footer margin-top-15">
-				<div class="small-footer-copyrights">
-					© 2018 <strong>Hireo</strong>. All Rights Reserved.
-				</div>
-				<ul class="footer-social-links">
-					<li>
-						<a href="#" title="Facebook" data-tippy-placement="top">
-							<i class="icon-brand-facebook-f"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="Twitter" data-tippy-placement="top">
-							<i class="icon-brand-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="Google Plus" data-tippy-placement="top">
-							<i class="icon-brand-google-plus-g"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="LinkedIn" data-tippy-placement="top">
-							<i class="icon-brand-linkedin-in"></i>
-						</a>
-					</li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<!-- Footer / End -->
+
 
 		</div>

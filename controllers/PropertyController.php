@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\Property;
@@ -134,17 +136,31 @@ class PropertyController extends Controller
      */
     public function actionAddNewProperty(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
-                'fieldConfig' => [
-                    'options' => [
-                        'class' => 'form-group row'
-                    ]]]);
+                                'id' => 'property',
+                                'action' => '/property/save-model',
+                                'enableClientValidation' => true,
+                                'enableAjaxValidation' => true,
+                                'options' => ['enctype' => 'multipart/form-data'],
+                                'fieldConfig' => [
+                                    'options' => [
+                                        'class' => 'form-group row'
+                                    ]]]);
             $property = new Property();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_property', ['form' => $form, 'property' => $property, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_property', ['form' => $form, 'property' => $property, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
+    }
 
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Property::saveProperty($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

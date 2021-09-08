@@ -176,3 +176,8 @@ a.desc:after {
     .del_icon:hover {
         cursor: pointer;
     }
+
+    .select_list{
+        padding: 1px!important;
+        padding-left: 20px!important;
+    }

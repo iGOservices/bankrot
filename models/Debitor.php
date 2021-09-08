@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "debitor".
@@ -60,6 +61,12 @@ class Debitor extends \yii\db\ActiveRecord
         '7' => 'Справка',
     ];
 
+    public static $commitment = [
+        '1' => 'Заем',
+        '2' => 'Аренда',
+        '3' => 'Алименты',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -75,8 +82,8 @@ class Debitor extends \yii\db\ActiveRecord
     {
         return [
             [['ticket_id',], 'required'],
-            [['ticket_id', 'group', 'commitment', 'is_predprin', 'statment', 'house', 'corpus', 'flat', 'post_index', 'sum_statment', 'sum_dolg', 'base', 'base_num', 'created_at', 'updated_at'], 'integer'],
-            [['base_date'], 'safe'],
+            [['ticket_id', 'group', 'is_predprin', 'statment', 'house', 'corpus', 'flat', 'post_index', 'sum_statment', 'sum_dolg', 'base', 'base_num', 'created_at', 'updated_at'], 'integer'],
+            [['base_date', 'commitment'], 'safe'],
             [['name', 'coutry', 'region', 'district', 'city', 'street', 'forfeit'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 12],
             [['other'], 'string', 'max' => 1000],
@@ -125,13 +132,21 @@ class Debitor extends \yii\db\ActiveRecord
         ];
     }
 
+
     public static function saveDebitor($ticket_id){
+        $ids = ArrayHelper::getColumn(Debitor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Debitor');
         $count = $data ? count($data) : 0;
         $debitors = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $debitors[$i] = new Debitor();
+
+            if(isset($ids[$i])){
+                $debitors[$i] = Debitor::findOne($ids[$i]);
+            }else{
+                $debitors[$i] = new Debitor();
+            }
         }
         $uploadForm = new UploadForm();
 
@@ -149,4 +164,5 @@ class Debitor extends \yii\db\ActiveRecord
         }
         return $result;
     }
+
 }

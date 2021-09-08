@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\ValuableProperty;
@@ -134,8 +136,14 @@ class ValuablePropertyController extends Controller
      */
     public function actionAddNewValuableProperty(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'valuable_property',
+                'action' => '/valuable-property/save-model',
+                'enableClientValidation' => true,
+                'enableAjaxValidation' => true,
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -143,8 +151,16 @@ class ValuablePropertyController extends Controller
             $property = new ValuableProperty();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_valuable_property', ['form' => $form, 'valuable_property' => $property, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_valuable_property', ['form' => $form, 'valuable_property' => $property, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
+    }
 
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = ValuableProperty::saveValuableProperty($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

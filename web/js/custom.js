@@ -1074,21 +1074,25 @@ $(document).ready(function(){
     /*  Custom Upload Button
     /*----------------------------------------------------*/
 
-	var uploadButton = {
+	let uploadButton = {
 		$button    : $('.uploadButton-input'),
 		$nameField : $('.uploadButton-file-name')
 	};
 
-	uploadButton.$button.on('change',function() {
-		_populateFileField($(this));
+	$(document).on('change','.uploadButton-input',function() {
+		let id = $(this).attr('id');
+
+		_populateFileField($(this),id);
+
 	});
 
-	function _populateFileField($button) {
-		var selectedFile = [];
-	    for (var i = 0; i < $button.get(0).files.length; ++i) {
+	function _populateFileField($button,id) {
+		let selectedFile = [];
+	    for (let i = 0; i < $button.get(0).files.length; ++i) {
 	        selectedFile.push($button.get(0).files[i].name +'<br>');
 	    }
-	    uploadButton.$nameField.html(selectedFile);
+		$('.'+id).html(selectedFile);
+	    //uploadButton.$nameField.html(selectedFile);
 	}
 
 

@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use app\models\Brak;
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\Razvod;
 use app\models\UploadForm;
 use Yii;
 use app\models\Family;
 use app\models\FamilySearch;
 use yii\base\BaseObject;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -157,8 +160,12 @@ class FamilyController extends Controller
      */
     public function actionAddNewFamily(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'id' => 'family',
+                'action' => '/family/save-model',
+                'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'
@@ -166,8 +173,26 @@ class FamilyController extends Controller
             $family = new Family();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_family', ['form' => $form, 'family' => $family,'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_family', ['form' => $form, 'family' => $family,'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
+    }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Family::saveFamily($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
+    }
+
+    public function actionSaveModelSp(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Family::saveSp($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

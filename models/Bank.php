@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "bank".
@@ -91,17 +92,26 @@ class Bank extends \yii\db\ActiveRecord
         ];
     }
 
+
     public static function saveBank($ticket_id){
+        $ids = ArrayHelper::getColumn(Bank::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Bank');
         $count = $data ? count($data) : 0;
         $banks = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $banks[$i] = new Bank();
+
+            if(isset($ids[$i])){
+                $banks[$i] = Bank::findOne($ids[$i]);
+            }else{
+                $banks[$i] = new Bank();
+            }
         }
         $uploadForm = new UploadForm();
 
         $result = true;
+
 
         foreach ($banks as $i => $bank) {
             $bank->ticket_id = $ticket_id;

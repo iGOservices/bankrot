@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\OtherShares;
@@ -134,17 +136,32 @@ class OtherSharesController extends Controller
      */
     public function actionAddNewOtherShares(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
-            $form = ActiveForm::begin([
-                'fieldConfig' => [
-                    'options' => [
-                        'class' => 'form-group row'
-                    ]]]);
+           $form = ActiveForm::begin([
+                            'id' => 'other_shares',
+                            'action' => '/other-shares/save-model',
+                            'enableClientValidation' => true,
+                            'enableAjaxValidation' => true,
+                            'options' => ['enctype' => 'multipart/form-data'],
+                            'fieldConfig' => [
+                                'options' => [
+                                    'class' => 'form-group row'
+                                ]]]);
             $shares = new OtherShares();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_other_shares', ['form' => $form, 'other_shares' => $shares, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_other_shares', ['form' => $form, 'other_shares' => $shares, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
+    }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = OtherShares::saveOtherShares($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
     }
 }

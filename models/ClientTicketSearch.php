@@ -38,9 +38,11 @@ class ClientTicketSearch extends ClientTicket
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$user_id = null)
     {
         $query = ClientTicket::find();
+        if($user_id)
+            $query->andWhere(['user_id' => $user_id]);
 
         // add conditions that should always apply here
 
@@ -75,7 +77,7 @@ class ClientTicketSearch extends ClientTicket
             ->andFilterWhere(['like', 'birth_place', $this->birth_place])
             ->andFilterWhere(['like', 'inn', $this->inn])
             ->andFilterWhere(['like', 'snils', $this->snils])
-            ->andFilterWhere(['like', 'registr_address', $this->registr_address])
+
             ->andFilterWhere(['like', 'fact_address', $this->fact_address])
             ->andFilterWhere(['like', 'mail', $this->mail])
             ->andFilterWhere(['like', 'changed_fio', $this->changed_fio]);

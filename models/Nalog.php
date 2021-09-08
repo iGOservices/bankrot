@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "nalog".
@@ -66,12 +67,19 @@ class Nalog extends \yii\db\ActiveRecord
     }
 
     public static function saveNalog($ticket_id){
+        $ids = ArrayHelper::getColumn(Nalog::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
         $data = Yii::$app->request->post('Nalog');
         $count = $data ? count($data) : 0;
         $nalog = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $nalog[$i] = new Nalog();
+
+            if(isset($ids[$i])){
+                $nalog[$i] = Nalog::findOne($ids[$i]);
+            }else{
+                $nalog[$i] = new Nalog();
+            }
         }
         $uploadForm = new UploadForm();
 

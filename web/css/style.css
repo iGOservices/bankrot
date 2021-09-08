@@ -184,7 +184,7 @@ input[type="email"].with-border,
 input[type="number"].with-border,
 textarea.with-border,
 select.with-border {
-	padding:1px;
+	padding:20px;
 	border: 1px solid #e0e0e0;
 	box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05);
 }
@@ -547,7 +547,7 @@ header.fullwidth .container {
 	border-bottom: 1px solid #e6e6e6;
 }
 
-.header-notifications-headline h4,
+.header-notifications-headline h5,
 .header-notifications-headline span {
 	display: inline-block;
 }
@@ -3451,14 +3451,14 @@ blockquote {
 /* Comments */
 .comments { margin: -10px 0 0 0; }
 
-.comments h4 {
+.comments h5 {
 	margin-bottom: 25px;
 	font-size: 20px;
 	font-weight: 500;
 	color: #333;
 }
 
-.comments h4 span { display: inline-block; font-size: inherit; }
+.comments h5 span { display: inline-block; font-size: inherit; }
 
 .comment { font-size: 20px; }
 
@@ -4521,7 +4521,7 @@ span.blog-item-tag {
 	color: #666;
 }
 
-.job-listing h4.job-listing-company {
+.job-listing h5.job-listing-company {
 	font-size: 16px;
 	color: #808080;
 }
@@ -5214,8 +5214,8 @@ span.blog-item-tag {
 	margin-bottom: -10px;
 }
 
-.freelancer-name h4,
-.freelancer-name h4 a {
+.freelancer-name h5,
+.freelancer-name h5 a {
 	font-size: 18px;
 	font-weight: 600;
 	color: #333;
@@ -5603,7 +5603,7 @@ span.blog-item-tag {
 	margin-bottom: 30px;
 }
 
-.companies-list .company h4 {
+.companies-list .company h5 {
 	color: #333;
 	font-size: 18px;
 	font-weight: 600;
@@ -6176,8 +6176,8 @@ mark.color {
 	color: #8f872e;
 }
 
-.notification.notice h4 { font-size: 19px; margin: 3px 0 15px 0; }
-.notification.notice h4,
+.notification.notice h5 { font-size: 19px; margin: 3px 0 15px 0; }
+.notification.notice h5,
 .notification.notice,
 .notification.notice a,
 .notification.notice strong {
@@ -7515,7 +7515,7 @@ input:checked + .switch-button:before {
 .banner-headline h1,
 .banner-headline h2,
 .banner-headline h3,
-.banner-headline h4 {
+.banner-headline h5 {
 	font-size: 28px;
 	font-weight: 300;
 	color: #777;
@@ -7774,7 +7774,7 @@ input:checked + .switch-button:before {
 .intro-banner.dark-overlay .banner-headline h1,
 .intro-banner.dark-overlay .banner-headline h2,
 .intro-banner.dark-overlay .banner-headline h3,
-.intro-banner.dark-overlay .banner-headline h4 {
+.intro-banner.dark-overlay .banner-headline h5 {
 	color: rgba(255,255,255,0.7);
 }
 
@@ -7791,7 +7791,7 @@ input:checked + .switch-button:before {
 	.banner-headline h1,
 	.banner-headline h2,
 	.banner-headline h3,
-	.banner-headline h4 {
+	.banner-headline h5 {
 	    font-size: 26px;
 	    line-height: 42px;
 	}
@@ -7811,7 +7811,7 @@ input:checked + .switch-button:before {
 	.banner-headline h1,
 	.banner-headline h2,
 	.banner-headline h3,
-	.banner-headline h4 {
+	.banner-headline h5 {
 	    font-size: 24px;
 	    line-height: 38px;
 	}
@@ -8761,7 +8761,7 @@ transform: translateY(-18px);
 	font-weight: 500;
 }
 
-.icon-box h4 {
+.icon-box h5 {
 	margin: 4px 0;
 	line-height: 26px;
 }
@@ -8891,7 +8891,7 @@ transform: translateY(-18px);
 	margin: 0 auto;
 }
 
-.testimonial-author h4 {
+.testimonial-author h5 {
 	display: block;
 	width: 100%;
 	font-size: 18px;
@@ -9054,12 +9054,12 @@ transform: translateY(-18px);
 .text-content h1,
 .text-content h2,
 .text-content h3,
-.text-content h4,
+.text-content h5,
 .text-content h5,
 .text-content.white-font h1,
 .text-content.white-font h2,
 .text-content.white-font h3,
-.text-content.white-font h4,
+.text-content.white-font h5,
 .text-content.white-font h5 {
 	color: #fff;
 }
@@ -12052,7 +12052,7 @@ body .pac-container {
     padding: 20px 25px;
 }
 
-.infoBox .job-listing h4.job-listing-company {
+.infoBox .job-listing h5.job-listing-company {
 	font-size: 14px;
 	position: relative;
 	top: 0px;
@@ -12104,12 +12104,12 @@ body .pac-container {
     border-radius: 4px 4px 0 0;
 }
 
-.map-box h4 {
+.map-box h5 {
 	margin: 0;
 	padding: 0;
 }
 
-.map-box h4 a {
+.map-box h5 a {
 	padding: 0 0 2px 0;
 	font-size: 17px;
 	line-height: 25px;
@@ -12127,7 +12127,7 @@ body .pac-container {
 	display: block;
 }
 
-.map-box h4 a:hover { color: #66676b; }
+.map-box h5 a:hover { color: #66676b; }
 
 .map-box p {
 	padding: 0;
@@ -12604,14 +12604,14 @@ body .pac-container {
 	align-self: center;
 }
 
-.boxed-list-item .item-content h4 a,
-.boxed-list-item .item-content h4 {
+.boxed-list-item .item-content h5 a,
+.boxed-list-item .item-content h5 {
 	font-size: 18px;
 	font-weight: 600;
 	color: #333;
 }
 
-.boxed-list-item .item-content h4 span {
+.boxed-list-item .item-content h5 span {
 	font-size: 16px;
 	color: #808080;
 	display: block;
@@ -12877,6 +12877,7 @@ a.apply-now-button i {
 }
 
 .attachment-box {
+	max-width: 100px;
 	display: flex;
 	margin: 0 20px 20px 0;
 	background-color: #f4f4f4;
@@ -12898,7 +12899,7 @@ a.apply-now-button i {
 .single-page-section .attachment-box { flex: 0 1 calc(33% - 20px); }
 .single-page-section .attachments-container { margin-bottom: -20px; }
 
-a.attachment-box { cursor: pointer; }
+.attachment-box { cursor: pointer; }
 
 .attachment-box:before {
 	content: "";
@@ -13422,7 +13423,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	line-height: 22px;
 }
 
-.fun-fact h4 {
+.fun-fact h5 {
 	font-size: 38px;
 	color: #333;
 	line-height: 38px;
@@ -14418,7 +14419,7 @@ ul.dashboard-box-list > li:hover {
 	right: 14px;
 }
 
-.messages-headline h4 {
+.messages-headline h5 {
 	font-size: 16px;
 	color: #333;
 	padding: 6px 0;
@@ -14854,12 +14855,12 @@ ul.dashboard-box-list > li:hover {
 	body p { font-size: 16px; line-height: 27px; }
 
 	/* Main Font */
-	body, h1, h2, h3, h4, h5, h6,  input[type="text"], input[type="password"], input[type="email"],
+	body, h1, h2, h3, h5, h5, h6,  input[type="text"], input[type="password"], input[type="email"],
 	textarea, select, input[type="button"], input[type="submit"], button, body .pac-container
 	{ font-family: "Nunito", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; text-transform: none; }
 
 	/* Headlines */
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h5, h5, h6 {
 		color: #333;
 		font-weight: 500;
 		margin: 0;
@@ -14869,7 +14870,7 @@ ul.dashboard-box-list > li:hover {
 	h1 { font-size: 32px; }
 	h2 { font-size: 26px; }
 	h3 { font-size: 22px; }
-	h4 { font-size: 16px; }
+	h5 { font-size: 16px; }
 	h5 { font-size: 14px; }
 	h6 { font-size: 12px; }
 
@@ -14905,14 +14906,14 @@ ul.dashboard-box-list > li:hover {
 	.section-headline h1,
 	.section-headline h2,
 	.section-headline h3,
-	.section-headline h4 {
+	.section-headline h5 {
 		font-size: 26px;
 		line-height: 36px;
 		font-weight: 500;
 		color: #333;
 	}
 
-	.section-headline h4 {
+	.section-headline h5 {
 		font-size: 22px;
 		line-height: 34px;
 	}

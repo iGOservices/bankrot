@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Passport;
+use app\models\Upload;
+use app\models\UploadForm;
 use Yii;
 use app\models\ClientTicket;
 use app\models\ClientTicketSearch;
+use yii\base\BaseObject;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +18,8 @@ use yii\filters\VerbFilter;
  */
 class ClientTicketController extends Controller
 {
+
+    public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -35,6 +41,7 @@ class ClientTicketController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new ClientTicketSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -52,8 +59,13 @@ class ClientTicketController extends Controller
      */
     public function actionView($id)
     {
+        $upload = Upload::find()->where(['model_id' => $id])->all();
+        //echo"<pre>";print_r($upload);die();
+        $passport = Passport::find()->where(['ticket_id' => $id])->one();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'passport' => $passport,
+            'upload' => $upload,
         ]);
     }
 
@@ -82,16 +94,34 @@ class ClientTicketController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$ticket_status_id = null)
     {
         $model = $this->findModel($id);
+        $uploadForm = new UploadForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->phone = preg_replace('~\D+~', '', $model->phone);
+            $model->snils = preg_replace('/[^0-9]/', '', $model->snils);
+            if($model->save()){
+                $uploadForm->save("main_info",'inn',$model->id);
+                $uploadForm->save("main_info",'snils',$model->id);
+                $uploadForm->save("main_info",'changed_fio',$model->id);
+                $uploadForm->save("main_info",'is_ip',$model->id);
+                $uploadForm->save("main_info",'facsimile',$model->id);
+                $uploadForm->save("main_info",'trud_book',$model->id);
+                $uploadForm->save("main_info",'is_work',$model->id);
+                if($ticket_status_id){
+                    return $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+                }else{
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', [
+            'uploadForm' => $uploadForm,
             'model' => $model,
+            'ticket_status_id' => $ticket_status_id,
         ]);
     }
 

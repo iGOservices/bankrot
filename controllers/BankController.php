@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\Directory;
 use app\models\UploadForm;
 use Yii;
 use app\models\Bank;
@@ -134,6 +136,7 @@ class BankController extends Controller
      */
     public function actionAddNewBank(){
         {
+            $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
                 'fieldConfig' => [
@@ -143,8 +146,18 @@ class BankController extends Controller
             $bank = new Bank();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_bank', ['form' => $form, 'bank' => $bank, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_bank', ['form' => $form, 'bank' => $bank, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
     }
+
+    public function actionSaveModel(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $data = Bank::saveBank($ticket_id);
+        $result =  [
+            'success' => $data,
+        ];
+        return json_encode($result);
+    }
+
 }

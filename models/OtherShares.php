@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\BaseObject;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "other_shares".
@@ -73,12 +74,20 @@ class OtherShares extends \yii\db\ActiveRecord
     }
 
     public static function saveOtherShares($ticket_id){
+        $ids = ArrayHelper::getColumn(OtherShares::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+
+
         $data = Yii::$app->request->post('OtherShares');
         $count = $data ? count($data) : 0;
         $other_shares = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $other_shares[$i] = new OtherShares();
+
+            if(isset($ids[$i])){
+                $other_shares[$i] = OtherShares::findOne($ids[$i]);
+            }else{
+                $other_shares[$i] = new OtherShares();
+            }
         }
         $uploadForm = new UploadForm();
 
