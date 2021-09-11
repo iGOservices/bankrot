@@ -15,16 +15,16 @@ class Pdf extends \yii\db\ActiveRecord
      * @throws \Mpdf\MpdfException
      */
     public static function createEmptyPdfFile($id, $file){
-        $dir = 'upload/'. $id . '/pdf/';
+        $dir = 'upload/'. $id . '/user_docs/';
         if(!is_dir($dir))
             mkdir($dir, 0777, true);
-        file_put_contents($dir. $file .'.pdf', '');
+        file_put_contents($dir. $file .'.user_docs', '');
 
         return $dir. $file .'.pdf';
     }
 
 
-    public function createPropertyPdf($id) {
+    public static function createPropertyPdf($id) {
 
         $client_ticket = ClientTicket::findOne($id);
         $passport = $client_ticket->passportByTicket;
@@ -44,12 +44,26 @@ class Pdf extends \yii\db\ActiveRecord
             'other_shares' => $other_shares,
             'valuable_property' => $valuable_property,
         ]);
+
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'property'])->one();
+        if(!$upload)
+            $upload = new Upload();
+
+        $upload->model = "user_docs";
+        $upload->model_id = $id;
+        $upload->origin = "Опись имущества гражданина";
+        $upload->name = "property";
+        $upload->folder = "user_docs";
+        $upload->ext = "pdf";
+        $upload->user_id = Yii::$app->user->id;
+        $upload->created_at = time();
+        $upload->save();
+
+
         $mpdf = new mPDF;
         $mpdf->WriteHTML($html);
         //$mpdf->Output();
         $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
-       
-
     }
 
     public function createBankrotBlank($id) {
@@ -64,12 +78,24 @@ class Pdf extends \yii\db\ActiveRecord
             'creditor' => $creditor,
 
         ]);
+
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'bankrot_blank'])->one();
+        if(!$upload)
+            $upload = new Upload();
+        $upload->model = "user_docs";
+        $upload->model_id = $id;
+        $upload->origin = "Заявление о признании гражданина банкротом";
+        $upload->name = "bankrot_blank";
+        $upload->folder = "user_docs";
+        $upload->ext = "pdf";
+        $upload->user_id = Yii::$app->user->id;
+        $upload->created_at = time();
+        $upload->save();
+
         $mpdf = new mPDF;
         $mpdf->WriteHTML($html);
         //$mpdf->Output();
         $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
-
-
     }
 
     public function createCreditorPdf($id) {
@@ -85,12 +111,24 @@ class Pdf extends \yii\db\ActiveRecord
             'creditor' => $creditor,
             'debitor' => $debitor,
         ]);
+
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'creditor'])->one();
+        if(!$upload)
+            $upload = new Upload();
+        $upload->model = "user_docs";
+        $upload->model_id = $id;
+        $upload->origin = "Список кредиторов и должников гражданина";
+        $upload->name = "creditor";
+        $upload->folder = "user_docs";
+        $upload->ext = "pdf";
+        $upload->user_id = Yii::$app->user->id;
+        $upload->created_at = time();
+        $upload->save();
+
         $mpdf = new mPDF;
         $mpdf->WriteHTML($html);
         //$mpdf->Output();
         $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
-
-
     }
 
 

@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
  */
 class EnforceProcController extends Controller
 {
+    public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -87,16 +88,21 @@ class EnforceProcController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $ticket_status_id = null)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if($ticket_status_id){
+                return $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+            }else{
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'ticket_status_id' => $ticket_status_id,
         ]);
     }
 

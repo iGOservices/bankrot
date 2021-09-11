@@ -61,7 +61,7 @@ class Family extends \yii\db\ActiveRecord
             [['ticket_id','name'], 'required'],
             [['ticket_id', 'type', 'birth_country', 'created_at', 'updated_at'], 'integer'],
             [['birthday', 'birth_date', 'birth_number_act_date'], 'safe'],
-            [['name',  'patronymic'], 'string', 'max' => 50],
+            [['name', 'surname', 'patronymic'], 'string', 'max' => 50],
             [['inn'], 'string', 'max' => 12],
             [['birth_series'], 'string', 'max' => 10],
             [['birth_number'], 'string', 'max' => 20],
@@ -77,19 +77,19 @@ class Family extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'type' => 'Type',
-            'name' => 'Name',
-            'surname' => 'Surname',
-            'patronymic' => 'Patronymic',
-            'birthday' => 'Birthday',
-            'inn' => 'Inn',
-            'birth_country' => 'Birth Country',
-            'birth_series' => 'Birth Series',
-            'birth_number' => 'Birth Number',
-            'birth_date' => 'Birth Date',
-            'birth_number_act' => 'Birth Number Act',
-            'birth_number_act_date' => 'Birth Number Act Date',
-            'given' => 'Given',
+            'type' => 'Тип родства',
+            'name' => 'Имя',
+            'surname' => 'Фамилия',
+            'patronymic' => 'Отчество',
+            'birthday' => 'Дата рождения',
+            'inn' => 'ИНН',
+            'birth_country' => 'Страна выдачи',
+            'birth_series' => 'Серия',
+            'birth_number' => 'Номер',
+            'birth_date' => 'Дата выдачи свидетельства',
+            'birth_number_act' => 'Номер актовой записи',
+            'birth_number_act_date' => 'Дата актовой записи',
+            'given' => 'Кем выдан',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -102,103 +102,174 @@ class Family extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function saveFamily($ticket_id){
+    public function getBirthFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%birth%',false]);
+    }
 
-        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+    public static function saveFamily($ticket_id){
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Family');
-        $count = $data ? count($data) : 0;
-        $family = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            if(isset($ids[$i])){
-                $family[$i] = Family::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $family = Family::findOne($item['id']);
             }else{
-                $family[$i] = new Family();
+                $family = new Family();
+                $family->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
 
-        $result = true;
-
-        foreach ($family as $i => $member) {
-            $member->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $member->load($data[$i], '')) {
-                if(!$member->save()){
-                    $result = false;
+            if($family->load($item, '')){
+                if($family->save()){
+                    $uploadForm->save("family","[$key]birth",$family->id,$ticket_id);
                 }else{
-                    $uploadForm->save("family","[$i]birth",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
+        //echo"<pre>";print_r($data);die();
+//        $count = $data ? count($data) : 0;
+//        $family = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//            if(isset($ids[$i])){
+//                $family[$i] = Family::findOne($ids[$i]);
+//            }else{
+//                $family[$i] = new Family();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($family as $i => $member) {
+//            $member->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $member->load($data[$i], '')) {
+//                if(!$member->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("family","[$i]birth",$member->id,$ticket_id);
+//                }
+//            }
+//        }
 
         return $result;
     }
 
     public static function saveSp($ticket_id){
 
-        $ids = ArrayHelper::getColumn(Razvod::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
-
-        $data = Yii::$app->request->post('Razvod');
-        $count = $data ? count($data) : 0;
-        $razvod = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $razvod[$i] = Razvod::findOne($ids[$i]);
-            }else{
-                $razvod[$i] = new Razvod();
-            }
-        }
         $uploadForm = new UploadForm();
-
         $result = true;
 
-        foreach ($razvod as $i => $let) {
-            $let->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $let->load($data[$i], '')) {
-                if(!$let->save()){
-                    $result = false;
+        $data = Yii::$app->request->post('Razvod');
+
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $razvod = Razvod::findOne($item['id']);
+            }else{
+                $razvod = new Razvod();
+                $razvod->ticket_id = $ticket_id;
+            }
+
+            if($razvod->load($item, '')){
+                if($razvod->save()){
+                    $uploadForm->save("sp","[$key]razvod",$razvod->id,$ticket_id);
+                    $uploadForm->save("sp","[$key]property_division",$razvod->id,$ticket_id);
                 }else{
-                    $uploadForm->save("sp","[$i]razvod",$ticket_id);
-                    $uploadForm->save("sp","[$i]brak_dogovor",$ticket_id);
-                    $uploadForm->save("sp","[$i]property_division",$ticket_id);
+                    $result = false;
                 }
             }
         }
+//
+//        $ids = ArrayHelper::getColumn(Razvod::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Razvod');
+//        $count = $data ? count($data) : 0;
+//        $razvod = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $razvod[$i] = Razvod::findOne($ids[$i]);
+//            }else{
+//                $razvod[$i] = new Razvod();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($razvod as $i => $let) {
+//            $let->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $let->load($data[$i], '')) {
+//                if(!$let->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("sp","[$i]razvod",$ticket_id);
+//                    $uploadForm->save("sp","[$i]brak_dogovor",$ticket_id);
+//                    $uploadForm->save("sp","[$i]property_division",$ticket_id);
+//                }
+//            }
+//        }
 
         if(!$result) return false;
 
-        $ids = ArrayHelper::getColumn(Brak::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
-
-
         $data = Yii::$app->request->post('Brak');
-        $count = $data ? count($data) : 0;
-        $brak = [];
 
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $brak[$i] = Brak::findOne($ids[$i]);
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $brak = Brak::findOne($item['id']);
             }else{
-                $brak[$i] = new Brak();
+                $brak = new Brak();
+                $brak->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
 
-        $result = true;
-
-        foreach ($brak as $i => $let) {
-            $let->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $let->load($data[$i], '')) {
-                if(!$let->save()){
-                    $result = false;
+            if($brak->load($item, '')){
+                if($brak->save()){
+                    $uploadForm->save("sp","[$key]brak",$brak->id,$ticket_id);
+                    $uploadForm->save("sp","[$key]brak_dogovor",$brak->id,$ticket_id);
                 }else{
-                    $uploadForm->save("sp","[$i]brak",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
+
+
+//
+//        $ids = ArrayHelper::getColumn(Brak::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//
+//        $data = Yii::$app->request->post('Brak');
+//        $count = $data ? count($data) : 0;
+//        $brak = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $brak[$i] = Brak::findOne($ids[$i]);
+//            }else{
+//                $brak[$i] = new Brak();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($brak as $i => $let) {
+//            $let->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $let->load($data[$i], '')) {
+//                if(!$let->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("sp","[$i]brak",$ticket_id);
+//                }
+//            }
+//        }
 
         return $result;
 

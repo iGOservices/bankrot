@@ -50,9 +50,9 @@ class EnforceProc extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'number' => 'Number',
-            'date' => 'Date',
-            'sum' => 'Sum',
+            'number' => 'Номер исполнительного производства',
+            'date' => 'Дата исполнительного производства',
+            'sum' => 'Сумма непогашенной задолженности',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -66,27 +66,52 @@ class EnforceProc extends \yii\db\ActiveRecord
     }
 
     public static function saveEnforceProc($ticket_id){
-        $ids = ArrayHelper::getColumn(EnforceProc::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(EnforceProc::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('EnforceProc');
+//        $count = $data ? count($data) : 0;
+//        $enforce = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $enforce[$i] = EnforceProc::findOne($ids[$i]);
+//            }else{
+//                $enforce[$i] = new EnforceProc();
+//            }
+//        }
+//
+//        $result = true;
+//
+//        foreach ($enforce as $i => $let) {
+//            $let->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $let->load($data[$i], '')) {
+//                if(!$let->save()){
+//                    $result = false;
+//                }
+//            }
+//        }
+//
+//        return $result;
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('EnforceProc');
-        $count = $data ? count($data) : 0;
-        $enforce = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $enforce[$i] = EnforceProc::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $enforce = EnforceProc::findOne($item['id']);
             }else{
-                $enforce[$i] = new EnforceProc();
+                $enforce = new EnforceProc();
+                $enforce->ticket_id = $ticket_id;
             }
-        }
 
-        $result = true;
+            if($enforce->load($item, '')){
+                if($enforce->save()){
 
-        foreach ($enforce as $i => $let) {
-            $let->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $let->load($data[$i], '')) {
-                if(!$let->save()){
+                }else{
                     $result = false;
                 }
             }

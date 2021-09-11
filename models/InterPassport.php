@@ -65,4 +65,11 @@ class InterPassport extends \yii\db\ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+
+
+    public function getInterPassportFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'inter_passport']);
+    }
 }

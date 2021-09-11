@@ -122,6 +122,12 @@ class ClientTicket extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getUserDocs()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'user_docs']);
+    }
+
     public function getTicketStatus()
     {
         return $this->hasOne(TicketStatus::className(), ['ticket_id' => 'id']);
@@ -163,18 +169,6 @@ class ClientTicket extends \yii\db\ActiveRecord
             ->where(['model' => 'is_ip']);
     }
 
-    public function getPassportFile()
-    {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => 'passport']);
-    }
-
-    public function getInterPassportFile()
-    {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => 'inter_passport']);
-    }
-
     public function getChangedFioFile()
     {
         return $this->hasMany(Upload::className(), ['model_id' => 'id'])
@@ -199,10 +193,9 @@ class ClientTicket extends \yii\db\ActiveRecord
             ->where(['model' => 'inn']);
     }
 
-    public function getUploadedFiles($model)
+    public function getUploadedFiles()
     {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => $model]);
+        return $this->hasMany(Upload::className(), ['model_id' => 'id']);
     }
 
     public function getPassportByTicket()

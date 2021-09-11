@@ -4,11 +4,19 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Property */
+/* @var $ticket_status_id app\models\TicketStatus */
+/* @var $uploadForm app\models\UploadForm */
 
-$this->title = 'Update Property: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Properties', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование информации о имуществе';
+
+if($ticket_status_id){
+    $this->params['breadcrumbs'][] = ['label' => 'Детали услуги №'.$model->ticket_id, 'url' => ['ticket-status/view', 'id' => $ticket_status_id]];
+    $this->params['breadcrumbs'][] = $this->title;
+}else{
+    $this->params['breadcrumbs'][] = ['label' => 'Properties', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+    $this->params['breadcrumbs'][] = $this->title;
+}
 ?>
 <div class="property-update">
 
@@ -16,6 +24,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'uploadForm' => $uploadForm,
     ]) ?>
 
 </div>

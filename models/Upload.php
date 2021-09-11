@@ -145,9 +145,9 @@ class Upload extends \yii\db\ActiveRecord
         return self::saveFile($model, $model_id, $file);
     }
 
-    public function getLink($absolute = true, $model)
+    public function getLink($absolute = true, $model, $ticketId = null)
     {
-        return ($absolute ? '/' : '') . $this->tableName() .'/'. $this->model_id .'/'. $model .'/'. $this->name . '.' . $this->ext;
+        return ($absolute ? '/' : '') . $this->tableName() .'/'. $ticketId .'/'. $model .'/'. $this->name . '.' . $this->ext;
     }
 
     public function getThumbnail($absolute = true,$model)

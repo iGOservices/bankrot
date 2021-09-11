@@ -67,7 +67,7 @@ use yii\widgets\MaskedInput;
                                     <span>Загруженные файлы</span>
                                     <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -158,7 +158,7 @@ use yii\widgets\MaskedInput;
                                         <span>Загруженные файлы</span>
                                         <?foreach ($files as $file):?>
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -201,7 +201,7 @@ use yii\widgets\MaskedInput;
                                         <span>Загруженные файлы</span>
                                         <?foreach ($files as $file):?>
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -234,7 +234,7 @@ use yii\widgets\MaskedInput;
                                         <span>Загруженные файлы</span>
                                         <?foreach ($files as $file):?>
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -271,7 +271,7 @@ use yii\widgets\MaskedInput;
                                         <span>Загруженные файлы</span>
                                         <?foreach ($files as $file):?>
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -388,7 +388,7 @@ use yii\widgets\MaskedInput;
                                         <span>Загруженные файлы</span>
                                         <?foreach ($files as $file):?>
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -400,10 +400,12 @@ use yii\widgets\MaskedInput;
                         </div>
 
                         <div class="col-xl-4">
+                            <? if($directory['is_work'] == 1):?>
                             <div class="submit-field">
                                 <h5>Статус безработного</h5>
-                                <?= $form->field($model, 'is_ip')->dropDownList(ClientTicket::$is_work,[ 'class' => 'with-border select_list'])->label(false)  ?>
+                                <?= $form->field($model, 'is_work')->dropDownList(ClientTicket::$is_work,[ 'class' => 'with-border select_list'])->label(false)  ?>
                             </div>
+                            <?endif;?>
                         </div>
 
                         <div class="col-xl-4">
@@ -423,7 +425,7 @@ use yii\widgets\MaskedInput;
                                         <?foreach ($files as $file):?>
 
                                             <li id="<?=$file->id?>">
-                                                <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -516,14 +518,14 @@ use yii\widgets\MaskedInput;
                                                                 'template' => '<div class="uploadButton">{input}
                                                                 <label class="uploadButton-button ripple-effect" for="passport_upload">Загрузить файл</label>
                                                                 <span class="uploadButton-file-name passport_upload">Файл не выбран</span>
-                                                             </div>'])->fileInput(['multiple' => false, 'id' => 'passport_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
+                                                             </div>'])->fileInput(['multiple' => true, 'id' => 'passport_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                                            <? if($files = $model->passportFile): ?>
+                                                            <? if($files = $passport_model->passportFile): ?>
                                                             <ul style="list-style: none;">
                                                                 <span>Загруженные файлы</span>
                                                                 <?foreach ($files as $file):?>
                                                                     <li id="<?=$file->id?>">
-                                                                        <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                                        <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                         </a>
                                                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -626,14 +628,14 @@ use yii\widgets\MaskedInput;
                                                             'template' => '<div class="uploadButton">{input}
                                                                 <label class="uploadButton-button ripple-effect" for="inter_passport_upload">Загрузить файл</label>
                                                                 <span class="uploadButton-file-name inter_passport_upload">Файл не выбран</span>
-                                                             </div>'])->fileInput(['multiple' => false, 'id' => 'inter_passport_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
+                                                             </div>'])->fileInput(['multiple' => true, 'id' => 'inter_passport_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                                        <? if($files = $model->interPassportFile): ?>
+                                                        <? if($files = $inter_passport_model->interPassportFile): ?>
                                                             <ul style="list-style: none;">
                                                                 <span>Загруженные файлы</span>
                                                                 <?foreach ($files as $file):?>
                                                                     <li id="<?=$file->id?>">
-                                                                        <a href="<?= $file->getLink(true,'main_info') ?>" target="_blank">
+                                                                        <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                         </a>
                                                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>

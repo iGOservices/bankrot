@@ -113,7 +113,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'family',
                             'action' => '/family/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -161,7 +161,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'sp',
                             'action' => '/family/save-model-sp',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -215,7 +215,7 @@ use yii\widgets\ActiveForm;
                         'id' => 'creditor',
                         'action' => '/creditor/save-model',
                         'enableClientValidation' => true,
-                        'enableAjaxValidation' => true,
+                        'enableAjaxValidation' => false,
                         'options' => ['enctype' => 'multipart/form-data'],
                         'fieldConfig' => [
                             'options' => [
@@ -263,7 +263,7 @@ use yii\widgets\ActiveForm;
                           'id' => 'debitor',
                           'action' => '/debitor/save-model',
                           'enableClientValidation' => true,
-                          'enableAjaxValidation' => true,
+                          'enableAjaxValidation' => false,
                           'options' => ['enctype' => 'multipart/form-data'],
                           'fieldConfig' => [
                               'options' => [
@@ -309,7 +309,7 @@ use yii\widgets\ActiveForm;
                                 'id' => 'property',
                                 'action' => '/property/save-model',
                                 'enableClientValidation' => true,
-                                'enableAjaxValidation' => true,
+                                'enableAjaxValidation' => false,
                                 'options' => ['enctype' => 'multipart/form-data'],
                                 'fieldConfig' => [
                                     'options' => [
@@ -356,7 +356,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'bank',
                             'action' => '/bank/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -393,7 +393,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="shares-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_shares" class="button ripple-effect">
@@ -403,7 +403,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'shares',
                             'action' => '/shares/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -422,8 +422,10 @@ use yii\widgets\ActiveForm;
                                             'model' => $model,
                                         ]);?>
                                     <?$shares_i = $key+1?>
+
                                 <?endforeach;?>
                             <?endif;?>
+
                         </div>
                         <input id="shares-point" hidden value="<?=isset($shares_i) ? $shares_i : 0?>">
                         <!-- Accordion / End -->
@@ -441,7 +443,7 @@ use yii\widgets\ActiveForm;
 
 
                     <div class="tab">
-                        <input id="other_shares-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_other_shares" class="button ripple-effect">
@@ -451,7 +453,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'other_shares',
                             'action' => '/other-shares/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -487,7 +489,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="valuable-property-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_valuable-property" class="button ripple-effect">
@@ -497,7 +499,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'valuable_property',
                             'action' => '/valuable-property/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -533,7 +535,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="deal-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_deal" class="button ripple-effect">
@@ -543,7 +545,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'deal',
                             'action' => '/deal/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -580,7 +582,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="nalog-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_nalog" class="button ripple-effect">
@@ -590,7 +592,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'nalog',
                             'action' => '/nalog/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -626,7 +628,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="enforce-proc-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_enforce-proc" class="button ripple-effect">
@@ -636,7 +638,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'enforce_proc',
                             'action' => '/enforce-proc/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [
@@ -672,7 +674,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="tab">
-                        <input id="other-point" hidden value="0">
+
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_other" class="button ripple-effect">
@@ -682,7 +684,7 @@ use yii\widgets\ActiveForm;
                             'id' => 'other',
                             'action' => '/other/save-model',
                             'enableClientValidation' => true,
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'options' => ['enctype' => 'multipart/form-data'],
                             'fieldConfig' => [
                                 'options' => [

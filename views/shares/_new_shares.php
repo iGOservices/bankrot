@@ -26,6 +26,7 @@ use kartik\date\DatePicker;
 	<div class="accordion-body js-accordion-body">
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
+            <?= $form->field($shares,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
 
 
@@ -132,12 +133,12 @@ use kartik\date\DatePicker;
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => "shares_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]shares")->all()): ?>
+                        <? if(isset($model) && $files = $shares->getSharesFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'shares') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'shares',$shares->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='shares'?>');" ><span class="icon-feather-trash-2"></span></a>

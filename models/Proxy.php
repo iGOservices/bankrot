@@ -49,10 +49,10 @@ class Proxy extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'cpo_id' => 'Cpo ID',
-            'proxy_number' => 'Proxy Number',
-            'proxy_date_start' => 'Proxy Date Start',
-            'proxy_date_end' => 'Proxy Date End',
+            'cpo_id' => 'Поле выбора СРО',
+            'proxy_number' => 'Номер доверенности',
+            'proxy_date_start' => 'Дата выдачи доверенности',
+            'proxy_date_end' => 'Дата окончания доверенности',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -63,6 +63,21 @@ class Proxy extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getProxyFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%proxy',false]);
+    }
+
+    public function getProxyPublFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%proxy_publ%',false]);
+    }
+
+    public function getProxyDepFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%proxy_dep%',false]);
     }
 
     public static function saveProxy($ticket_id){
@@ -78,9 +93,9 @@ class Proxy extends \yii\db\ActiveRecord
         }
         $proxy->ticket_id = $ticket_id;
         if ($proxy->load(Yii::$app->request->post()) && $proxy->save()) {
-            $uploadForm->save("proxy","proxy",$ticket_id);
-            $uploadForm->save("proxy","proxy_publ",$ticket_id);
-            $uploadForm->save("proxy","proxy_dep",$ticket_id);
+            $uploadForm->save("proxy","proxy",$proxy->id,$ticket_id);
+            $uploadForm->save("proxy","proxy_publ",$proxy->id,$ticket_id);
+            $uploadForm->save("proxy","proxy_dep",$proxy->id,$ticket_id);
             $result = true;
         }
 

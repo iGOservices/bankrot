@@ -95,15 +95,15 @@ class MainController extends Controller
                         $passport_model->ticket_id = $model->id;
                         $inter_passport_model->ticket_id = $model->id;
                         if($passport_model->save() && $inter_passport_model->save()) {
-                            $uploadForm->save("main_info",'passport',$model->id);
-                            $uploadForm->save("main_info",'inter_passport',$model->id);
-                            $uploadForm->save("main_info",'inn',$model->id);
-                            $uploadForm->save("main_info",'snils',$model->id);
-                            $uploadForm->save("main_info",'changed_fio',$model->id);
-                            $uploadForm->save("main_info",'is_ip',$model->id);
-                            $uploadForm->save("main_info",'facsimile',$model->id);
-                            $uploadForm->save("main_info",'trud_book',$model->id);
-                            $uploadForm->save("main_info",'is_work',$model->id);
+                            $uploadForm->save("main_info",'passport',$passport_model->id,$model->id);
+                            $uploadForm->save("main_info",'inter_passport',$inter_passport_model->id,$model->id);
+                            $uploadForm->save("main_info",'inn',$model->id,$model->id);
+                            $uploadForm->save("main_info",'snils',$model->id,$model->id);
+                            $uploadForm->save("main_info",'changed_fio',$model->id,$model->id);
+                            $uploadForm->save("main_info",'is_ip',$model->id,$model->id);
+                            $uploadForm->save("main_info",'facsimile',$model->id,$model->id);
+                            $uploadForm->save("main_info",'trud_book',$model->id,$model->id);
+                            $uploadForm->save("main_info",'is_work',$model->id,$model->id);
 
                             $result = [
                                 'success' => true,

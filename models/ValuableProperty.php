@@ -66,6 +66,11 @@ class ValuableProperty extends \yii\db\ActiveRecord
         return 'valuable_property';
     }
 
+    public function getValuablePropertyFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%valuable_property%',false]);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -105,7 +110,7 @@ class ValuableProperty extends \yii\db\ActiveRecord
             'org_name' => 'Наименование организации',
             'dogovor_number' => 'Номер договора',
             'dogovor_date' => 'Дата договора',
-            'active_status' => 'Статус актива',
+            'active_status' => 'Статус актива В залоге',
             'zalog_name' => 'Имя залогодержателя',
             'zalog_type' => 'Залогодержатель',
             'zalog_inn' => 'ИНН залогодержателя',
@@ -125,35 +130,62 @@ class ValuableProperty extends \yii\db\ActiveRecord
     }
 
     public static function saveValuableProperty($ticket_id){
-        $ids = ArrayHelper::getColumn(ValuableProperty::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(ValuableProperty::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//
+//        $data = Yii::$app->request->post('ValuableProperty');
+//        $count = $data ? count($data) : 0;
+//        $valuable_property = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//            if(isset($ids[$i])){
+//                $valuable_property[$i] = ValuableProperty::findOne($ids[$i]);
+//            }else{
+//                $valuable_property[$i] = new ValuableProperty();
+//            }
+//
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($valuable_property as $i => $property) {
+//            $property->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $property->load($data[$i], '')) {
+//                if(!$property->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("valuable_property","[$i]valuable_property",$ticket_id);
+//                }
+//            }
+//        }
+//
+//        return $result;
 
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('ValuableProperty');
-        $count = $data ? count($data) : 0;
-        $valuable_property = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            if(isset($ids[$i])){
-                $valuable_property[$i] = ValuableProperty::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $valuable_property = ValuableProperty::findOne($item['id']);
             }else{
-                $valuable_property[$i] = new ValuableProperty();
+                $valuable_property = new ValuableProperty();
+                $valuable_property->ticket_id = $ticket_id;
             }
-
-        }
-        $uploadForm = new UploadForm();
-
-        $result = true;
-
-        foreach ($valuable_property as $i => $property) {
-            $property->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $property->load($data[$i], '')) {
-                if(!$property->save()){
-                    $result = false;
+            // echo"<pre>";print_r($data);die();
+            if($valuable_property->load($item, '')){
+                if($valuable_property->save()){
+                    $uploadForm->save("valuable_property","[$key]valuable_property",$valuable_property->id,$ticket_id);
                 }else{
-                    $uploadForm->save("valuable_property","[$i]valuable_property",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
 
         return $result;
     }

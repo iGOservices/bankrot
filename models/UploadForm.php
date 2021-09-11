@@ -55,14 +55,14 @@ class UploadForm extends Model
         ];
     }
 
-    public function upload($folder = null,$model = null, $modelId = null)
+    public function upload($folder = null,$model = null, $ticketId = null)
     {
         if ($this->validate()) {
             foreach ($this->files as $file) {
                 do{
                     $filename = Yii::$app->getSecurity()->generateRandomString(15);
-                }while ($this->checkExist($filename . '.' . $file->extension, $model, $modelId,$folder));
-                $file->saveAs($this->uploadPath . ($modelId ? $modelId . '/' : '') . ($folder ? $folder . '/' : '') . $filename . '.' . $file->extension);
+                }while ($this->checkExist($filename . '.' . $file->extension, $model, $ticketId,$folder));
+                $file->saveAs($this->uploadPath . ($ticketId ? $ticketId . '/' : '') . ($folder ? $folder . '/' : '') . $filename . '.' . $file->extension);
                 /*if(in_array($file->extension,['jpg','png','jpeg']))
                 {
                     //$path = $this->uploadPath . ($model ? $model . '/' : '') . $filename . '.' . $file->extension;
@@ -102,12 +102,12 @@ class UploadForm extends Model
         return $this->fileNames;
     }
 
-    public function checkExist($filename,$model = null , $modelId = null,$folder = null)
+    public function checkExist($filename,$model = null , $ticketId = null,$folder = null)
     {
         $dir = $this->uploadPath;
-        if($modelId && $folder)
+        if($ticketId && $folder)
         {
-            $dir = $this->uploadPath . $modelId . '/'. $folder . '/';
+            $dir = $this->uploadPath . $ticketId . '/'. $folder . '/';
             if(!is_dir($dir)) mkdir($dir, 0777, true);
             if(!is_dir($this->thumbnailPath)) mkdir($this->thumbnailPath, 0777, true);
         }
@@ -115,13 +115,15 @@ class UploadForm extends Model
     }
 
     /**
+     * @param $folder
      * @param $model
      * @param $modelId
+     * @param $ticketId
      * @param null $deleteModel
      * @param boolean $key - в случае нескольких форм передаем true? для использования модели как ключа
      * @return array
      */
-    public function save($folder,$model,$modelId,$deleteModel = null, $key = false)
+    public function save($folder,$model,$modelId,$ticketId,$deleteModel = null, $key = false)
     {
         $files = [];
         $this->files = UploadedFile::getInstances($this, $model);
@@ -129,7 +131,7 @@ class UploadForm extends Model
         {
             if($deleteModel) $deleteModel->deleteFile();
 
-            if ($this->upload($folder,$model,$modelId)) {
+            if ($this->upload($folder,$model,$ticketId)) {
                 if($this->getFileNames()){
                     foreach ($this->getFileNames() as $file)
                     {

@@ -40,7 +40,7 @@ AdminAsset::register($this);
         ['label' => 'Услуги', 'url' => ['/ticket-status/index']],
         ['label' => 'Список пользователей', 'url' => ['/user/index']],
 
-        ['label' => 'Справочник', 'url' => ['directory/update','id' => 1]],
+        ['label' => 'Справочник', 'url' => ['/admin/directory/directory-list','id' => 1]],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

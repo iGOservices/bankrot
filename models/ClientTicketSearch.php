@@ -17,7 +17,7 @@ class ClientTicketSearch extends ClientTicket
     public function rules()
     {
         return [
-            [['id', 'user_id', 'gender', 'phone', 'is_ip', 'facsimile', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'user_id', 'gender', 'phone', 'is_ip', 'is_work', 'facsimile', 'created_at', 'updated_at'], 'integer'],
             [['name', 'surname', 'patronymic', 'birthday', 'birth_place', 'inn', 'snils', 'registr_address', 'fact_address', 'mail', 'changed_fio'], 'safe'],
         ];
     }

@@ -112,9 +112,9 @@ class Creditor extends \yii\db\ActiveRecord
             'group' => 'Группа',
             'commitment' => 'Содержание обязательства',
             'is_predprin' => 'Обязательство возникло в результате предпринимательской деятельсноти',
-            'statment' => 'Statment',
+            'statment' => 'Физ лицо/орг.',
             'name' => 'Наименование кредитора',
-            'inn' => 'Inn',
+            'inn' => 'ИНН',
             'coutry' => 'Страна',
             'region' => 'Регион',
             'district' => 'Район',
@@ -143,38 +143,60 @@ class Creditor extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getCreditorFile($model)
+    public function getCreditorFiles()
     {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => $model]);
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%creditor%',false]);
     }
 
     public static function saveCreditor($ticket_id){
 
-        $ids = ArrayHelper::getColumn(Creditor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Creditor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Creditor');
+//        $count = $data ? count($data) : 0;
+//        $creditors = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//            if(isset($ids[$i])){
+//                $creditors[$i] = Creditor::findOne($ids[$i]);
+//            }else{
+//                $creditors[$i] = new Creditor();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($creditors as $i => $creditor) {
+//            $creditor->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $creditor->load($data[$i], '')) {
+//                if(!$creditor->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("creditor","[$i]creditor",$ticket_id);
+//                }
+//            }
+//        }
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Creditor');
-        $count = $data ? count($data) : 0;
-        $creditors = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            if(isset($ids[$i])){
-                $creditors[$i] = Creditor::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $creditor = Creditor::findOne($item['id']);
             }else{
-                $creditors[$i] = new Creditor();
+                $creditor = new Creditor();
+                $creditor->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
 
-        $result = true;
-
-        foreach ($creditors as $i => $creditor) {
-            $creditor->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $creditor->load($data[$i], '')) {
-                if(!$creditor->save()){
-                    $result = false;
+            if($creditor->load($item, '')){
+                if($creditor->save()){
+                    $uploadForm->save("creditor","[$key]creditor",$creditor->id,$ticket_id);
                 }else{
-                    $uploadForm->save("creditor","[$i]creditor",$ticket_id);
+                    $result = false;
                 }
             }
         }

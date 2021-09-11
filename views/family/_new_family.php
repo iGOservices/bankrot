@@ -31,6 +31,7 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
+                <?= $form->field($family,"[$increment]id")->hiddenInput([])->label(false); ?>
                 <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                     <? if($directory['family_type'] == 1):?>
                         <div class="submit-field ">
@@ -102,12 +103,12 @@ use kartik\date\DatePicker;
 											<span class="uploadButton-file-name inn_upload birth_upload'.$increment.'">Файл не выбран</span>
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => "birth_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]birth")->all()): ?>
+                        <? if(isset($model) && $files = $family->getBirthFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'family') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'family',$family->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='family'?>');" ><span class="icon-feather-trash-2"></span></a>

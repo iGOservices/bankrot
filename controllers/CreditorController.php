@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
  */
 class CreditorController extends Controller
 {
+    public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -86,16 +87,24 @@ class CreditorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $ticket_status_id = null)
     {
+        $uploadForm = new UploadForm();
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $uploadForm->save("creditor","creditor",$model->id,$model->ticket_id);
+            if($ticket_status_id){
+                return $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+            }else{
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
+            'uploadForm' => $uploadForm,
             'model' => $model,
+            'ticket_status_id' => $ticket_status_id,
         ]);
     }
 
@@ -138,10 +147,6 @@ class CreditorController extends Controller
             $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
-                'id' => 'creditor',
-                'action' => '/creditor/save-model',
-                'enableClientValidation' => true,
-                'enableAjaxValidation' => true,
                 'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'options' => [

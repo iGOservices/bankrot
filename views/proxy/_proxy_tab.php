@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
             <div class="accordion-body js-accordion-body" style="display: none;">
                 <div class="accordion-body__contents">
                     <div class="row">
-
+                        <?= $form->field($proxy,"id")->hiddenInput([])->label(false); ?>
                         <div class="col-xl-3">
 
                                 <div class="submit-field">
@@ -97,12 +97,12 @@ use yii\widgets\ActiveForm;
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => 'proxy_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                    <? if(isset($model) && $files = $model->getUploadedFiles("proxy")->all()): ?>
+                                    <? if(isset($model) && $files = $proxy->getProxyFiles()->all()): ?>
                                         <ul style="list-style: none;">
                                             <span>Загруженные файлы</span>
                                             <?foreach ($files as $file):?>
                                                 <li id="<?=$file->id?>">
-                                                    <a href="<?= $file->getLink(true,'proxy') ?>" target="_blank">
+                                                    <a href="<?= $file->getLink(true,'proxy',$proxy->ticket_id) ?>" target="_blank">
                                                         <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                     </a>
                                                     <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -133,7 +133,7 @@ use yii\widgets\ActiveForm;
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => 'proxy_publ_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                <? if(isset($model) && $files = $model->getUploadedFiles("proxy_publ")->all()): ?>
+                <? if(isset($model) && $files = $proxy->getProxyPublFiles()->all()): ?>
                     <ul style="list-style: none;">
                         <span>Загруженные файлы</span>
                         <?foreach ($files as $file):?>
@@ -161,7 +161,7 @@ use yii\widgets\ActiveForm;
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => 'proxy_dep_upload', 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                <? if(isset($model) && $files = $model->getUploadedFiles("proxy_dep")->all()): ?>
+                <? if(isset($model) && $files = $proxy->getProxyDepFiles()->all()): ?>
                     <ul style="list-style: none;">
                         <span>Загруженные файлы</span>
                         <?foreach ($files as $file):?>

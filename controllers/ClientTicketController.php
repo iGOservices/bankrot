@@ -103,13 +103,13 @@ class ClientTicketController extends Controller
             $model->phone = preg_replace('~\D+~', '', $model->phone);
             $model->snils = preg_replace('/[^0-9]/', '', $model->snils);
             if($model->save()){
-                $uploadForm->save("main_info",'inn',$model->id);
-                $uploadForm->save("main_info",'snils',$model->id);
-                $uploadForm->save("main_info",'changed_fio',$model->id);
-                $uploadForm->save("main_info",'is_ip',$model->id);
-                $uploadForm->save("main_info",'facsimile',$model->id);
-                $uploadForm->save("main_info",'trud_book',$model->id);
-                $uploadForm->save("main_info",'is_work',$model->id);
+                $uploadForm->save("main_info",'inn',$model->id,$model->id);
+                $uploadForm->save("main_info",'snils',$model->id,$model->id);
+                $uploadForm->save("main_info",'changed_fio',$model->id,$model->id);
+                $uploadForm->save("main_info",'is_ip',$model->id,$model->id);
+                $uploadForm->save("main_info",'facsimile',$model->id,$model->id);
+                $uploadForm->save("main_info",'trud_book',$model->id,$model->id);
+                $uploadForm->save("main_info",'is_work',$model->id,$model->id);
                 if($ticket_status_id){
                     return $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
                 }else{

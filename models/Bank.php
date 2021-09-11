@@ -92,37 +92,68 @@ class Bank extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getBankFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%bank%',false]);
+    }
+
 
     public static function saveBank($ticket_id){
-        $ids = ArrayHelper::getColumn(Bank::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Bank::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Bank');
+//        $count = $data ? count($data) : 0;
+//        $banks = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $banks[$i] = Bank::findOne($ids[$i]);
+//            }else{
+//                $banks[$i] = new Bank();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//
+//        foreach ($banks as $i => $bank) {
+//            $bank->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $bank->load($data[$i], '')) {
+//                if(!$bank->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("bank","[$i]bank",$ticket_id);
+//                }
+//            }
+//        }
+//
+//        return $result;
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Bank');
-        $count = $data ? count($data) : 0;
-        $banks = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $banks[$i] = Bank::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $bank = Bank::findOne($item['id']);
             }else{
-                $banks[$i] = new Bank();
+                $bank = new Bank();
+                $bank->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
-
-        $result = true;
-
-
-        foreach ($banks as $i => $bank) {
-            $bank->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $bank->load($data[$i], '')) {
-                if(!$bank->save()){
-                    $result = false;
+            // echo"<pre>";print_r($data);die();
+            if($bank->load($item, '')){
+                if($bank->save()){
+                    $uploadForm->save("bank","[$key]bank",$bank->id,$ticket_id);
                 }else{
-                    $uploadForm->save("bank","[$i]bank",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
 
         return $result;
     }

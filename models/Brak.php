@@ -52,12 +52,12 @@ class Brak extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'series' => 'Series',
-            'number' => 'Number',
-            'date' => 'Date',
-            'number_act' => 'Number Act',
-            'number_act_date' => 'Number Act Date',
-            'given' => 'Given',
+            'series' => 'Серия',
+            'number' => 'Номер',
+            'date' => 'Дата выдаи',
+            'number_act' => 'Номер актовой записи',
+            'number_act_date' => 'Дата актовой записи',
+            'given' => 'Кем выдан',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -68,5 +68,15 @@ class Brak extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getBrakFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%brak',false]);
+    }
+
+    public function getBrakDogovorFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%brak_dogovor%',false]);
     }
 }

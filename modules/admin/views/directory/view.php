@@ -6,13 +6,20 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Directory */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Справочник полей ввода', 'url' => ['index']];
+if($model->id == 1){
+    $this->title = 'Раздел: Заполнение и формирование документов для обращения в суд ';
+}elseif($model->id == 2){
+    $this->title = 'Банкротство под ключ ';
+}else{
+    $this->title = 'Услуги арбитражных управляющих';
+}
+$this->params['breadcrumbs'][] = ['label' => 'Справочник полей ввода', 'url' => ['directory-list']];
+$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="directory-view">
 
-    <h1>Справочник полей ввода</h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,7 +35,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Справочник полей в
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'name',
             'surname',
             'patronymic',

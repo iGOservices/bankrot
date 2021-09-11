@@ -28,6 +28,7 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
+                <?= $form->field($debitor,"[$increment]id")->hiddenInput([])->label(false); ?>
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                     <? if($directory['debitor_group'] == 1):?>
                         <div class="submit-field ">
@@ -261,12 +262,12 @@ use kartik\date\DatePicker;
 											<span class="uploadButton-file-name debitor_upload'.$increment.'">Файл не выбран</span>
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => "debitor_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]debitor")->all()): ?>
+                        <? if(isset($model) && $files = $debitor->getDebitorFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'debitor') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'debitor',$debitor->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='debitor'?>');" ><span class="icon-feather-trash-2"></span></a>

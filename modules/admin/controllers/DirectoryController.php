@@ -126,4 +126,12 @@ class DirectoryController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionDirectoryList()
+    {
+        $directory = Directory::find()->all();
+        return $this->render('directory_list', [
+            'directory' => $directory,
+        ]);
+    }
 }

@@ -460,6 +460,7 @@ $(document).on('click','#add_bank',function(){
 $(document).on('click','#add_shares',function(){
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     let num = document.getElementById('shares-point').value;
+    //console.log(num);
     $.ajax({
         url: '/shares/add-new-shares',
         type: 'POST',
@@ -674,7 +675,7 @@ function deleteItem(i,statment,id,id2 = null){
 
         str = statment+'-point';
         let count = document.getElementById(str).value;
-        $("#"+str).val(count-1);
+        $("#"+str).val(parseInt(count));
     }
 }
 
@@ -752,11 +753,12 @@ $('#main').on('beforeSubmit', function(e) {
 });
 
 $('#family').on('beforeSubmit', function(e) {
+    console.log('beforre');
     var form = $(this);
     //var data = form.serialize();
     var formData = new FormData(this);
     //var formData = new FormData(form[0].value);
-    console.log(formData);
+    //console.log(formData);
     $.ajax({
         url: form.attr("action"),
         type: "POST",
@@ -770,6 +772,8 @@ $('#family').on('beforeSubmit', function(e) {
                 nextPrev(1);
             else
                 alert("Не  удалось проверить введенные данные!");
+
+            //e.preventDefault();
         },
         error: function () {
             alert("Something went wrong");
@@ -777,6 +781,8 @@ $('#family').on('beforeSubmit', function(e) {
     });
 }).on('submit', function(e){
     e.preventDefault();
+    console.log('submit');
+
 });
 
 $('#creditor').on('beforeSubmit', function(e) {

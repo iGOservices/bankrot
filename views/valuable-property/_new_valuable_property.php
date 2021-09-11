@@ -27,6 +27,7 @@ use kartik\date\DatePicker;
 	<div class="accordion-body js-accordion-body">
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
+            <?= $form->field($valuable_property,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
                 <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                     <? if($directory['valuable_property_property_type'] == 1):?>
@@ -169,12 +170,12 @@ use kartik\date\DatePicker;
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => "valuable_property_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]valuable_property")->all()): ?>
+                        <? if(isset($model) && $files = $valuable_property->getValuablePropertyFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'valuable_property') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'valuable_property',$valuable_property->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='valuable_property'?>');" ><span class="icon-feather-trash-2"></span></a>

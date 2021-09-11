@@ -17,8 +17,13 @@ use app\models\ContactForm;
 
 class PdfController extends Controller
 {
-
-
-
+    public function actionCreateUserDocuments($id,$ticket_status_id = null){
+        Pdf::createPropertyPdf($id);
+        Pdf::createCreditorPdf($id);
+        Pdf::createBankrotBlank($id);
+        if($ticket_status_id){
+            $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+        }
+    }
 
 }

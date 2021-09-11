@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ClientTicket;
+use app\models\UploadForm;
 use Yii;
 use app\models\Passport;
 use app\models\PassportSearch;
@@ -14,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class PassportController extends Controller
 {
+    public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -82,16 +85,23 @@ class PassportController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $ticket_status_id = null)
     {
         $model = $this->findModel($id);
-
+        $uploadForm = new UploadForm();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $uploadForm->save("main_info",'passport',$model->id,$model->ticket_id);
+            if($ticket_status_id){
+                return $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+            }else{
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
+            'uploadForm' => $uploadForm,
             'model' => $model,
+            'ticket_status_id' => $ticket_status_id,
         ]);
     }
 

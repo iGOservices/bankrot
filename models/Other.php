@@ -46,7 +46,7 @@ class Other extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'text' => 'Text',
+            'text' => 'Текст',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -59,36 +59,69 @@ class Other extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getOtherFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%other%',false]);
+    }
+
     public static function saveOther($ticket_id){
-        $ids = ArrayHelper::getColumn(Other::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Other::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Other');
+//        $count = $data ? count($data) : 0;
+//        $other = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $other[$i] = Other::findOne($ids[$i]);
+//            }else{
+//                $other[$i] = new Other();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($other as $i => $let) {
+//            $let->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $let->load($data[$i], '')) {
+//                if(!$let->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("other","[$i]other",$ticket_id);
+//                }
+//            }
+//        }
+//
+//        return $result;
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Other');
-        $count = $data ? count($data) : 0;
-        $other = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $other[$i] = Other::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $other = Other::findOne($item['id']);
             }else{
-                $other[$i] = new Other();
+                $other = new Other();
+                $other->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
 
-        $result = true;
-
-        foreach ($other as $i => $let) {
-            $let->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $let->load($data[$i], '')) {
-                if(!$let->save()){
-                    $result = false;
+            if($other->load($item, '')){
+                if($other->save()){
+                    $uploadForm->save("other","[$key]other",$other->id,$ticket_id);
                 }else{
-                    $uploadForm->save("other","[$i]other",$ticket_id);
+                    $result = false;
                 }
             }
         }
 
         return $result;
+
+
+
     }
 }

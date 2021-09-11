@@ -64,4 +64,11 @@ class Passport extends \yii\db\ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+
+    public function getPassportFile()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'passport']);
+    }
+
 }

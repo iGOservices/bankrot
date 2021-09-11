@@ -56,9 +56,9 @@ class OtherShares extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ticket_id' => 'Ticket ID',
-            'creater' => 'Создатель',
-            'type' => 'Вид',
-            'total_count' => 'Общее кол-во',
+            'creater' => 'Лицо выпустившее ценную буману',
+            'type' => 'Вид ценной бумаги',
+            'total_count' => 'Общее количество',
             'nominal_cost' => 'Номинальная величина обязательства(руб)',
             'other' => 'Примечание',
             'created_at' => 'Created At',
@@ -73,36 +73,67 @@ class OtherShares extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function saveOtherShares($ticket_id){
-        $ids = ArrayHelper::getColumn(OtherShares::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+    public function getOtherSharesFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%other_shares%',false]);
+    }
 
+    public static function saveOtherShares($ticket_id){
+//        $ids = ArrayHelper::getColumn(OtherShares::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//
+//        $data = Yii::$app->request->post('OtherShares');
+//        $count = $data ? count($data) : 0;
+//        $other_shares = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $other_shares[$i] = OtherShares::findOne($ids[$i]);
+//            }else{
+//                $other_shares[$i] = new OtherShares();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($other_shares as $i => $share) {
+//            $share->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $share->load($data[$i], '')) {
+//                if(!$share->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("other_shares","[$i]other_shares",$ticket_id);
+//                }
+//            }
+//        }
+//
+//        return $result;
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('OtherShares');
-        $count = $data ? count($data) : 0;
-        $other_shares = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $other_shares[$i] = OtherShares::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+            $other_shares = OtherShares::findOne($item['id']);
             }else{
-                $other_shares[$i] = new OtherShares();
+                $other_shares = new OtherShares();
+                $other_shares->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
-
-        $result = true;
-
-        foreach ($other_shares as $i => $share) {
-            $share->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $share->load($data[$i], '')) {
-                if(!$share->save()){
-                    $result = false;
+            // echo"<pre>";print_r($data);die();
+            if($other_shares->load($item, '')){
+                if($other_shares->save()){
+                    $uploadForm->save("other_shares","[$key]other_shares",$other_shares->id,$ticket_id);
                 }else{
-                    $uploadForm->save("other_shares","[$i]other_shares",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
 
         return $result;
     }

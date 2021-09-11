@@ -77,32 +77,63 @@ class Deal extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getDealFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%deal%',false]);
+    }
+
     public static function saveDeal($ticket_id){
-        $ids = ArrayHelper::getColumn(Deal::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Deal::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Deal');
+//        $count = $data ? count($data) : 0;
+//        $deals = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $deals[$i] = Deal::findOne($ids[$i]);
+//            }else{
+//                $deals[$i] = new Deal();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($deals as $i => $deal) {
+//            $deal->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $deal->load($data[$i], '')) {
+//                if(!$deal->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("deal","[$i]deal",$ticket_id);
+//                }
+//            }
+//        }
+//
+//        return $result;
+
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Deal');
-        $count = $data ? count($data) : 0;
-        $deals = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $deals[$i] = Deal::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $deal = Deal::findOne($item['id']);
             }else{
-                $deals[$i] = new Deal();
+                $deal = new Deal();
+                $deal->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
 
-        $result = true;
-
-        foreach ($deals as $i => $deal) {
-            $deal->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $deal->load($data[$i], '')) {
-                if(!$deal->save()){
-                    $result = false;
+            if($deal->load($item, '')){
+                if($deal->save()){
+                    $uploadForm->save("deal","[$key]deal",$deal->id,$ticket_id);
                 }else{
-                    $uploadForm->save("deal","[$i]deal",$ticket_id);
+                    $result = false;
                 }
             }
         }

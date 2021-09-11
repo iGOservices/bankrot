@@ -26,6 +26,7 @@ use kartik\date\DatePicker;
 	<div class="accordion-body js-accordion-body">
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
+            <?= $form->field($nalog,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
 
                 <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
@@ -53,12 +54,12 @@ use kartik\date\DatePicker;
 											<span class="uploadButton-file-name ndfl_upload'.$increment.'">Файл не выбран</span>
 										
 										 </div>'])->fileInput(['multiple' => true, 'id' => "ndfl_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]ndfl")->all()): ?>
+                        <? if(isset($model) && $files = $nalog->getNalogFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'nalog') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'nalog',$nalog->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='nalog'?>');" ><span class="icon-feather-trash-2"></span></a>

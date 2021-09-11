@@ -152,46 +152,68 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getPropertyFile($model)
+    public function getPropertyFiles()
     {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => $model]);
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%]property%',false]);
     }
-
-    public function getOtherPropertyFile($model)
+    public function getOtherPropertyFiles()
     {
-        return $this->hasMany(Upload::className(), ['model_id' => 'id'])
-            ->where(['model' => $model]);
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%other_property%',false]);
     }
 
     public static function saveProperty($ticket_id){
-        $ids = ArrayHelper::getColumn(Property::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Property::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Property');
+//
+//        $count = $data ? count($data) : 0;
+//        $property = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//            if(isset($ids[$i])){
+//                $property[$i] = Property::findOne($ids[$i]);
+//            }else{
+//                $property[$i] = new Property();
+//            }
+//
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($property as $i => $prop) {
+//            $prop->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $prop->load($data[$i], '')) {
+//                if(!$prop->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("property","[$i]property",$ticket_id);
+//                    $uploadForm->save("property","[$i]other_property",$ticket_id);
+//                }
+//            }
+//        }
+//        return $result;
+
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Property');
-
-        $count = $data ? count($data) : 0;
-        $property = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            if(isset($ids[$i])){
-                $property[$i] = Property::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $property = Property::findOne($item['id']);
             }else{
-                $property[$i] = new Property();
+                $property = new Property();
+                $property->ticket_id = $ticket_id;
             }
-
-        }
-        $uploadForm = new UploadForm();
-
-        $result = true;
-
-        foreach ($property as $i => $prop) {
-            $prop->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $prop->load($data[$i], '')) {
-                if(!$prop->save()){
-                    $result = false;
+            // echo"<pre>";print_r($data);die();
+            if($property->load($item, '')){
+                if($property->save()){
+                    $uploadForm->save("property","[$key]property",$property->id,$ticket_id);
+                    $uploadForm->save("property","[$key]other_property",$property->id,$ticket_id);
                 }else{
-                    $uploadForm->save("property","[$i]property",$ticket_id);
-                    $uploadForm->save("property","[$i]other_property",$ticket_id);
+                    $result = false;
                 }
             }
         }

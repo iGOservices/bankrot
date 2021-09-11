@@ -21,7 +21,8 @@ use kartik\date\DatePicker;
     </div>
     <div class="accordion__item js-accordion-item" style="float:left;width:98%">
 	<div class="accordion-header js-accordion-header">Данные по Семейному положению №<?=$increment+1?>
-	</div> 
+	</div>
+
 	<!-- Accordtion Body -->
 	<div class="accordion-body js-accordion-body">
 		<!-- Accordion Content -->
@@ -40,8 +41,9 @@ use kartik\date\DatePicker;
                                 <div class="accordion-body js-accordion-body">
                                     <!-- Accordion Content -->
                                     <div class="accordion-body__contents">
+                                        <?= $form->field($brak,"[$increment]id")->hiddenInput([])->label(false); ?>
+                                        <?= $form->field($razvod,"[$increment]id")->hiddenInput([])->label(false); ?>
                                         <div class="row">
-
                                             <div class="col-xl-6">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
                                                     <h5>Серия</h5>
@@ -117,12 +119,14 @@ use kartik\date\DatePicker;
 										
 										        </div>'])->fileInput(['multiple' => true, 'id' => "brak_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                                    <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]brak")->all()): ?>
+                                                    <? if(isset($model) && $files = $brak->getBrakFiles()->all()): ?>
+
                                                         <ul style="list-style: none;">
                                                             <span>Загруженные файлы</span>
                                                             <?foreach ($files as $file):?>
+
                                                                 <li id="<?=$file->id?>">
-                                                                    <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                                                    <a href="<?= $file->getLink(true,'sp',$brak->ticket_id) ?>" target="_blank">
                                                                         <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                     </a>
                                                                     <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -232,12 +236,12 @@ use kartik\date\DatePicker;
 										
 										    </div>'])->fileInput(['multiple' => true, 'id' => "razvod_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                                <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]razvod")->all()): ?>
+                                                <? if(isset($model) && $files = $razvod->getRazvodFiles()->all()): ?>
                                                     <ul style="list-style: none;">
                                                         <span>Загруженные файлы</span>
                                                         <?foreach ($files as $file):?>
                                                             <li id="<?=$file->id?>">
-                                                                <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                                                <a href="<?= $file->getLink(true,'sp',$razvod->ticket_id) ?>" target="_blank">
                                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                 </a>
                                                                 <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -266,16 +270,16 @@ use kartik\date\DatePicker;
                             <?= $form->field($uploadForm, "[$increment]brak_dogovor[]", [
                                 'template' => '<div class="uploadButton">{input}
 											<label class="uploadButton-button ripple-effect" for="brak_dogovor_upload'.$increment.'">Загрузить файл</label>
-											<span class="uploadButton-file-name rbrak_dogovor_upload'.$increment.'">Файл не выбран</span>
+											<span class="uploadButton-file-name brak_dogovor_upload'.$increment.'">Файл не выбран</span>
 										
 										    </div>'])->fileInput(['multiple' => true, 'id' => "brak_dogovor_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                            <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]brak_dogovor")->all()): ?>
+                            <? if(isset($model) && $files = $brak->getBrakDogovorFiles()->all()): ?>
                                 <ul style="list-style: none;">
                                     <span>Загруженные файлы</span>
                                     <?foreach ($files as $file):?>
                                         <li id="<?=$file->id?>">
-                                            <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                            <a href="<?= $file->getLink(true,'sp',$brak->ticket_id) ?>" target="_blank">
                                                 <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                             </a>
                                             <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>
@@ -297,12 +301,12 @@ use kartik\date\DatePicker;
 										
 										    </div>'])->fileInput(['multiple' => true, 'id' => "property_division_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                        <? if(isset($model) && $files = $model->getUploadedFiles("[$increment]property_division")->all()): ?>
+                        <? if(isset($model) && $files = $razvod->getPropertyDivisionFiles()->all()): ?>
                             <ul style="list-style: none;">
                                 <span>Загруженные файлы</span>
                                 <?foreach ($files as $file):?>
                                     <li id="<?=$file->id?>">
-                                        <a href="<?= $file->getLink(true,'sp') ?>" target="_blank">
+                                        <a href="<?= $file->getLink(true,'sp',$razvod->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
                                         <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>');" ><span class="icon-feather-trash-2"></span></a>

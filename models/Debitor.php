@@ -101,9 +101,9 @@ class Debitor extends \yii\db\ActiveRecord
             'group' => 'Группа',
             'commitment' => 'Содержание обязательства',
             'is_predprin' => 'Обязательство взоникло в результате предприн деятельсноти',
-            'statment' => 'Statment',
+            'statment' => 'Физ лицо/орг.',
             'name' => 'Наименование кредитора',
-            'inn' => 'Inn',
+            'inn' => 'ИНН',
             'coutry' => 'Страна',
             'region' => 'Регион',
             'district' => 'Район',
@@ -132,36 +132,66 @@ class Debitor extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getDebitorFiles()
+    {
+        return $this->hasMany(Upload::className(), ['model_id' => 'id'])->where(['like','model','%debitor%',false]);
+    }
+
 
     public static function saveDebitor($ticket_id){
-        $ids = ArrayHelper::getColumn(Debitor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//        $ids = ArrayHelper::getColumn(Debitor::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
+//
+//        $data = Yii::$app->request->post('Debitor');
+//        $count = $data ? count($data) : 0;
+//        $debitors = [];
+//
+//        for ($i = 0; $i < $count; $i++) {
+//
+//            if(isset($ids[$i])){
+//                $debitors[$i] = Debitor::findOne($ids[$i]);
+//            }else{
+//                $debitors[$i] = new Debitor();
+//            }
+//        }
+//        $uploadForm = new UploadForm();
+//
+//        $result = true;
+//
+//        foreach ($debitors as $i => $debitor) {
+//            $debitor->ticket_id = $ticket_id;
+//            if (!empty($data[$i]) && $debitor->load($data[$i], '')) {
+//                if(!$debitor->save()){
+//                    $result = false;
+//                }else{
+//                    $uploadForm->save("debitor","[$i]debitor",$ticket_id);
+//                }
+//            }
+//        }
+//        return $result;
+        $uploadForm = new UploadForm();
+        $result = true;
+//        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Debitor');
-        $count = $data ? count($data) : 0;
-        $debitors = [];
-
-        for ($i = 0; $i < $count; $i++) {
-
-            if(isset($ids[$i])){
-                $debitors[$i] = Debitor::findOne($ids[$i]);
+        //echo"<pre>";print_r($data);die();
+        foreach ($data as $key => $item){
+            if($item['id']){
+                $debitor = Debitor::findOne($item['id']);
             }else{
-                $debitors[$i] = new Debitor();
+                $debitor = new Debitor();
+                $debitor->ticket_id = $ticket_id;
             }
-        }
-        $uploadForm = new UploadForm();
-
-        $result = true;
-
-        foreach ($debitors as $i => $debitor) {
-            $debitor->ticket_id = $ticket_id;
-            if (!empty($data[$i]) && $debitor->load($data[$i], '')) {
-                if(!$debitor->save()){
-                    $result = false;
+           // echo"<pre>";print_r($data);die();
+            if($debitor->load($item, '')){
+                if($debitor->save()){
+                    $uploadForm->save("debitor","[$key]debitor",$debitor->id,$ticket_id);
                 }else{
-                    $uploadForm->save("debitor","[$i]debitor",$ticket_id);
+                    $result = false;
                 }
             }
         }
+
+
         return $result;
     }
 

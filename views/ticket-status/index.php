@@ -103,9 +103,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date("Y-m-d H:i:s",$model->updated_at);
                 }
             ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {delete}',
+                'buttons' => [
 
-
-            ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ],
         ],
     ]); ?>
 
