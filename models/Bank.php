@@ -157,4 +157,37 @@ class Bank extends \yii\db\ActiveRecord
 
         return $result;
     }
+
+    public static function createPayArray($id){
+        $bank = Bank::find()->where(['ticket_id' => $id])->all();
+        $bank_arr = [];
+        foreach ($bank as $key => $item){
+            $bank_arr [] = [
+                "address" => [
+                    "Country" =>null,
+                      "Region" =>null,
+                      "Area" =>null,
+                      "City" => null,
+                      "Town"=>null,
+                      "text"=>"",
+                      "Street"=>null,
+                      "HouseNumber"=>"",
+                      "KorpusNumber"=>"",
+                      "FlatNumber" =>""
+                ],
+                "name" => $item->name."",
+                "description" => $item->other."",
+               "type" => Bank::$type[$item->type]."",
+               "valuta" =>Bank::$currency[$item->currency]."",
+               "date_opening" =>date("d.m.Y",strtotime($item->date_open))."",
+               "balance" =>$item->balance."",
+               "account_number" =>$item->number."",
+               "account_bik" =>$item->bic."",
+               "group" => "2"
+            ];
+        }
+
+        return $bank_arr;
+    }
+
 }

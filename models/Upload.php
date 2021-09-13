@@ -109,15 +109,15 @@ class Upload extends \yii\db\ActiveRecord
         return $upload->save() ? $upload : $upload->errors;
     }
 
-    public function deleteFile($model)
+    public function deleteFile($model,$id)
     {
-        if(file_exists($this->getLink(false,$model)))
+        if(file_exists($this->getLink(false,$model,$id)))
         {
-            unlink($this->getLink(false,$model));
+            unlink($this->getLink(false,$model,$id));
         }
-        if(file_exists($this->getThumbnail(false,$model)))
+        if(file_exists($this->getThumbnail(false,$model,$id)))
         {
-            unlink($this->getThumbnail(false,$model));
+            unlink($this->getThumbnail(false,$model,$id));
         }
         return $this->delete();
     }
@@ -150,12 +150,12 @@ class Upload extends \yii\db\ActiveRecord
         return ($absolute ? '/' : '') . $this->tableName() .'/'. $ticketId .'/'. $model .'/'. $this->name . '.' . $this->ext;
     }
 
-    public function getThumbnail($absolute = true,$model)
+    public function getThumbnail($absolute = true,$model,$id = null)
     {
         if(file_exists($this->tableName() .'/thumbnail/' . $this->name . '.' . $this->ext))
             return ($absolute ? '/' : '') . $this->tableName() .'/thumbnail/' . $this->name . '.' . $this->ext;
         else
-            return $this->getLink($absolute,$model);
+            return $this->getLink($absolute,$model,$id);
     }
 
     public function getPreview()

@@ -105,7 +105,7 @@ use yii\widgets\ActiveForm;
                                                     <a href="<?= $file->getLink(true,'proxy',$proxy->ticket_id) ?>" target="_blank">
                                                         <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                     </a>
-                                                    <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                    <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>',<?=$proxy->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
                                                 </li>
                                             <?endforeach;?>
                                         </ul>
@@ -141,7 +141,7 @@ use yii\widgets\ActiveForm;
                                 <a href="<?= $file->getLink(true,'proxy') ?>" target="_blank">
                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                 </a>
-                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>'<?=$proxy->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
                             </li>
                         <?endforeach;?>
                     </ul>
@@ -169,7 +169,7 @@ use yii\widgets\ActiveForm;
                                 <a href="<?= $file->getLink(true,'proxy') ?>" target="_blank">
                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                 </a>
-                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='proxy'?>'<?=$proxy->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
                             </li>
                         <?endforeach;?>
                     </ul>

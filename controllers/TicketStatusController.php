@@ -19,6 +19,7 @@ use app\models\Property;
 use app\models\Proxy;
 use app\models\Razvod;
 use app\models\Shares;
+use app\models\UploadForm;
 use app\models\ValuableProperty;
 use Yii;
 use app\models\TicketStatus;
@@ -71,6 +72,7 @@ class TicketStatusController extends Controller
      */
     public function actionView($id)
     {
+        $uploadForm = new UploadForm();
         $model = $this->findModel($id);
         $client_ticket = ClientTicket::findOne($model->ticket_id);
         $passport_model = Passport::find()->where(['ticket_id' => $model->ticket_id])->one();
@@ -96,6 +98,7 @@ class TicketStatusController extends Controller
         $proxy = Proxy::find()->where(['ticket_id' => $model->ticket_id])->one();
         return $this->render('view', [
             'model' => $model,
+            'uploadForm' => $uploadForm,
             'client_ticket' => $client_ticket,
             'passport_model' => $passport_model,
             'inter_passport_model' => $inter_passport_model,
@@ -186,5 +189,16 @@ class TicketStatusController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUploadUserDocs(){
+        $post = Yii::$app->request->post();
+        //print_r($post['ClientTicket']['id']);die();
+        $ticket = TicketStatus::find()->where(['ticket_id' => $post['ClientTicket']['id']])->one();
+        $uploadForm = new UploadForm();
+        $uploadForm->save("user_docs","user_docs",$post['ClientTicket']['id'],$post['ClientTicket']['id']);
+        if($ticket){
+            $this->redirect(['ticket-status/view', 'id' => $ticket->id]);
+        }
     }
 }

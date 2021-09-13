@@ -273,4 +273,114 @@ class Creditor extends \yii\db\ActiveRecord
         return $f5;
     }
 
+    public static function createPayArray($id){
+        $creditor = Creditor::find()->where(['ticket_id' => $id])->all();
+        $creditor_arr1 = [];
+        $monetary = [];
+        $non_monetary = [];
+        $payments = [];
+        foreach ($creditor as $key => $item){
+            $creditor_arr1 [] = [
+                "id" => $key."creditor",
+                "name" => $item->name."",
+                "type" => $item->statment == 1 ? "physical": "organization",
+                "inn" => $item->inn."",
+                "address" => [
+                    "Country" => [
+                        "id" => $item->coutry,
+                        "text" => $item->coutry
+                    ],
+                    "Region" => [
+                        "id" => $item->region,
+                        "text" => $item->region
+                    ],
+                    "Area" => [
+                        "id" => $item->district,
+                        "text" => $item->district
+                    ],
+                    "City" => [
+                        "id" => $item->city,
+                        "text" => $item->city
+                    ],
+                    "Town" => [
+                        "id"=> "",
+                        "text"  => ""
+                    ],
+                    "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->flat."",
+                    "Street" => [
+                        "id" => $item->street,
+                        "text" => $item->street
+                    ],
+                    "HouseNumber" => $item->house,
+                    "KorpusNumber" => $item->corpus,
+                    "FlatNumber" => $item->flat
+                ],
+                "type_contact" => "creditor",
+                "text" => $item->name.""
+            ];
+            if($item->group == 1){
+                $monetary [] = [
+                        "group" => ($item->group-1)."",
+                        "creditor_id" => $key."creditor",
+                        "content_obligation" => Creditor::$commitment[$item->commitment]."",
+                        "business" => $item->is_predprin  == 1 ? true : false,
+                        "occurrence_agreement" => Creditor::$base[$item->base],
+                        "occurrence_date" => date("d.m.Y",strtotime($item->base_date))."",
+                        "occurrence_number" => $item->base_num."",
+                        "liabilities_total" => $item->sum_statment."",
+                        "liabilities_debt" => $item->sum_dolg."",
+                        "fines" => $item->forfeit."",
+                        "description" => $item->other,
+
+
+                ];
+            }elseif($item->group == 2){
+                $payments [] = [
+                        "group" => ($item->group-1)."",
+                        "creditor_id" => $key."creditor",
+                        "content_obligation" => Creditor::$commitment_ob[$item->commitment]."",
+                        "name_tax" => Creditor::$commitment_ob[$item->commitment]."",
+                        "business" => $item->is_predprin  == 1 ? true : false,
+                        "occurrence_agreement" => Creditor::$base[$item->base],
+                        "occurrence_date" =>  date("d.m.Y",strtotime($item->base_date))."",
+                        "occurrence_number" => $item->base_num."",
+                        "liabilities_total" => $item->sum_statment."",
+                        "liabilities_debt" => $item->sum_dolg."",
+                        "fines" => $item->forfeit."",
+                        "description" => $item->other."",
+
+                ];
+            }else{
+                $non_monetary [] = [
+                        "group" => ($item->group-1)."",
+                        "creditor_id" => $key."creditor",
+                        "content_obligation" => $item->commitment."",
+                        "name_tax" => $item->commitment."",
+                        "business" => $item->is_predprin  == 1 ? true : false,
+                        "occurrence_agreement" => Creditor::$base[$item->base],
+                        "occurrence_date" =>  date("d.m.Y",strtotime($item->base_date))."",
+                        "occurrence_number" => $item->base_num."",
+                        "liabilities_total" => $item->sum_statment."",
+                        "liabilities_debt" => $item->sum_dolg."",
+                        "fines" => $item->forfeit."",
+                        "description" => $item->other."",
+
+                ];
+            }
+        }
+
+        $result = [
+            'creditor1' => $creditor_arr1,
+            'creditor2' => [
+                "Data" => [
+                    "Monetary" => $monetary,
+                    "Payments" => $payments,
+                    "NonMonetary" => $non_monetary,
+                ]
+            ]
+        ];
+
+        return $result;
+    }
+
 }

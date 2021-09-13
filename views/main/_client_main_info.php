@@ -70,7 +70,7 @@ use yii\widgets\MaskedInput;
                                         <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
-                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                     </li>
                                     <?endforeach;?>
                                 </ul>
@@ -161,7 +161,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -204,7 +204,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -237,7 +237,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -274,7 +274,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -391,7 +391,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -428,7 +428,7 @@ use yii\widgets\MaskedInput;
                                                 <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                 </a>
-                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                             </li>
                                         <?endforeach;?>
                                     </ul>
@@ -528,7 +528,7 @@ use yii\widgets\MaskedInput;
                                                                         <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                         </a>
-                                                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                                                     </li>
                                                                 <?endforeach;?>
                                                             </ul>
@@ -638,7 +638,7 @@ use yii\widgets\MaskedInput;
                                                                         <a href="<?= $file->getLink(true,'main_info',$model->id) ?>" target="_blank">
                                                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                                                         </a>
-                                                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='main_info'?>',<?=$model->id?>);" ><span class="icon-feather-trash-2"></span></a>
                                                                     </li>
                                                                 <?endforeach;?>
                                                             </ul>

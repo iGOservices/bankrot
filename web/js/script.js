@@ -56,13 +56,14 @@ function setCookie(name, value, options = {}) {
     document.cookie = updatedCookie;
 }
 
-function deleteImg(id,model){
+function deleteImg(id,model,ticket_id){
     $.ajax({
         url: '/main/delete-img',
         type: 'POST',
         data: {
             id: id,
             model: model,
+            ticket_id : ticket_id,
         },
         success: function (res) {
             $('#'+id).html("");

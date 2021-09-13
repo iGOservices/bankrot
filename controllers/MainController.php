@@ -350,7 +350,8 @@ class MainController extends Controller
         if(\Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
             $delete = Upload::findOne($data['id']);
-            $delete->deleteFile($data['model']);
+
+            $delete->deleteFile($data['model'],$data['ticket_id']);
         }
 
     }

@@ -178,7 +178,7 @@ use kartik\date\DatePicker;
                                         <a href="<?= $file->getLink(true,'valuable_property',$valuable_property->ticket_id) ?>" target="_blank">
                                             <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
                                         </a>
-                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='valuable_property'?>');" ><span class="icon-feather-trash-2"></span></a>
+                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='valuable_property'?>'<?=$valuable_property->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
                                     </li>
                                 <?endforeach;?>
                             </ul>

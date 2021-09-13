@@ -232,9 +232,9 @@ use app\models\ValuableProperty;
 
         <? foreach ($debitor as $key => $let){
             /* @var $let app\models\Debitor*/
-            if($let->is_predprin == 0 && $let->group == 2){
+            if($let->is_predprin == 0 && ($let->group == 2 || $let->group == 3)){
                 echo "<tr><td>2.".($key+1)."</td>".
-                    "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
+                    "<td colspan='3'>".$let->commitment.": ".$let->name."</td>".
                     "<td colspan='2'>Тут что то будет когда я узнаю</td>".
                     "<td colspan='2'>Тут что то будет когда я узнаю</td></tr>";
             }

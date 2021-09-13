@@ -26,4 +26,14 @@ class PdfController extends Controller
         }
     }
 
+
+
+    public function actionCreateExportPayDocument($id,$ticket_status_id = null){
+        Pdf::createAsbExportFile($id);
+
+        if($ticket_status_id){
+            $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
+        }
+    }
+
 }
