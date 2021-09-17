@@ -131,6 +131,8 @@ class User extends ActiveRecord implements IdentityInterface
         return ArrayHelper::map(self::find()->where(['status' => 1])->orderBy('username ASC')->all(), 'id', 'username');
     }
 
+
+
     /**
      * @inheritdoc
      */

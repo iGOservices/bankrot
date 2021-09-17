@@ -182,7 +182,7 @@ use yii\widgets\ActiveForm;
         <div class="center-block">
             <div class="row" >
                 <a href="#" class="button ripple-effect" id="prevBtn" onclick="nextPrev(-1)" style="margin-right:5px;"><span class="icon-material-outline-keyboard-arrow-left"></span>Назад</a>
-                <?= Html::submitButton("Далее<span class=\"icon-material-outline-keyboard-arrow-right\"></span>", ['class' => 'button ripple-effect']) ?>
+                <?= Html::submitButton("Получить услугу<span class=\"icon-material-outline-keyboard-arrow-right\"></span>", ['class' => 'button ripple-effect']) ?>
             </div>
         </div>
     </div>

@@ -69,21 +69,23 @@ if(getCookie('tab') && getCookie('tab') >= 0){
 function showTab(n) {
   // This function will display the specified tab of the form ...
   var x = document.getElementsByClassName("tab");
-  x[n].style.display = "block";
-    console.log(x.length - 1);
-  // ... and fix the Previous/Next buttons:
-  if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
-  } else {
-    document.getElementById("prevBtn").style.display = "inline";
+  if(x.length != 0){
+      x[n].style.display = "block";
+      //console.log(x.length - 1);
+      // ... and fix the Previous/Next buttons:
+      if (n == 0) {
+          document.getElementById("prevBtn").style.display = "none";
+      } else {
+          document.getElementById("prevBtn").style.display = "inline";
+      }
+      if (n == (x.length - 1)) {
+          document.getElementById("nextBtn").innerHTML = "Submit";
+      } else {
+          //document.getElementById("nextBtn").innerHTML = 'Далее<span class="icon-material-outline-keyboard-arrow-right"></span>';
+      }
+      // ... and run a function that displays the correct step indicator:
+      fixStepIndicator(n)
   }
-  if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
-  } else {
-    //document.getElementById("nextBtn").innerHTML = 'Далее<span class="icon-material-outline-keyboard-arrow-right"></span>';
-  }
-  // ... and run a function that displays the correct step indicator:
-  fixStepIndicator(n)
 }
 
 function nextPrev(n) {
@@ -753,7 +755,6 @@ $('#main').on('beforeSubmit', function(e) {
 });
 
 $('#family').on('beforeSubmit', function(e) {
-    console.log('beforre');
     var form = $(this);
     //var data = form.serialize();
     var formData = new FormData(this);
@@ -775,7 +776,8 @@ $('#family').on('beforeSubmit', function(e) {
 
             //e.preventDefault();
         },
-        error: function () {
+        error: function (data) {
+            console.log(data);
             alert("Something went wrong");
         }
     });
@@ -792,6 +794,8 @@ $('#creditor').on('beforeSubmit', function(e) {
     for (i = 0; i < x.length; i++) {
        sum += parseInt(x[i].value);
     }
+    if(!sum)
+        sum = 0;
     console.log(sum);
     if(sum < 500000 ){
         alert("Невозможно списать задолженность, так как сумма меньше чем 500000руб.\nДальнейшее заполнение невозможно!");
@@ -1155,8 +1159,11 @@ $('#proxy').on('beforeSubmit', function(e) {
         success: function (data) {
             let res = JSON.parse(data);
             console.log(res);
-            if(res.success == true)
-                nextPrev(1);
+            if(res.success == true){
+                //nextPrev(1);
+                document.location.href = "/main/payment-page";
+            }
+
             else
                 alert("Не  удалось проверить введенные данные!");
         },
@@ -1167,6 +1174,74 @@ $('#proxy').on('beforeSubmit', function(e) {
 }).on('submit', function(e){
     e.preventDefault();
 });
+
+
+function activatePromocode(service_id,price){
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    let promocode = document.getElementById('promocode').value;
+    if (!promocode)
+        return false;
+    $.ajax({
+        url: '/admin/promocode/activate-promocode',
+        type: "POST",
+        data: {
+            service_id : service_id,
+            promocode : promocode,
+            _csrf : csrfToken,
+        },
+        success: function(res){
+            var data = JSON.parse(res);
+            //console.log(data.message);
+            if(data.success == true){
+                $('#discount').html("Скидка по промокоду: <span>"+data.discount+" % </span>");
+                $('#total').html("Всего к оплате <span>"+(price*data.discount)/100+" рублей</span>");
+            }
+            $('#promocode_message').html(data.message);
+        },
+        error: function(XMLHttpRequest){
+            console.log(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+function checkBoxes(){
+    if($('#chekcbox1').is(':checked') && $('#chekcbox2').is(':checked') )
+        nextPrev(1);
+}
+
+
+
+// $('#send-mail').on('beforeSubmit', function(e) {
+//     var form = $(this);
+//     var data = form.serialize();
+//     console.log(form);
+//     console.log(data);
+//     var formData = new FormData(this);
+//     $.ajax({
+//         url: form.attr("action"),
+//         type: "POST",
+//         data: formData,
+//         //datatype:'json',
+//         processData: false,
+//         contentType: false,
+//         success: function (data) {
+//             let res = JSON.parse(data);
+//             console.log(res);
+//             if(res.success == true){
+//                 //nextPrev(1);
+//                 document.location.href = "/main/payment-page";
+//             }
+//
+//             else
+//                 alert("Не  удалось проверить введенные данные!");
+//         },
+//         error: function () {
+//             alert("Something went wrong");
+//         }
+//     });
+// }).on('submit', function(e){
+//     e.preventDefault();
+// });
 
 
 

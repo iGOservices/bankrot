@@ -102,19 +102,21 @@ class Other extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Other');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $other = Other::findOne($item['id']);
-            }else{
-                $other = new Other();
-                $other->ticket_id = $ticket_id;
-            }
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $other = Other::findOne($item['id']);
+                } else {
+                    $other = new Other();
+                    $other->ticket_id = $ticket_id;
+                }
 
-            if($other->load($item, '')){
-                if($other->save()){
-                    $uploadForm->save("other","[$key]other",$other->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($other->load($item, '')) {
+                    if ($other->save()) {
+                        $uploadForm->save("other", "[$key]other", $other->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

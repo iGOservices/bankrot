@@ -13,12 +13,11 @@ use app\models\Creditor;
         115225, г. Москва, ул. Большая Тульская, д.17<br>
         <br>
        <b>
-        Заявитель (должник): Хиникадзе Нино Шукриевна<br>
-        12.08.1956 г.рождения, место рождения: Аджарская АССР,<br>
-        Кобулетский район, Хуцубани,<br>
+        Заявитель (должник): <?=$client_ticket->surname?> <?=$client_ticket->name?> <?=$client_ticket->patronymic?><br>
+        <?=$client_ticket->birthday?> г.рождения,<br> место рождения: Аджарская <?=$client_ticket->birth_place?>,<br>
         Место жительства (зарегистрирована)<br></b>
-        121353 г. Москва, ул.Беловежская д.39 копр.6 кв.70<br>
-        ИНН: 772704789276<br>
+        <?=$client_ticket->fact_address?><br>
+        ИНН: <?=$client_ticket->inn?><br>
         Государственная пошлина за подачу заявления<br>
         о признании гражданина банкротом -  <b>300 рублей</b><br>
         <br>
@@ -29,7 +28,7 @@ use app\models\Creditor;
 
     <div style="font-style: italic;text-align: justify;">
     На день подачи настоящего заявления (далее по тексту - заявление) в Арбитражный суд г. Москвы,
-        у <?=$client_ticket->surname?><?= $client_ticket->gender == 0 ? "а" : "ой"?> Нино Шукриевны (далее по тексту – должник)
+        у <?=$client_ticket->surname?><?= $client_ticket->gender == 0 ? "а" : "ой"?> <?=$client_ticket->name?><?= $client_ticket->gender == 0 ? "а" : "ы"?> <?=$client_ticket->patronymic?><?= $client_ticket->gender == 0 ? "а" : "ы"?>(далее по тексту – должник)
         ИНН <?=$client_ticket->inn?>, СНИЛС <?=$client_ticket->snils?>
         паспорт гр.  <?=$passport->series?> <?=$passport->number?>, выдан <?=$passport->given?>, дата выдачи <?=$passport->date_given?>,
         код подразделения <?=$passport->code?>, зарегистрированная (ый) по адресу:
@@ -108,7 +107,7 @@ use app\models\Creditor;
     <br>
     <div style="text-align: center;"><b><u><i>ПРОШУ СУД:</i></u></b></div>
     <ol>
-        <li><i><b>	Признать <?=$client_ticket->surname?><?= $client_ticket->gender == 0 ? "а" : "ой"?> Нино Шукриевну ИНН <?=$client_ticket->inn?>,
+        <li><i><b>	Признать <?=$client_ticket->surname?><?= $client_ticket->gender == 0 ? "а" : "ой"?> <?=$client_ticket->name?><?= $client_ticket->gender == 0 ? "а" : "ы"?> <?=$client_ticket->patronymic?><?= $client_ticket->gender == 0 ? "а" : "ы"?> ИНН <?=$client_ticket->inn?>,
                 СНИЛС <?=$client_ticket->snils?> паспорт гражданина РФ  <?=$passport->series?> <?=$passport->number?>,
                 выдан <?=$passport->given?>, дата выдачи <?=$passport->date_given?>, код подразделения <?=$passport->code?>,
                 зарегистрированную по адресу: <?=$client_ticket->index?>, г. <?=$client_ticket->city?>, ул. <?=$client_ticket->street?>,

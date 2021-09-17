@@ -90,13 +90,37 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->phone = preg_replace('~\D+~', '', $model->phone);
+            if($model->login())
+                return $this->goBack();
         }
 
         $this->layout = 'login';
         $model->password = '';
+        $model->phone = '';
         return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionEmailLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post())) {
+            //echo"<pre>";print_r($model);die();
+            if($model->login())
+                return $this->goBack();
+        }
+
+        $this->layout = 'login';
+        $model->password = '';
+        $model->phone = '';
+        return $this->render('email_login', [
             'model' => $model,
         ]);
     }
@@ -109,8 +133,8 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->response->redirect("/site/login");
+        //return $this->goHome();
     }
 
     /**

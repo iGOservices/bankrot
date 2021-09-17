@@ -169,24 +169,206 @@ class ValuableProperty extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('ValuableProperty');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $valuable_property = ValuableProperty::findOne($item['id']);
-            }else{
-                $valuable_property = new ValuableProperty();
-                $valuable_property->ticket_id = $ticket_id;
-            }
-            // echo"<pre>";print_r($data);die();
-            if($valuable_property->load($item, '')){
-                if($valuable_property->save()){
-                    $uploadForm->save("valuable_property","[$key]valuable_property",$valuable_property->id,$ticket_id);
-                }else{
-                    $result = false;
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $valuable_property = ValuableProperty::findOne($item['id']);
+                } else {
+                    $valuable_property = new ValuableProperty();
+                    $valuable_property->ticket_id = $ticket_id;
+                }
+                // echo"<pre>";print_r($data);die();
+                if ($valuable_property->load($item, '')) {
+                    if ($valuable_property->save()) {
+                        $uploadForm->save("valuable_property", "[$key]valuable_property", $valuable_property->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }
 
 
         return $result;
+    }
+
+
+    public static function createPayArray($id){
+        $valuable = ValuableProperty::find()->where(['ticket_id' => $id])->all();
+        $valuable_arr = [];
+        $fund = [];
+        $jewelry = [];
+        $art = [];
+        $professional = [];
+        $other = [];
+        foreach ($valuable as $key => $item){
+            $valuable_arr [] = [
+                "id" => $key."value",
+                "name" => $item->zalog_name."",
+                "type" => $item->zalog_type == 1 ? "physical": "organization",
+                "inn" => $item->zalog_inn."",
+                "address" => [
+                    "Country" => null,
+                    "Region" => null,
+                    "Area" => null,
+                    "City" => null,
+                    "Town" => null,
+                    "text" => $item->zalog_address."",
+                    "Street" => null,
+                    "HouseNumber" => null,
+                    "KorpusNumber" => null,
+                    "FlatNumber" => null
+                ],
+                "type_contact" => "creditor",
+                "agreement" => $item->zalog_dogovor."",
+                "text" => $item->zalog_name.""
+            ];
+            if($item->property_type-1 == 0) {
+                $fund [] = [
+                    "address" => [
+                        "Country" => $item->coutry."",
+                         "Region" => $item->region."",
+                         "Area" => $item->district."",
+                         "City" => $item->city."",
+                         "Town" => null,
+                         "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->office."",
+                         "Street" => $item->street."",
+                         "HouseNumber" => $item->house."",
+                         "KorpusNumber" => $item->corpus."",
+                         "FlatNumber"=> $item->office.""
+                    ],
+                      "type" => "0",
+                      "name" => $item->name."",
+                      "cost_sum" => $item->cost."",
+                      "location_type" => ($item->location-1)."",
+                      "location_credit_institution" => $item->org_name."",
+                      "location_agreement" => "",
+                      "location_number" => $item->dogovor_number."",
+                      "location_date" => date("d.m.Y",strtotime($item->dogovor_date))."",
+                      "description" => $item->other."",
+                      "mortgageeId" => $key."value",
+                      "group" => "5"
+                ];
+            }elseif($item->property_type-1 == 1) {
+                $jewelry [] = [
+                    "address" => [
+                        "Country" => $item->coutry."",
+                        "Region" => $item->region."",
+                        "Area" => $item->district."",
+                        "City" => $item->city."",
+                        "Town" => null,
+                        "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->office."",
+                        "Street" => $item->street."",
+                        "HouseNumber" => $item->house."",
+                        "KorpusNumber" => $item->corpus."",
+                        "FlatNumber"=> $item->office.""
+                    ],
+                    "type" => "1",
+                    "name" => $item->name."",
+                    "cost_sum" => $item->cost."",
+                    "location_type" => ($item->location-1)."",
+                    "location_credit_institution" => $item->org_name."",
+                    "location_agreement" => "",
+                    "location_number" => $item->dogovor_number."",
+                    "location_date" => date("d.m.Y",strtotime($item->dogovor_date))."",
+                    "description" => $item->other."",
+                    "mortgageeId" => $key."value",
+                    "group" => "5"
+                ];
+            }elseif($item->property_type-1 == 2) {
+                $art [] = [
+                    "address" => [
+                        "Country" => $item->coutry."",
+                        "Region" => $item->region."",
+                        "Area" => $item->district."",
+                        "City" => $item->city."",
+                        "Town" => null,
+                        "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->office."",
+                        "Street" => $item->street."",
+                        "HouseNumber" => $item->house."",
+                        "KorpusNumber" => $item->corpus."",
+                        "FlatNumber"=> $item->office.""
+                    ],
+                    "type" => "2",
+                    "name" => $item->name."",
+                    "cost_sum" => $item->cost."",
+                    "location_type" => ($item->location-1)."",
+                    "location_credit_institution" => $item->org_name."",
+                    "location_agreement" => "",
+                    "location_number" => $item->dogovor_number."",
+                    "location_date" => date("d.m.Y",strtotime($item->dogovor_date))."",
+                    "description" => $item->other."",
+                    "mortgageeId" => $key."value",
+                    "group" => "5"
+                ];
+            }elseif($item->property_type-1 == 3) {
+                $professional [] = [
+                    "address" => [
+                        "Country" => $item->coutry."",
+                        "Region" => $item->region."",
+                        "Area" => $item->district."",
+                        "City" => $item->city."",
+                        "Town" => null,
+                        "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->office."",
+                        "Street" => $item->street."",
+                        "HouseNumber" => $item->house."",
+                        "KorpusNumber" => $item->corpus."",
+                        "FlatNumber"=> $item->office.""
+                    ],
+                    "type" => "3",
+                    "name" => $item->name."",
+                    "cost_sum" => $item->cost."",
+                    "location_type" => ($item->location-1)."",
+                    "location_credit_institution" => $item->org_name."",
+                    "location_agreement" => "",
+                    "location_number" => $item->dogovor_number."",
+                    "location_date" => date("d.m.Y",strtotime($item->dogovor_date))."",
+                    "description" => $item->other."",
+                    "mortgageeId" => $key."value",
+                    "group" => "5"
+                ];
+            }else{
+                $other [] = [
+                    "address" => [
+                        "Country" => $item->coutry."",
+                        "Region" => $item->region."",
+                        "Area" => $item->district."",
+                        "City" => $item->city."",
+                        "Town" => null,
+                        "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", квартира ".$item->office."",
+                        "Street" => $item->street."",
+                        "HouseNumber" => $item->house."",
+                        "KorpusNumber" => $item->corpus."",
+                        "FlatNumber"=> $item->office.""
+                    ],
+                    "type" => "4",
+                    "name" => $item->name."",
+                    "cost_sum" => $item->cost."",
+                    "location_type" => ($item->location-1)."",
+                    "location_credit_institution" => $item->org_name."",
+                    "location_agreement" => "",
+                    "location_number" => $item->dogovor_number."",
+                    "location_date" => date("d.m.Y",strtotime($item->dogovor_date))."",
+                    "description" => $item->other."",
+                    "mortgageeId" => $key."value",
+                    "group" => "5"
+                ];
+            }
+
+        }
+
+        $result = [
+            'valuable1' => $valuable_arr,
+            'valuable2' => [
+                "Fund" => $fund,
+                "Jewelry" => $jewelry,
+                "Art" => $art,
+                "Professional" => $professional,
+                "Other" => $other
+            ]
+        ];
+
+        return $result;
+
     }
 }

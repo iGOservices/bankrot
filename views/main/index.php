@@ -30,12 +30,14 @@ use yii\widgets\ActiveForm;
 /* @var $razvod app\models\Razvod */
 
 /* @var $proxy app\models\Proxy */
+
+/* @var $ticket app\models\TicketStatus */
 ?>
 
 <div class="dashboard-content-inner" >
 	<!-- Dashboard Headline -->
 	<div class="dashboard-headline">
-		<h3>Заполнение нового тикета </h3>
+		<h3>Заполнение новой услуги </h3>
 <!--        <p>-->
 <!--            --><?//= Html::a('export pdf', ['/pdf/creditor'], ['class' => 'btn btn-success']) ?>
 <!--        </p>-->
@@ -43,8 +45,8 @@ use yii\widgets\ActiveForm;
 		<!-- Breadcrumbs -->
 		<nav id="breadcrumbs" class="dark">
 			<ul>
-				<li><a href="/main/tickets">Мои тикеты</a></li>
-				<li>Заполнение нового тикета</li>
+				<li><a href="/main/tickets">Список моих услуг</a></li>
+				<li>Заполнение новой услуги</li>
 			</ul>
 		</nav>
 	</div>
@@ -65,6 +67,7 @@ use yii\widgets\ActiveForm;
 					</h3>
               		<!-- Circles which indicates the steps of the form: -->
               		<div style="text-align:center">
+                        <span class="step"></span>
                     	<span class="step"></span>
                     	<span class="step"></span>
                     	<span class="step"></span>
@@ -80,13 +83,32 @@ use yii\widgets\ActiveForm;
                         <span class="step"></span>
                         <span class="step"></span>
                         <span class="step"></span>
-                        <span class="step"></span>
+
                   	</div>
 				</div>
 
 				<div class="content with-padding padding-bottom-10">
 
+                    <div class="tab">
 
+                        <div class="checkbox">
+                            <input type="checkbox" id="chekcbox1" checked="">
+                            <label for="chekcbox1"><span class="checkbox-icon"></span>Согласие на использование и обработку персональных данных</label>
+                        </div>
+                        <br>
+                        <div class="checkbox">
+                            <input type="checkbox" id="chekcbox2" checked="">
+                            <label for="chekcbox2"><span class="checkbox-icon"></span>Ответственность за непредставление или представление заведомо недостоверных и неполных сведений возлагается  на пользователя</label>
+                        </div>
+                        <div class="row" style="margin-top:30px;">
+                            <div class="center-block">
+                                <div class="row" >
+                                    <a href="#" class="button ripple-effect" id="prevBtn" onclick="nextPrev(-1)" style="margin-right:5px;"><span class="icon-material-outline-keyboard-arrow-left"></span>Назад</a>
+                                    <a href="#" class="button ripple-effect" id="prevBtn" onclick="checkBoxes();" style="margin-right:5px;">Далее<span class="icon-material-outline-keyboard-arrow-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="tab">
                         <?= $this->render('_client_main_info',[
@@ -97,9 +119,6 @@ use yii\widgets\ActiveForm;
                             'directory' => $directory,
                             //'form' => $form,
                         ]);?>
-
-
-
                      </div>
 
                     <div class="tab">
@@ -109,6 +128,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_family" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить Родственника
                         </a>
+
+                        <?if(!$family):?>
+                            <p>Если родственные отношения отстуствуют, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'family',
                             'action' => '/family/save-model',
@@ -157,6 +181,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_sp" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить Семейное положение
                         </a>
+
+                        <?if(!$brak):?>
+                            <p>Если семейное положение отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'sp',
                             'action' => '/family/save-model-sp',
@@ -210,6 +239,11 @@ use yii\widgets\ActiveForm;
                     <a href="#" id="add_creditor" class="button ripple-effect">
                         <i class="icon-material-outline-add-circle-outline"></i>Добавить кредитора
                     </a>
+
+                    <?if(!$creditor):?>
+                        <p>Если кредиторы отсутсвуют, то нажмите далее</p>
+                    <?endif;?>
+
                     <!-- Accordion -->
                     <?$form = ActiveForm::begin([
                         'id' => 'creditor',
@@ -258,6 +292,12 @@ use yii\widgets\ActiveForm;
                       <a href="#" id="add_debitor" class="button ripple-effect">
                           <i class="icon-material-outline-add-circle-outline"></i>Добавить дебитора
                       </a>
+
+                      <?if(!$debitor):?>
+                          <p>Если дебиторы отсутсвуют, то нажмите далее</p>
+                      <?endif;?>
+
+
                       <!-- Accordion -->
                       <?$form = ActiveForm::begin([
                           'id' => 'debitor',
@@ -304,12 +344,16 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_property" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить имущество
                         </a>
+
+                        <?if(!$property):?>
+                            <p>Если имущество отстуствует, то нажмите далее</p>
+                        <?endif;?>
                         <!-- Accordion -->
                             <?$form = ActiveForm::begin([
                                 'id' => 'property',
                                 'action' => '/property/save-model',
                                 'enableClientValidation' => true,
-                                'enableAjaxValidation' => false,
+                                'enableAjaxValidation' => true,
                                 'options' => ['enctype' => 'multipart/form-data'],
                                 'fieldConfig' => [
                                     'options' => [
@@ -352,6 +396,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_bank" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить банк
                         </a>
+
+                        <?if(!$bank):?>
+                            <p>Если сведения о счетах в банках или иных кредитных организациях отсутсвуют, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'bank',
                             'action' => '/bank/save-model',
@@ -399,6 +448,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_shares" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить выписку по ценным бумагам
                         </a>
+
+                        <?if(!$shares):?>
+                            <p>Если информация по акциям или ценным бумагам отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'shares',
                             'action' => '/shares/save-model',
@@ -449,6 +503,12 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_other_shares" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить иные ценные бумаги
                         </a>
+
+                        <?if(!$other_shares):?>
+                            <p>Если информация по иным ценным бумагам отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
+
                         <?$form = ActiveForm::begin([
                             'id' => 'other_shares',
                             'action' => '/other-shares/save-model',
@@ -495,6 +555,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_valuable-property" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить наличные денежные средства и иное ценное имущество
                         </a>
+
+                        <?if(!$valuable_property):?>
+                            <p>Если информация по наличным денежным средствам и ценному имуществу отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'valuable_property',
                             'action' => '/valuable-property/save-model',
@@ -541,6 +606,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_deal" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить «Совершенные сделки за последние 3 года»
                         </a>
+
+                        <?if(!$deal):?>
+                            <p>Если Совершенные сделки за последние 3 года отсутсвуют, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'deal',
                             'action' => '/deal/save-model',
@@ -588,6 +658,12 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_nalog" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить Доходы и Налоги
                         </a>
+
+                        <?if(!$nalog):?>
+                            <p>Если информация по доходам и налогам отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
+
                         <?$form = ActiveForm::begin([
                             'id' => 'nalog',
                             'action' => '/nalog/save-model',
@@ -632,8 +708,12 @@ use yii\widgets\ActiveForm;
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                         <a href="#" id="add_enforce-proc" class="button ripple-effect">
-                            <i class="icon-material-outline-add-circle-outline"></i>Добавить Исполнительные произвосдства
+                            <i class="icon-material-outline-add-circle-outline"></i>Добавить Исполнительные производства
                         </a>
+                        <?if(!$nalog):?>
+                            <p>Если информация по исполнительным производствам отсутсвует, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'enforce_proc',
                             'action' => '/enforce-proc/save-model',
@@ -680,6 +760,11 @@ use yii\widgets\ActiveForm;
                         <a href="#" id="add_other" class="button ripple-effect">
                             <i class="icon-material-outline-add-circle-outline"></i>Добавить Иные документы
                         </a>
+
+                        <?if(!$nalog):?>
+                            <p>Если иные документы отсутсвуют, то нажмите далее</p>
+                        <?endif;?>
+
                         <?$form = ActiveForm::begin([
                             'id' => 'other',
                             'action' => '/other/save-model',
@@ -740,19 +825,82 @@ use yii\widgets\ActiveForm;
 
                     </div>
                     <div class="tab">
-                        <p>
-                            <?= Html::a('Оплатить', ['main/close-ticket'], ['class' => 'btn btn-success']) ?>
-                        </p>
-                        <div class="form-group">
+                        <?if($ticket):?>
+                        <?$service = $ticket->getService()->one()?>
+                        <div class="pricing-plans-container"  style="width: 50%;margin: 0 auto" >
+                        <div class="pricing-plan">
+                            <h3><?=$service->title?></h3>
+                            <p class="margin-top-10"><?=$service->description?></p>
+                            <div class="pricing-plan-label billed-monthly-label" id="cost"><strong><?=$service->price?></strong>рублей</div>
+                            <div class="pricing-plan-label billed-yearly-label"><strong>$205</strong>/ yearly</div>
+                            <div class="pricing-plan-features">
+<!--                                <strong>Features of Basic Plan</strong>-->
+                                <ul>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="section-headline margin-bottom-12">
+                                                    <h5>Промокод</h5>
+                                                </div>
+                                                <input class="with-border" placeholder="" id="promocode">
+                                            </div>
+                                            <div class="col-xl-6 col-md-6" style="margin-top: 42px">
+                                                <a href="#"  onclick="activatePromocode(<?=$service->id?>,<?=$service->price?>);" class=" button full-width button-sliding-icon">Применить <i class="icon-material-outline-arrow-right-alt"></i></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li id="promocode_message"></li>
+<!--                                    <li>Highlighted in Search Results</li>-->
+                                </ul>
+                            </div>
+                            <form method="post" action="https://pay.modulbank.ru/pay">
+
+                                <input type="hidden" name="testing" value="1">
+
+                                <input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI">
+
+                                <input type="hidden" name="order_id" value="14425840">
+
+                                <input type="hidden" name="amount" value="<?=$service->price?>">
+
+                                <input type="hidden" name="merchant" value="ad25ef06-1824-413f-8ef1-c08115b9b979">
+
+                                <input type="hidden" name="signature" value="9b28fa592922dc8a0c1ba2e40f2c0432aa617afd">
+
+                                <input type="hidden" name="description" value="Заказ №14425840">
+
+                                <input type="hidden" name="client_phone" value="+7 912 9876543">
+
+                                <input type="hidden" name="client_email" value="test@test.ru">
+
+                                <input type="hidden" name="success_url" value="http://myawesomesite.com/payment_success">
+
+                                <input type="hidden" name="receipt_contact" value="test@mail.com">
+
+                                <input type="hidden" name="unix_timestamp" value="1573451160">
+
+                                <input type="hidden" name="receipt_items"
+                                       value="[{&quot;discount_sum&quot;: 40, &quot;name&quot;: &quot;Товар 1&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
+ &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 48, &quot;quantity&quot;: 10, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;},
+ {&quot;name&quot;: &quot;Товар 2&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
+ &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 533, &quot;quantity&quot;: 1, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;}]">
+
+<!--                                <input type="submit" value="Оплатить услугу" class="button full-width margin-top-20">-->
+                                <a href="/main/save-payment?ticket_id=<?=$model->id?>" onclick="setCookie('tab', 0);" class="button full-width margin-top-20">Оплатить услугу</a>
+
+                            </form>
+
+                        </div>
+                        </div>
                             <div class="row" style="margin-top:30px;">
                                 <div class="center-block">
                                     <div class="row" >
                                         <a href="#" class="button ripple-effect" id="prevBtn" onclick="nextPrev(-1)" style="margin-right:5px;"><span class="icon-material-outline-keyboard-arrow-left"></span>Назад</a>
-                                        <?= Html::submitButton("Далее<span class=\"icon-material-outline-keyboard-arrow-right\"></span>", ['class' => 'button ripple-effect']) ?>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <br>
+                        <?endif;?>
                     </div>
 
                     <div class="tab">
@@ -763,9 +911,9 @@ use yii\widgets\ActiveForm;
 		
 
 
-				  <div class="form-group">
-                      <a onclick="bindInputValue();">Заполнить</a>
-					</div>
+<!--				  <div class="form-group">-->
+<!--                      <a onclick="bindInputValue();">Заполнить</a>-->
+<!--					</div>-->
 
 						</div>
 					</div>

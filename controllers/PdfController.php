@@ -18,6 +18,8 @@ use app\models\ContactForm;
 class PdfController extends Controller
 {
     public function actionCreateUserDocuments($id,$ticket_status_id = null){
+        //Pdf::createDocx();
+
         Pdf::createPropertyPdf($id);
         Pdf::createCreditorPdf($id);
         Pdf::createBankrotBlank($id);

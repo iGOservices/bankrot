@@ -3,6 +3,8 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Message;
+use app\models\User;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -12,6 +14,8 @@ use app\assets\AppAsset;
 use yii\helpers\Url;
 
 AppAsset::register($this);
+
+$user = User::findOne(Yii::$app->user->id);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -305,30 +309,31 @@ AppAsset::register($this);
 								<div class="user-details">
 									<div class="user-avatar status-online"><img src="/img/main_profile.jpg" alt=""></div>
 									<div class="user-name">
-										Tom Smith <span>Freelancer</span>
+                                        <?=$user->username?>
+<!--										<span>Freelancer</span>-->
 									</div>
 								</div>
 								
 								<!-- User Status Switcher -->
-								<div class="status-switch" id="snackbar-user-status">
-									<label class="user-online current-status">Online</label>
-									<label class="user-invisible">Invisible</label>
-									<!-- Status Indicator -->
-									<span class="status-indicator" aria-hidden="true"></span>
-								</div>	
+<!--								<div class="status-switch" id="snackbar-user-status">-->
+<!--									<label class="user-online current-status">Online</label>-->
+<!--									<label class="user-invisible">Invisible</label>-->
+<!--
+									<span class="status-indicator" aria-hidden="true"></span>-->
+<!--								</div>	-->
 						</div>
 						
 						<ul class="user-menu-small-nav">
-							<li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
-							<li><a href="<?= Url::toRoute(['user/update', 'id' => Yii::$app->user->id])?>"><i class="icon-material-outline-settings"></i> Настройки</a></li>
-							<?='<li>'
+<!--							<li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>-->
+							<li><a href="<?= Url::toRoute(['user/update-user', 'id' => Yii::$app->user->id])?>"><i class="icon-material-outline-settings"></i> Настройки профиля</a></li>
+							<?='<li><a>'
                             . Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton(
                                 '<i class="icon-material-outline-power-settings-new"></i> Выйти',
                                 ['class' => 'btn btn-link logout']
                             )
                             . Html::endForm()
-                            . '</li>';?>
+                            . '</a></li>';?>
                         </ul>
 
 						</div>
@@ -383,8 +388,11 @@ AppAsset::register($this);
 
 						<ul data-submenu-title="Основная информация">
 							<li><a href="/main/index"><i class="icon-material-outline-dashboard"></i>Заполнение данных</a></li>
-							<li><a href="dashboard-messages.html"><i class="icon-material-outline-question-answer"></i> Чат поддержки <span class="nav-tag">2</span></a></li>
-							<li><a href="/main/tickets"><i class="icon-material-outline-star-border"></i> Активные тикеты</a></li>
+                            <li><a href="/main/tickets"><i class="icon-material-outline-star-border"></i>Список моих услуг</a></li>
+                            <?$message = Message::find()->where(['chat_id' => Yii::$app->user->id])->andWhere(['<>','user_id',Yii::$app->user->id])->andWhere(['see' => 0])->count();?>
+							<li><a href="/message/chat?type=user" ><i class="icon-material-outline-question-answer"></i> Чат поддержки <?=$message == 0 ? "" : "<span class=\"nav-tag\">".$message."</span>"?></a></li>
+                            <li><a href="/main/send-mail" ><i class="icon-material-baseline-mail-outline"></i>Оставить заявку</a></li>
+
 <!--							<li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>-->
 						</ul>
 						
@@ -406,10 +414,10 @@ AppAsset::register($this);
 <!--							</li>-->
 <!--						</ul>-->
 
-						<ul data-submenu-title="Настройки">
-							<li class="active"><a href="<?= Url::toRoute(['user/update', 'id' => Yii::$app->user->id])?>"><i class="icon-material-outline-settings"></i> Настройки</a></li>
-							<li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
-						</ul>
+<!--						<ul data-submenu-title="Настройки">-->
+<!--							<li class="active"><a href="--><?//= Url::toRoute(['user/update', 'id' => Yii::$app->user->id])?><!--"><i class="icon-material-outline-settings"></i> Настройки</a></li>-->
+<!--							<li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>-->
+<!--						</ul>-->
 						
 					</div>
 				</div>
@@ -430,7 +438,7 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
         <!-- Footer -->
-        <div class="dashboard-footer-spacer"></div>
+<!--        <div class="dashboard-footer-spacer"></div>-->
         <div class="small-footer margin-top-15">
             <div class="small-footer-copyrights">
                 © 2021 <strong>Bankrot</strong>. All Rights Reserved.

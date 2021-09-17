@@ -13,13 +13,13 @@ use app\models\Upload;
 
                 <!-- Dashboard Headline -->
                 <div class="dashboard-headline">
-                    <h3>Детали тикета №<?=$ticket->id?></h3>
+                    <h3>Файлы прилагаемые к услуге №<?=$ticket->id?></h3>
 
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="/main/tickets">Мои тикеты</a></li>
-                            <li>Детали тикета</li>
+                            <li><a href="/main/tickets">Список моих услуг</a></li>
+                            <li>Список файлов</li>
                         </ul>
                     </nav>
                 </div>
@@ -32,7 +32,7 @@ use app\models\Upload;
                         <div class="dashboard-box margin-top-0">
                             <!-- Headline -->
                             <div class="headline">
-                                <h3><i class="icon-material-outline-library-books"></i> Информация по конкретному тикету</h3>
+                                <h3><i class="icon-material-outline-library-books"></i> Файлы загруженные пользователем</h3>
                             </div>
 
                             <div class="content">
@@ -49,7 +49,7 @@ use app\models\Upload;
 
                                                     <!-- Details -->
                                                     <span class="freelancer-detail-item"><a href="#"><i class="icon-feather-mail"></i><?=$ticket->mail?></a></span>
-                                                    <span class="freelancer-detail-item"><i class="icon-feather-phone"></i><?=$ticket->phone?></span>
+                                                    <span class="freelancer-detail-item"><i class="icon-feather-phone"></i>+<?=$ticket->phone?></span>
 
                                                     <!-- Buttons -->
 <!--                                                    <div class="buttons-to-right always-visible margin-top-25 margin-bottom-5">-->
@@ -58,7 +58,6 @@ use app\models\Upload;
 <!--                                                        <a href="#" class="button gray ripple-effect ico" title="Remove Candidate" data-tippy-placement="top"><i class="icon-feather-trash-2"></i></a>-->
 <!--                                                    </div>-->
 
-                                                    <br>Здесь можно вывести информацию по тикету!
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +66,7 @@ use app\models\Upload;
                                     </li>
                                     <li>
                                         <div class="freelancer-name">
-                                        <h5>Файлы,загружаемые пользователем:</h5>
+<!--                                        <h5>Файлы,загружаемые пользователем:</h5>-->
                                             <!-- Attachments -->
                                             <?if(isset($upload) && isset($ticket)):?>
                                                 <?$pointer = 0;?>

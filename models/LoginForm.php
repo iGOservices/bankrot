@@ -14,6 +14,7 @@ use yii\base\Model;
 class LoginForm extends Model
 {
     public $phone;
+    public $email;
     public $password;
     public $rememberMe = true;
 
@@ -26,8 +27,9 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['phone', 'password'], 'required'],
+            [['password'], 'required'],
             [['phone'], 'integer'],
+            [['email'], 'email'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -39,6 +41,7 @@ class LoginForm extends Model
     {
         return [
             'phone' => 'Телефон',
+            'mail' => 'Email',
             'password' => 'Пароль',
             'rememberMe' => 'Запомнить',
         ];
@@ -55,7 +58,6 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Неверный телефон или пароль');
             }
@@ -83,6 +85,10 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
             $this->_user = User::findByPhone($this->phone);
+            if(!$this->_user){
+                $this->_user = User::findByEmail($this->email);
+            }
+
         }
 
         return $this->_user;

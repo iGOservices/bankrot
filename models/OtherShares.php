@@ -117,24 +117,56 @@ class OtherShares extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('OtherShares');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-            $other_shares = OtherShares::findOne($item['id']);
-            }else{
-                $other_shares = new OtherShares();
-                $other_shares->ticket_id = $ticket_id;
-            }
-            // echo"<pre>";print_r($data);die();
-            if($other_shares->load($item, '')){
-                if($other_shares->save()){
-                    $uploadForm->save("other_shares","[$key]other_shares",$other_shares->id,$ticket_id);
-                }else{
-                    $result = false;
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $other_shares = OtherShares::findOne($item['id']);
+                } else {
+                    $other_shares = new OtherShares();
+                    $other_shares->ticket_id = $ticket_id;
+                }
+                // echo"<pre>";print_r($data);die();
+                if ($other_shares->load($item, '')) {
+                    if ($other_shares->save()) {
+                        $uploadForm->save("other_shares", "[$key]other_shares", $other_shares->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }
 
 
         return $result;
+    }
+
+    public static function createPayArray($id){
+        $other_shares = OtherShares::find()->where(['ticket_id' => $id])->all();
+        $other_shares_arr = [];
+        foreach ($other_shares as $key => $item){
+            $other_shares_arr [] = [
+                "address" => [
+                    "Country" =>null,
+                    "Region" =>null,
+                    "Area" =>null,
+                    "City" => null,
+                    "Town"=>null,
+                    "text"=>"",
+                    "Street"=>null,
+                    "HouseNumber"=>"",
+                    "KorpusNumber"=>"",
+                    "FlatNumber" =>""
+                ],
+                "description" => $item->other."",
+               "person_released_security" => $item->creater."",
+               "nominal" => $item->nominal_cost."",
+               "total" => $item->total_count."",
+               "total_cost" => ($item->total_count*$item->nominal_cost)."",
+               "name" => OtherShares::$type[$item->type]."",
+               "group" => "4"
+            ];
+        }
+
+        return $other_shares_arr;
     }
 }

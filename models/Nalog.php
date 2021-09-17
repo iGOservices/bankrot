@@ -108,19 +108,21 @@ class Nalog extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Nalog');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $nalog = Nalog::findOne($item['id']);
-            }else{
-                $nalog = new Nalog();
-                $nalog->ticket_id = $ticket_id;
-            }
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $nalog = Nalog::findOne($item['id']);
+                } else {
+                    $nalog = new Nalog();
+                    $nalog->ticket_id = $ticket_id;
+                }
 
-            if($nalog->load($item, '')){
-                if($nalog->save()){
-                    $uploadForm->save("nalog","[$key]ndfl",$nalog->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($nalog->load($item, '')) {
+                    if ($nalog->save()) {
+                        $uploadForm->save("nalog", "[$key]ndfl", $nalog->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

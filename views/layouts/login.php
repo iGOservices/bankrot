@@ -28,8 +28,7 @@ AppAsset::register($this);
     <body class="gray">
     <?php $this->beginBody() ?>
 
-    <!-- Wrapper -->
-    <div id="wrapper">
+
 
         <div class="clearfix"></div>
         <!-- Header Container / End -->
@@ -41,9 +40,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-md-12">
 
-                        <h2>Название компании*</h2>
-
-
+<!--                        <h2>Название компании*</h2>-->
 
                     </div>
                 </div>

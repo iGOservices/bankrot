@@ -25,9 +25,9 @@ class TicketStatus extends \yii\db\ActiveRecord
     ];
 
     public static $type = [
-        0 => 'Заполнение документов',
-        1 => 'Банкротство под ключ',
-        2 => 'Услуги арбитражных управляющих',
+        1 => 'Заполнение документов',
+        2 => 'Банкротство под ключ',
+        3 => 'Услуги арбитражных управляющих',
     ];
     /**
      * {@inheritdoc}
@@ -73,5 +73,10 @@ class TicketStatus extends \yii\db\ActiveRecord
     public function getClientTicket()
     {
         return $this->hasOne(ClientTicket::className(), ['id' => 'ticket_id']);
+    }
+
+    public function getService()
+    {
+        return $this->hasOne(Service::className(), ['id' => 'type']);
     }
 }

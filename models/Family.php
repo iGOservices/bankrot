@@ -113,20 +113,22 @@ class Family extends \yii\db\ActiveRecord
 //        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
         $data = Yii::$app->request->post('Family');
-        //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $family = Family::findOne($item['id']);
-            }else{
-                $family = new Family();
-                $family->ticket_id = $ticket_id;
-            }
-
-            if($family->load($item, '')){
-                if($family->save()){
-                    $uploadForm->save("family","[$key]birth",$family->id,$ticket_id);
+        if($data){
+            //echo"<pre>";print_r($data);die();
+            foreach ($data as $key => $item){
+                if($item['id']){
+                    $family = Family::findOne($item['id']);
                 }else{
-                    $result = false;
+                    $family = new Family();
+                    $family->ticket_id = $ticket_id;
+                }
+
+                if($family->load($item, '')){
+                    if($family->save()){
+                        $uploadForm->save("family","[$key]birth",$family->id,$ticket_id);
+                    }else{
+                        $result = false;
+                    }
                 }
             }
         }
@@ -166,21 +168,22 @@ class Family extends \yii\db\ActiveRecord
         $result = true;
 
         $data = Yii::$app->request->post('Razvod');
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $razvod = Razvod::findOne($item['id']);
+                } else {
+                    $razvod = new Razvod();
+                    $razvod->ticket_id = $ticket_id;
+                }
 
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $razvod = Razvod::findOne($item['id']);
-            }else{
-                $razvod = new Razvod();
-                $razvod->ticket_id = $ticket_id;
-            }
-
-            if($razvod->load($item, '')){
-                if($razvod->save()){
-                    $uploadForm->save("sp","[$key]razvod",$razvod->id,$ticket_id);
-                    $uploadForm->save("sp","[$key]property_division",$razvod->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($razvod->load($item, '')) {
+                    if ($razvod->save()) {
+                        $uploadForm->save("sp", "[$key]razvod", $razvod->id, $ticket_id);
+                        $uploadForm->save("sp", "[$key]property_division", $razvod->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }
@@ -219,21 +222,22 @@ class Family extends \yii\db\ActiveRecord
         if(!$result) return false;
 
         $data = Yii::$app->request->post('Brak');
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $brak = Brak::findOne($item['id']);
+                } else {
+                    $brak = new Brak();
+                    $brak->ticket_id = $ticket_id;
+                }
 
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $brak = Brak::findOne($item['id']);
-            }else{
-                $brak = new Brak();
-                $brak->ticket_id = $ticket_id;
-            }
-
-            if($brak->load($item, '')){
-                if($brak->save()){
-                    $uploadForm->save("sp","[$key]brak",$brak->id,$ticket_id);
-                    $uploadForm->save("sp","[$key]brak_dogovor",$brak->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($brak->load($item, '')) {
+                    if ($brak->save()) {
+                        $uploadForm->save("sp", "[$key]brak", $brak->id, $ticket_id);
+                        $uploadForm->save("sp", "[$key]brak_dogovor", $brak->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

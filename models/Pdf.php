@@ -147,12 +147,29 @@ class Pdf extends \yii\db\ActiveRecord
 
     public function createAsbExportFile($id){
         $file = Pdf::createEmptyAsbFile($id);
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'export_asb'])->one();
+
+        if(!$upload)
+            $upload = new Upload();
+        $upload->model = "export_asb";
+        $upload->model_id = $id;
+        $upload->origin = "Файл для экспорта в ПАУ";
+        $upload->name = "export_asb";
+        $upload->folder = "export_asb";
+        $upload->ext = "asb";
+        $upload->user_id = Yii::$app->user->id;
+        $upload->created_at = time();
+        $upload->save();
 
         $model = ClientTicket::findOne($id);
         $passport_model = Passport::find()->where(['ticket_id' => $id])->one();
         $creditor_arr = Creditor::createPayArray($id);
         $debitor_arr = Debitor::createPayArray($id);
         $bank_arr = Bank::createPayArray($id);
+        $shares_arr = Shares::createPayArray($id);
+        $other_shares_arr = OtherShares::createPayArray($id);
+        $valuable_arr = ValuableProperty::createPayArray($id);
+        $property_arr = Property::createPayArray($id);
        // echo"<pre>";print_r($creditor_arr);die();
         //echo"<pre>";print_r();die();
         $html = [
@@ -231,73 +248,15 @@ class Pdf extends \yii\db\ActiveRecord
                     "identification_issued" => $passport_model->given,
                 ]
             ],
-            "Contacts" => ArrayHelper::merge($creditor_arr['creditor1'], $debitor_arr['debitor1']),
+            "Contacts" => ArrayHelper::merge($creditor_arr['creditor1'], $debitor_arr['debitor1'],$valuable_arr['valuable1'],$property_arr['property1']),
             "Inventory"=>[
                 "Data"=>[
-                    "Immovable"=>[
-                        "Land" => [
-
-                        ],
-                        "Home" => [
-
-                        ],
-                        "Apartments" => [
-
-                        ],
-                        "Garages" => [
-
-                        ],
-                        "Other" => [
-
-                        ]
-                    ],
-                    "Movable"=>[
-                        "Cars" => [
-
-                        ],
-                        "Lorries" => [
-
-                        ],
-                        "Moto" => [
-
-                        ],
-                        "Agricultural" => [
-
-                        ],
-                        "Water" => [
-
-                        ],
-                        "Air" => [
-
-                        ],
-                        "Other" => [
-
-                        ]
-                    ],
+                    "Immovable"=> $property_arr['immovable'],
+                    "Movable"=> $property_arr['movable'],
                     "Accounts" => $bank_arr,
-                    "Shares" => [
-
-                    ],
-                    "OtherSecurities" => [
-
-                    ],
-                    "Cash"=>[
-                        "Fund" => [
-
-                        ],
-                        "Jewelry" => [
-
-                        ],
-                        "Art" => [
-
-                        ],
-                        "Professional" => [
-
-                        ],
-                        "Other" => [
-
-                        ]
-                    ]
+                    "Shares" => $shares_arr,
+                    "OtherSecurities" => $other_shares_arr,
+                    "Cash"=> $valuable_arr['valuable2'],
                 ]
             ],
             "Creditors"=> $creditor_arr['creditor2'],
@@ -306,150 +265,225 @@ class Pdf extends \yii\db\ActiveRecord
                 "version" => "1.0"
             ]
         ];
-//        $html = [
-//            "Main" => [
-//                "Profile" => [
-//                    "place_birth" => [
-//                        "Country" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Region" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Area" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "City" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Town" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "text" => "Россия, Респ Удмуртская, г Ижевск, ул Авангардная, дом 6а, квартира 12",
-//                        "Street" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "HouseNumber" => "6а",
-//                        "KorpusNumber" => "",
-//                        "FlatNumber" => "12"
-//                    ],
-//                    "registration_address" => [
-//                        "Country" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Region" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Area" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "City" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "Town" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "text" => "Россия, Респ Удмуртская, г Ижевск, ул Авангардная, дом 6а, корпус 12, квартира 12",
-//                        "Street" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия",
-//                        ],
-//                        "HouseNumber" => "6а",
-//                        "KorpusNumber"=> "12",
-//                        "FlatNumber" => "12"
-//                    ],
-//                    "last_name" => "Иванов",
-//                    "first_name" => "Иван",
-//                    "middle_name" => "Иванович",
-//                    "last_fio" => "",
-//                    "date_birth" => "14.10.2015",
-//                    "snils" => "00000000000",
-//                    "inn" => "0000000000",
-//                    "identification_type" => "passport",
-//                    "identification_serial" => "1234",
-//                    "identification_number" => "123456",
-//                    "identification_issued" => "УВД Октяборьского района",
-//                ]
-//            ],
-//            "Contacts" => [
-//                [
-//                    "id" => "11195955-5802-2621-2116-d45b36a61067",
-//                    "name" => "Петров Пётр Петрович",
-//                    "type" => "physical",
-//                    "inn" => "0000000000",
-//                    "address" => [
-//                        "Country" => [
-//                            "id" => "RUS",
-//                            "text" => "Россия"
-//                        ],
-//                        "Region" => [
-//                            "id" => "18",
-//                            "text" => "Респ Удмуртская"
-//                        ],
-//                        "Area" => [
-//                            "id" => "",
-//                            "text" => ""
-//                        ],
-//                        "City" => [
-//                            "id" => "001",
-//                            "text" => "г Ижевск"
-//                        ],
-//                        "Town" => [
-//                            "id"=> "",
-//                            "text"  => ""
-//                        ],
-//                        "text" => "Россия, Респ Удмуртская, г Ижевск, ул Авангардная, дом 5а , корпус 12, квартира 12",
-//                        "Street" => [
-//                            "id" => "0001",
-//                            "text" => "ул Авангардная"
-//                        ],
-//                        "HouseNumber" => "5а ",
-//                        "KorpusNumber" => "12",
-//                        "FlatNumber" => "12"
-//                    ],
-//                    "type_contact" => "creditor",
-//                    "text" => "Петров Пётр Петрович"
-//                ]
-//            ],
-//            "Creditors" => [
-//                "Data" => [
-//                    "Monetary" => [
-//                        [
-//                            "creditor_id" => "11195955-5802-2621-2116-d45b36a61067",
-//                            "content_obligation" => "Аренда",
-//                            "business" => true,
-//                            "occurrence_agreement" => "Договор Аренды",
-//                            "occurrence_date" => "14.10.2015",
-//                            "occurrence_number" => "12",
-//                            "liabilities_total" => "1234",
-//                            "liabilities_debt" => "123",
-//                            "fines" => "12345",
-//                            "description" => "Примечание 1",
-//                            "group" => "0"
-//                        ],
-//                    ]
-//                ]
-//            ],
-//            "Info" => [
-//                "version" => "1.0"
-//            ]
-//        ];
+
 
         $fo = fopen($file, 'w') or die("can't open file");
         fwrite($fo, json_encode($html, JSON_UNESCAPED_UNICODE));
         fclose($fo);
         return true;
+    }
+
+
+    public static function createDocx(){
+
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+        $phpWord->setDefaultFontName('Times New Roman');
+        $phpWord->setDefaultFontSize(14);
+
+        $section = $phpWord->addSection();
+
+
+
+        $sectionStyle = array(
+
+            'orientation' => 'landscape',
+            'marginTop' => \PhpOffice\PhpWord\Shared\Converter::pixelToTwip(10),
+            'marginLeft' => 600,
+            'marginRight' => 600,
+            'colsNum' => 1,
+            'pageNumberingStart' => 1,
+            'borderBottomSize'=>100,
+            'borderBottomColor'=>'C0C0C0'
+
+        );
+        $section = $phpWord->addSection($sectionStyle);
+
+
+// Adding Text element with font customized inline...
+
+        $section->addText('Приложение №1', ['size'=>8], [ 'align' => 'right' ]);
+        $section->addText('К приказу Министерства', ['size'=>8], [ 'align' => 'right' ]);
+        $section->addText('экономического развития РФ ', ['size'=>8], [ 'align' => 'right' ]);
+        $section->addText('от 5 августа 2015 г.№530', ['size'=>8], [ 'align' => 'right' ]);
+
+
+        $section->addTextBreak(1);
+
+        $center = $phpWord->addParagraphStyle('p2Style', array('align'=>'center','marginTop' => 1));
+
+        $section->addText('Список кредиторов и должников гражданина',array('bold' => true,'name'=>'Times New Roman','size' => 16),$center);
+
+
+        $section->addTextBreak(1); // перенос строки
+
+        $styleTable = array('borderSize' => 1, 'borderColor' => '999999');
+        $cellRowSpan = array('vMerge' => 'restart', 'valign' => 'center');
+        $cellRowContinue = array('vMerge' => 'continue');
+        $cellColSpan2 = array('gridSpan' => 2, 'valign' => 'center');
+        $cellColSpan3 = array('gridSpan' => 3, 'valign' => 'center');
+
+        $cellHCentered = array('align' => 'center');
+        $cellVCentered = array('valign' => 'center');
+
+        $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
+        $table = $section->addTable('Colspan Rowspan');
+        $table->addRow(null, array('tblHeader' => true));
+        $table->addCell(2000, $cellColSpan3)->addText('Информация о гражданине', array('bold' => true), $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(1000, $cellVCentered)->addText('фамилия', null, $cellHCentered);
+        $table->addCell(3000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('имя', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('отчество', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText("в случае изменения фамилии,\n имени, отчества указать прежние фамилии, имена, отчества", null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('дата рождения', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('место рождения', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('СНИЛС', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('ИНН', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow(null);
+        $table->addCell(2000, $cellColSpan3)->addText('документ, удостоверяющий личность', [], []);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('вид документа', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('серия (при наличии) и номер', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+
+        $table->addRow(null);
+        $table->addCell(2000, $cellColSpan3)->addText('адрес регистрации по месту жительства в Российской Федерации', [], []);
+
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('субъект Российской Федерации', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('район', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('город', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('населенный пункт (село, поселок и так далее)', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('улица (проспект, переулок и так далее)', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('номер дома (владения)', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('номер корпуса (строения)', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+        $table->addRow();
+        $table->addCell(2000, $cellVCentered)->addText('номер квартиры (офиса)', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
+        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
+
+
+        $section->addPageBreak();
+
+
+
+//        $table->addRow();
+//        $table->addCell(2000, $cellRowSpan)->addText('rowspan=2 '
+//            . '(need one null cell under)', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellRowSpan)->addText('rowspan=3 '
+//            . '(nedd 2 null celss under)', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//
+//        $table->addRow();
+//        $table->addCell(null, $cellRowContinue); // 1 пустая в колонке 1
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(null, $cellRowContinue); // 1 пустая в колонке 3
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//
+//
+//        $table->addRow();
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(null, $cellRowContinue);  // 2 пустая в колонке 3
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//
+//
+//        $table->addRow();
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
+
+
+
+
+// Saving the document as OOXML file...
+//        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+//        $objWriter->save('helloWorld.docx');
+
+// Saving the document as ODF file...
+//        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
+//        $objWriter->save('helloWorld.odt');
+
+// Saving the document as HTML file...
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
+        $objWriter->save("php://output");
+        //$objWriter->save('helloWorld.html');
+
     }
 
 }

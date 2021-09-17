@@ -41,8 +41,6 @@ use kartik\date\DatePicker;
                                 <div class="accordion-body js-accordion-body">
                                     <!-- Accordion Content -->
                                     <div class="accordion-body__contents">
-                                        <?= $form->field($brak,"[$increment]id")->hiddenInput([])->label(false); ?>
-                                        <?= $form->field($razvod,"[$increment]id")->hiddenInput([])->label(false); ?>
                                         <div class="row">
                                             <div class="col-xl-6">
                                                 <div class="submit-field" style="padding-left:30px;padding-right:30px;">
@@ -319,10 +317,13 @@ use kartik\date\DatePicker;
 
 			</div>
 		</div>
+        <?= $form->field($brak,"[$increment]id")->hiddenInput([])->label(false); ?>
+        <?= $form->field($razvod,"[$increment]id")->hiddenInput([])->label(false); ?>
 	</div>
 	<!-- Accordion Body / End -->
 </div>
 <!-- Accordion Item / End -->
+
 </div>
 
 

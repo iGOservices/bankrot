@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Message;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -28,6 +29,7 @@ AdminAsset::register($this);
 
 <div class="wrap">
     <?php
+
     NavBar::begin([
         'brandLabel' => 'Админ-панель',
         'brandUrl' => Yii::$app->homeUrl,
@@ -37,6 +39,9 @@ AdminAsset::register($this);
     ]);
 
     $menuItems = [
+        ['label' => 'Чат', 'url' => ['/message/chat?type=admin']],
+        ['label' => 'Тарифы', 'url' => ['/admin/service/index']],
+        ['label' => 'Промокоды', 'url' => ['/admin/promocode/index']],
         ['label' => 'Услуги', 'url' => ['/ticket-status/index']],
         ['label' => 'Список пользователей', 'url' => ['/user/index']],
 

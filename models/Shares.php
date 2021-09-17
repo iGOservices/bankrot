@@ -126,24 +126,64 @@ class Shares extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Shares');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $shares = Shares::findOne($item['id']);
-            }else{
-                $shares = new Shares();
-                $shares->ticket_id = $ticket_id;
-            }
-            // echo"<pre>";print_r($data);die();
-            if($shares->load($item, '')){
-                if($shares->save()){
-                    $uploadForm->save("shares","[$key]shares",$shares->id,$ticket_id);
-                }else{
-                    $result = false;
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $shares = Shares::findOne($item['id']);
+                } else {
+                    $shares = new Shares();
+                    $shares->ticket_id = $ticket_id;
+                }
+                // echo"<pre>";print_r($data);die();
+                if ($shares->load($item, '')) {
+                    if ($shares->save()) {
+                        $uploadForm->save("shares", "[$key]shares", $shares->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }
 
 
         return $result;
+    }
+
+
+    public static function createPayArray($id){
+        $shares = Shares::find()->where(['ticket_id' => $id])->all();
+        $shares_arr = [];
+        foreach ($shares as $key => $item){
+            $shares_arr [] = [
+                "address" => [
+                    "Country" =>null,
+                    "Region" =>null,
+                    "Area" =>null,
+                    "City" => null,
+                    "Town"=>null,
+                    "text"=>$item->location."",
+                    "Street"=>null,
+                    "HouseNumber"=>"",
+                    "KorpusNumber"=>"",
+                    "FlatNumber" =>""
+                ],
+                "name" => $item->name."",
+                "description" => $item->other."",
+                "form_incorporation" =>"0",
+                "capital" =>"Складочный капитал",
+                "proportion_portion" => $item->share."",
+                "proportion_nominal" =>$item->nominal_cost."",
+                "proportion_stock" => $item->shares_count."",
+                "participation_agreement" => "",
+                "participation_date" => date("d.m.Y",strtotime($item->date))."",
+                "participation_number" => $item->dogovor_number."",
+                "capital_sum" => $item->total_cost."",
+//                "farm_property":"0",
+//                "farm_share":"",
+                "group" => "3"
+            ];
+        }
+
+        return $shares_arr;
     }
 }

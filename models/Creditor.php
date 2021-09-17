@@ -184,19 +184,21 @@ class Creditor extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Creditor');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $creditor = Creditor::findOne($item['id']);
-            }else{
-                $creditor = new Creditor();
-                $creditor->ticket_id = $ticket_id;
-            }
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $creditor = Creditor::findOne($item['id']);
+                } else {
+                    $creditor = new Creditor();
+                    $creditor->ticket_id = $ticket_id;
+                }
 
-            if($creditor->load($item, '')){
-                if($creditor->save()){
-                    $uploadForm->save("creditor","[$key]creditor",$creditor->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($creditor->load($item, '')) {
+                    if ($creditor->save()) {
+                        $uploadForm->save("creditor", "[$key]creditor", $creditor->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

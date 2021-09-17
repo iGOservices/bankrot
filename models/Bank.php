@@ -137,19 +137,21 @@ class Bank extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Bank');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $bank = Bank::findOne($item['id']);
-            }else{
-                $bank = new Bank();
-                $bank->ticket_id = $ticket_id;
-            }
-            // echo"<pre>";print_r($data);die();
-            if($bank->load($item, '')){
-                if($bank->save()){
-                    $uploadForm->save("bank","[$key]bank",$bank->id,$ticket_id);
-                }else{
-                    $result = false;
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $bank = Bank::findOne($item['id']);
+                } else {
+                    $bank = new Bank();
+                    $bank->ticket_id = $ticket_id;
+                }
+                // echo"<pre>";print_r($data);die();
+                if ($bank->load($item, '')) {
+                    if ($bank->save()) {
+                        $uploadForm->save("bank", "[$key]bank", $bank->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

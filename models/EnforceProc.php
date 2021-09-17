@@ -100,19 +100,21 @@ class EnforceProc extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('EnforceProc');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $enforce = EnforceProc::findOne($item['id']);
-            }else{
-                $enforce = new EnforceProc();
-                $enforce->ticket_id = $ticket_id;
-            }
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $enforce = EnforceProc::findOne($item['id']);
+                } else {
+                    $enforce = new EnforceProc();
+                    $enforce->ticket_id = $ticket_id;
+                }
 
-            if($enforce->load($item, '')){
-                if($enforce->save()){
+                if ($enforce->load($item, '')) {
+                    if ($enforce->save()) {
 
-                }else{
-                    $result = false;
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

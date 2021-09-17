@@ -16,8 +16,10 @@ use app\models\Pdf;
 use app\models\Property;
 use app\models\Proxy;
 use app\models\Razvod;
+use app\models\Service;
 use app\models\Shares;
 use app\models\TicketStatus;
+use app\models\User;
 use app\models\ValuableProperty;
 use Yii;
 use app\models\ClientTicket;
@@ -85,11 +87,13 @@ class MainController extends Controller
                 if ($model->validate() && $passport_model->validate() && $inter_passport_model->validate()) {
                     if($model->save()){
 
-                        $ticket_id = ClientTicket::getActiveTicket();
+                        //$ticket_id = ClientTicket::getActiveTicket();
                         if(!$ticket_id){
+                            //В зависимости от домена создаем необходимый статус
                             $ticket_status = new TicketStatus();
                             $ticket_status->ticket_id = $model->id;
                             $ticket_status->status = 0;
+                            $ticket_status->type = 1;
                             $ticket_status->save();
                         }
                         $passport_model->ticket_id = $model->id;
@@ -153,6 +157,7 @@ class MainController extends Controller
         $ticket_id = ClientTicket::getActiveTicket();
 
         if($ticket_id){
+            $ticket = TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
             $model = ClientTicket::findOne($ticket_id);
             $passport_model = Passport::find()->where(['ticket_id' => $ticket_id])->one();
             $inter_passport_model = InterPassport::find()->where(['ticket_id' => $ticket_id])->one();
@@ -182,7 +187,10 @@ class MainController extends Controller
 
             $proxy = new Proxy();
         }
-
+//
+//        $url = $_SERVER['REQUEST_URI'];
+//        $url = explode('?', $url);
+//        $url = $url[0];
         $directory = Directory::findOne(1);
 
         $model->user_id = Yii::$app->user->id;
@@ -342,6 +350,8 @@ class MainController extends Controller
             'razvod' => isset($razvod) ? $razvod : null,
 
             'proxy' => isset($proxy) ? $proxy : null,
+
+            'ticket' => isset($ticket) ? $ticket : null,
         ]);
     }
 
@@ -368,6 +378,33 @@ class MainController extends Controller
         ]);
     }
 
+    public function actionSavePayment(){
+        $ticket_id = ClientTicket::getActiveTicket();
+        $ticket = TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
+        Pdf::createPropertyPdf($ticket_id);
+        Pdf::createCreditorPdf($ticket_id);
+        Pdf::createBankrotBlank($ticket_id);
+
+        if($ticket->type != 1){
+            $ticket->status = 3;
+        }else{
+            $ticket->status = 1;
+        }
+        if($ticket->save()){
+            if($ticket->type == 1){
+                //Отправялем администраторку на почту сообщение
+                $result = Yii::$app->mailer->compose()
+                    ->setFrom('sotsur@yandex.ru')
+                    ->setTo('sotsur@yandex.ru')
+                    ->setSubject('Новая услуга')
+                    ->setTextBody('Новая услуга')
+                    ->setHtmlBody("Создана новая услуга №".$ticket_id);
+                $result->send();
+            }
+        }
+        return $this->redirect("/main/tickets");
+    }
+
     /**
      * Выводим игнформацию по конкретному тикету
      * @param $id
@@ -375,7 +412,7 @@ class MainController extends Controller
      */
     public function actionTicketDetail($id){
         $ticket = ClientTicket::findOne($id);
-        $upload = Upload::find()->where(['model_id' => $id])->all();
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => "user_docs"])->all();
 
         return $this->render('ticket_detail', [
             'ticket' => $ticket,
@@ -423,17 +460,64 @@ class MainController extends Controller
         return true;
     }
 
-    public function actionCloseTicket(){
+//    public function actionCloseTicket(){
+//        $ticket_id = ClientTicket::getActiveTicket();
+//        Pdf::CreateUserDocuments($ticket_id);
+//
+//        if($ticket_id){
+//            $result = TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
+//            $result->status = 1;
+//            if($result->save()){
+//                setcookie ("tab", 0);
+//                return $this->redirect('/main/tickets');
+//            }
+//        }
+//    }
 
+
+    public function actionPaymentPage(){
         $ticket_id = ClientTicket::getActiveTicket();
-        if($ticket_id){
-            $result = TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
-            $result->status = 1;
-            if($result->save()){
-                setcookie ("tab", 0);
-                return $this->redirect('/main/tickets');
+        $ticket =  TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
+        $service = Service::findOne($ticket->type);
+        return $this->render("payment_page",[
+            'service' => $service,
+        ]);
+    }
+
+    public function actionSendMail(){
+        $uploadForm = new UploadForm();
+
+        $data = Yii::$app->request->post();
+        if($data){
+            if($data['ClientTicket']['text']){
+                //$uploadForm->save("tmp",'mail',1,1);
+                //echo"<pre>";print_r($_FILES['UploadForm']);die();
+                $user = User::findOne(Yii::$app->user->id);
+                $result = Yii::$app->mailer->compose()
+                    ->setFrom('sotsur@yandex.ru')
+                    ->setTo('sotsur@yandex.ru')
+                    ->setSubject('Заявка от пользователя')
+                    ->setTextBody('Текст сообщения')
+                    ->setHtmlBody("<h4>Телефон: ".$user->phone." ,email: ".$user->email."<h4>".$data['ClientTicket']['text']);
+                if($_FILES){
+                    foreach ($_FILES['UploadForm']['name']['mail'] as $file){
+                        //echo"<pre>";print_r($file);die();
+                        $result->attachContent('Заявка от пользователя '.$user->username, ['fileName' => $file, 'contentType' => 'text/plain']);
+                    }
+                }
+                $result->send();
+                return $this->render("mail_success",[
+
+                ]);
             }
+
         }
+
+        return $this->render("send_mail",[
+
+        ]);
+
+
     }
 
 }

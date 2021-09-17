@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ClientTicket;
 use app\models\ClientTicketSearch;
+use app\models\UploadForm;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -93,7 +94,7 @@ class UserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$type = null)
     {
         $model = $this->findModel($id);
 
@@ -134,5 +135,22 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    public function actionUpdateUser($id)
+    {
+        $this->layout = "/user";
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->phone = preg_replace('~\D+~', '', $model->phone);
+            if($model->save())
+                return $this->redirect(['user/update-user', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 }

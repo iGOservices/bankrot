@@ -306,7 +306,7 @@ use kartik\date\DatePicker;
                 </div>
 
                 <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['property_zalog_name'] == 1):?>
+                    <? if($directory['property_zalog'] == 1):?>
                         <div class="submit-field ">
                             <h5>Залогодержатель</h5>
                             <?= $form->field($property, "[$increment]zalog")->dropDownList(Property::$zalog, ['maxlength' => true, 'class' => 'with-border select_list'])->label(false) ?>
@@ -315,7 +315,7 @@ use kartik\date\DatePicker;
                 </div>
 
                 <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['property_zalog_name'] == 1):?>
+                    <? if($directory['property_active_status'] == 1):?>
                         <div class="submit-field ">
                             <h5>Статус актива В залоге.</h5>
                             <?= $form->field($property, "[$increment]active_status", [

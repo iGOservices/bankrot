@@ -200,6 +200,7 @@ class Property extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Property');
         //echo"<pre>";print_r($data);die();
+        if($data){
         foreach ($data as $key => $item){
             if($item['id']){
                 $property = Property::findOne($item['id']);
@@ -213,11 +214,614 @@ class Property extends \yii\db\ActiveRecord
                     $uploadForm->save("property","[$key]property",$property->id,$ticket_id);
                     $uploadForm->save("property","[$key]other_property",$property->id,$ticket_id);
                 }else{
-                    $result = false;
+                    $result = json_encode($property->errors);
+                }
+            }
+        }
+        }
+
+
+        return $result;
+    }
+
+
+    public static function createPayArray($id){
+        $property = Property::find()->where(['ticket_id' => $id])->all();
+        $property_arr1 = [];
+        $land = [];
+        $home = [];
+        $apartments= [];
+        $garages= [];
+        $other= [];
+        $cars= [];
+        $lorries= [];
+        $moto= [];
+        $agricultural= [];
+        $water= [];
+        $air= [];
+        $other= [];
+
+        foreach ($property as $key => $item){
+            $property_arr1 [] = [
+                "id" => $key."property",
+                "name" => $item->zalog_name."",
+                "type" => $item->zalog == 1 ? "physical": "organization",
+                "inn" => $item->zalog_inn."",
+                "address" => [
+                    "Country" => null,
+                    "Region" => null,
+                    "Area" => null,
+                    "City" => null,
+                    "Town" => null,
+                    "text" => "".$item->zalog_post_index."",
+                    "Street" => null,
+                    "HouseNumber" => null,
+                    "KorpusNumber" => null,
+                    "FlatNumber" => null
+                ],
+                "agreement" => $item->zalog_dogovor,
+                "type_contact" => "creditor",
+                "text" => $item->other.""
+            ];
+            if(($item->group-1) == 0){
+                if(($item->property_type-1) == 0){
+                    $land [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house."",
+                            "KorpusNumber" => $item->corpus."",
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "area" => $item->square."",
+                        "cost" => $item->cost."",
+                        "purchase_name" => "",
+                        "purchase_date"  =>  date("d.m.Y",strtotime($item->date_sved))."",
+                        "purchase_number" => $item->num_sved."",
+                        "mortgageeId" => $key."property",
+                        "group" => "0"
+                    ];
+                }elseif(($item->property_type-1) == 1){
+                    $home [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "area" => $item->square."",
+                        "cost" => $item->cost."",
+                        "purchase_name" => "",
+                        "purchase_date"  =>  date("d.m.Y",strtotime($item->date_sved))."",
+                        "purchase_number" => $item->num_sved."",
+                        "mortgageeId" => $key."property",
+                        "group" => "0"
+                    ];
+                }elseif(($item->property_type-1) == 2){
+                    $apartments [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->flat
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "area" => $item->square."",
+                        "cost" => $item->cost."",
+                        "purchase_name" => "",
+                        "purchase_date"  =>  date("d.m.Y",strtotime($item->date_sved))."",
+                        "purchase_number" => $item->num_sved."",
+                        "mortgageeId" => $key."property",
+                        "group" => "0"
+                    ];
+                }elseif(($item->property_type-1) == 3){
+                    $garages [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "area" => $item->square."",
+                        "cost" => $item->cost."",
+                        "purchase_name" => "",
+                        "purchase_date"  =>  date("d.m.Y",strtotime($item->date_sved))."",
+                        "purchase_number" => $item->num_sved."",
+                        "mortgageeId" => $key."property",
+                        "group" => "0"
+                    ];
+                }else{
+                    $other [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "area" => $item->square."",
+                        "cost" => $item->cost."",
+                        "purchase_name" => "",
+                        "purchase_date"  =>  date("d.m.Y",strtotime($item->date_sved))."",
+                        "purchase_number" => $item->num_sved."",
+                        "mortgageeId" => $key."property",
+                        "group" => "0"
+                    ];
+                }
+            }else{
+                if(($item->property_type-1) == 0){
+                    $cars [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }elseif(($item->property_type-1) == 1){
+                    $lorries [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" =>($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }elseif(($item->property_type-1) == 2){
+                    $moto [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" =>($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }elseif(($item->property_type-1) == 3){
+                    $agricultural [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }elseif(($item->property_type-1) == 4){
+                    $water [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }elseif(($item->property_type-1) == 5){
+                    $air [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
+                }else{
+                    $other [] = [
+                        "address" => [
+                            "Country" => [
+                                "id" => $item->coutry,
+                                "text" => $item->coutry
+                            ],
+                            "Region" => [
+                                "id" => $item->region,
+                                "text" => $item->region
+                            ],
+                            "Area" => [
+                                "id" => $item->district,
+                                "text" => $item->district
+                            ],
+                            "City" => [
+                                "id" => $item->city,
+                                "text" => $item->city
+                            ],
+                            "Town" => [
+                                "id"=> "",
+                                "text"  => ""
+                            ],
+                            "text" => "".$item->coutry.", Респ ".$item->region.", г ".$item->city.", ул ".$item->street.", дом ".$item->house." , корпус ".$item->corpus.", офис ".$item->office."",
+                            "Street" => [
+                                "id" => $item->street,
+                                "text" => $item->street
+                            ],
+                            "HouseNumber" => $item->house,
+                            "KorpusNumber" => $item->corpus,
+                            "FlatNumber" => $item->office.""
+                        ],
+                        "name" => $item->active_name."",
+                        "description" => $item->other."",
+                        "type" => ($item->property_type-1)."",
+                        "ownership_type" => ($item->property_view-1)."",
+                        "ownership" => $item->share."",
+                        "identification_number" => $item->reg_number."",
+                        "cost" => $item->cost."",
+                        "model" => "",
+                        "year" => "",
+                        "mortgageeId" => $key."property",
+                        "group" => "1"
+                    ];
                 }
             }
         }
 
+        $result = [
+            'property1' => $property_arr1,
+            'immovable' => [
+                "Land" => $land,
+                "Home" => $home,
+                "Apartments" => $apartments,
+                "Garages" => $garages,
+                "Other" => $other
+            ],
+            "movable"=>[
+                "Cars" => $cars,
+                "Lorries" => $lorries,
+                "Moto" => $moto,
+                "Agricultural" => $agricultural,
+                "Water" => $water,
+                "Air" => $air,
+                "Other" => $other
+            ],
+        ];
 
         return $result;
     }

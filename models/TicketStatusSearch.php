@@ -46,6 +46,7 @@ class TicketStatusSearch extends TicketStatus
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+
         ]);
 
         $this->load($params);
@@ -57,6 +58,7 @@ class TicketStatusSearch extends TicketStatus
         }
 
         $dataProvider->setSort([
+            'defaultOrder' => ['ticket_id'=>SORT_DESC],
             'attributes' => [
                 'user_id' => [
                     'asc' => ['user_id' => SORT_ASC, 'user_id' => SORT_ASC],

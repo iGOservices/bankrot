@@ -35,6 +35,8 @@ class Upload extends \yii\db\ActiveRecord
         'nalog' => "Доходы и Налоги",
         'other' => "Иные документы",
         'proxy' => "Блок оплаты и получения услуг",
+        'user_docs' => "Сформированные документы",
+        'export_asb' => "Файл для эксопрта в ПАУ",
     ];
     /**
      * {@inheritdoc}

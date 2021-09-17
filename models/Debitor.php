@@ -172,25 +172,26 @@ class Debitor extends \yii\db\ActiveRecord
         $result = true;
 //        $ids = ArrayHelper::getColumn(Family::find()->where(['ticket_id' => $ticket_id])->all(), 'id');
 
-        $data = Yii::$app->request->post('Debitor');
-        //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $debitor = Debitor::findOne($item['id']);
-            }else{
-                $debitor = new Debitor();
-                $debitor->ticket_id = $ticket_id;
-            }
-           // echo"<pre>";print_r($data);die();
-            if($debitor->load($item, '')){
-                if($debitor->save()){
-                    $uploadForm->save("debitor","[$key]debitor",$debitor->id,$ticket_id);
-                }else{
-                    $result = false;
+            $data = Yii::$app->request->post('Debitor');
+        if($data) {
+            //echo"<pre>";print_r($data);die();
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $debitor = Debitor::findOne($item['id']);
+                } else {
+                    $debitor = new Debitor();
+                    $debitor->ticket_id = $ticket_id;
+                }
+                // echo"<pre>";print_r($data);die();
+                if ($debitor->load($item, '')) {
+                    if ($debitor->save()) {
+                        $uploadForm->save("debitor", "[$key]debitor", $debitor->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }
-
 
         return $result;
     }

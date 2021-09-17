@@ -128,6 +128,12 @@ class ClientTicket extends \yii\db\ActiveRecord
             ->where(['model' => 'user_docs']);
     }
 
+    public function getExportPay()
+    {
+        return $this->hasOne(Upload::className(), ['model_id' => 'id'])
+            ->where(['model' => 'export_asb']);
+    }
+
     public function getTicketStatus()
     {
         return $this->hasOne(TicketStatus::className(), ['ticket_id' => 'id']);
@@ -248,7 +254,7 @@ class ClientTicket extends \yii\db\ActiveRecord
 
         if($tickets){
             foreach ($tickets as $ticket) {
-
+                //тут смотрим тип домена и для конкретного домена
                 $ticket_status = $ticket->ticketStatus;
                 //Если находим незавершенный тикет то продолжаем его
                 if($ticket_status && $ticket_status->status == 0){

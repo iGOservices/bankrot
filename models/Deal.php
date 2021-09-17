@@ -121,19 +121,21 @@ class Deal extends \yii\db\ActiveRecord
 
         $data = Yii::$app->request->post('Deal');
         //echo"<pre>";print_r($data);die();
-        foreach ($data as $key => $item){
-            if($item['id']){
-                $deal = Deal::findOne($item['id']);
-            }else{
-                $deal = new Deal();
-                $deal->ticket_id = $ticket_id;
-            }
+        if($data) {
+            foreach ($data as $key => $item) {
+                if ($item['id']) {
+                    $deal = Deal::findOne($item['id']);
+                } else {
+                    $deal = new Deal();
+                    $deal->ticket_id = $ticket_id;
+                }
 
-            if($deal->load($item, '')){
-                if($deal->save()){
-                    $uploadForm->save("deal","[$key]deal",$deal->id,$ticket_id);
-                }else{
-                    $result = false;
+                if ($deal->load($item, '')) {
+                    if ($deal->save()) {
+                        $uploadForm->save("deal", "[$key]deal", $deal->id, $ticket_id);
+                    } else {
+                        $result = false;
+                    }
                 }
             }
         }

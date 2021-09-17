@@ -57,7 +57,7 @@ use app\models\ValuableProperty;
 
         <? foreach ($creditor as $key => $let){
             /* @var $let app\models\Creditor*/
-            if($let->is_predprin == 0 && $let->group == 1){
+            if($let->is_predprin == 1 && $let->group == 1){
                 echo "<tr><td>1.".($key+1)."</td>".
                 "<td>".Creditor::$commitment[$let->commitment]."</td>".
                 "<td>".Creditor::$statment[$let->statment].": ".$let->name."</td>".
@@ -85,7 +85,7 @@ use app\models\ValuableProperty;
             if($let->is_predprin == 0 && $let->group == 2){
                 echo "<tr><td>2.".($key+1)."</td>".
                     "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю что такое недоимка</td>".
+                    "<td colspan='2'></td>".
                     "<td colspan='2'>".$let->forfeit."</td></tr>";
             }
         }?>
@@ -160,7 +160,7 @@ use app\models\ValuableProperty;
             if($let->is_predprin == 1 && $let->group == 2){
                 echo "<tr><td>2.".($key+1)."</td>".
                     "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю что такое недоимка</td>".
+                    "<td colspan='2'></td>".
                     "<td colspan='2'>".$let->forfeit."</td></tr>";
             }
         }?>
@@ -235,8 +235,8 @@ use app\models\ValuableProperty;
             if($let->is_predprin == 0 && ($let->group == 2 || $let->group == 3)){
                 echo "<tr><td>2.".($key+1)."</td>".
                     "<td colspan='3'>".$let->commitment.": ".$let->name."</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю</td></tr>";
+                    "<td colspan='2'></td>".
+                    "<td colspan='2'></td></tr>";
             }
         }?>
 
@@ -308,9 +308,9 @@ use app\models\ValuableProperty;
             /* @var $let app\models\Debitor*/
             if($let->is_predprin == 1 && $let->group == 2){
                 echo "<tr><td>2.".($key+1)."</td>".
-                    "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю</td>".
-                    "<td colspan='2'>Тут что то будет когда я узнаю</td></tr>";
+//                    "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
+                    "<td colspan='2'></td>".
+                    "<td colspan='2'></td></tr>";
             }
         }?>
 

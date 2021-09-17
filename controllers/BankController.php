@@ -148,6 +148,7 @@ class BankController extends Controller
             $directory = Directory::findOne(1);
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
+                'enableClientValidation' => true,
                 'fieldConfig' => [
                     'options' => [
                         'class' => 'form-group row'

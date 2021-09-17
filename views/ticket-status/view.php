@@ -69,6 +69,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Сформировать документ для экспорта в ПАУ', ['pdf/create-export-pay-document','id' => $client_ticket->id,'ticket_status_id' => $model->id], ['class' => 'btn btn-success edit_button']) ?>
     </p>
+    <?$doc = $client_ticket->getExportPay()->one();?>
+    <?if($doc):?>
+
+        <ul><li id="<?=$doc->id?>">
+                    <a href="<?= $doc->getLink(true,'export_asb',$client_ticket->id) ?>" download>
+                        <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($doc->origin,100,'...');?>
+                        <a href='#' onclick="deleteImg(<?=$doc->id?>,'export_asb',<?=$client_ticket->id?>);" ><svg aria-hidden="true" style="display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z"></path></svg></a>
+                    </a>
+            </li></ul>
+    <?else:?>
+        <span style="color: red;">Файл для экспорта в ПАУ еще не сформирован</span>
+    <?endif;?>
+
+    <hr>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -158,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul>
         <?foreach ($docs as $doc):?>
             <li id="<?=$doc->id?>">
-                <a href="<?= $doc->getLink(true,'user_docs',$client_ticket->id) ?>" target="_blank">
+                <a href="<?= $doc->getLink(true,'user_docs',$client_ticket->id) ?>" target="_blank" >
                     <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($doc->origin,100,'...');?>
                     <a href='#' onclick="deleteImg(<?=$doc->id?>,'user_docs',<?=$client_ticket->id?>);" ><svg aria-hidden="true" style="display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z"></path></svg></a>
                 </a>
@@ -259,7 +273,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $str.= "<li id=\"".$file->id."\">
                                 <a href=\"".$file->getLink(true,'main_info',$model->id)."\" target=\"_blank\">
                                     ".StringHelper::truncate($file->origin,30,'...').".".$file->ext."
-                                </a><a href='#' onclick=\"deleteImg(".$file->id.",'main_info',".$model->d.");\" ><svg aria-hidden=\"true\" style=\"display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path fill=\"currentColor\" d=\"M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z\"></path></svg></a></li>";
+                                </a><a href='#' onclick=\"deleteImg(".$file->id.",'main_info',".$model->id.");\" ><svg aria-hidden=\"true\" style=\"display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path fill=\"currentColor\" d=\"M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z\"></path></svg></a></li>";
                         }
                         $str.= "</ul>";
                     }
@@ -1213,87 +1227,87 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
 
-    <h1>Сведения о счетха в банках и иных кредитных организациях</h1>
-
-    <?
-    $i = 1;
-    $items = [];
-    foreach ($bank as $key => $item){
-        $items [] = [
-            'label' => "№ ".$i,
-            'content' =>
-                "<br><p>".
-                Html::a('Редактировать', ['bank/update', 'id' => $item->id ,'ticket_status_id' => $model->id], ['class' => 'btn btn-primary edit_button'])."
-                </p>".
-                DetailView::widget([
-                    'model' => $item,
-                    'attributes' => [
-                        //'id',
-                        //'ticket_id',
-                        'name',
-                        'post_address',
-                        'number',
-                        'bic',
-                        [
-                            'attribute' => 'type',
-                            'value' => function($model)
-                            {
-                                return Bank::$type[$model->type];
-                            }
-                        ],
-                        [
-                            'attribute' => 'currency',
-                            'value' => function($model)
-                            {
-                                return Bank::$currency[$model->currency];
-                            }
-                        ],
-                        'date_open',
-                        'balance',
-                        [
-                            'class' => 'kartik\grid\DataColumn',
-                            'format'=>'html',
-                            'contentOptions' => [
-                                'style'=>'max-width:200px; overflow: auto; white-space: normal; word-wrap: break-word;'
-                            ],
-                            'attribute' => 'other',
-                            'value' => function($model)
-                            {
-                                return $model->other;
-                            }
-                        ],
-                        [
-                            'label' => 'Скан выписки по операциям счета за 3 года',
-                            'format' => 'raw',
-                            'value' => function($model)
-                            {
-                                $str = "";
-                                if($files = $model->getBankFiles()->all()){
-                                    $str .= "<span>Файлы:</span><ul>";
-                                    foreach ($files as $file){
-                                        $str.= "<li id=\"".$file->id."\">
-                                <a href=\"".$file->getLink(true,'bank',$model->ticket_id)."\" target=\"_blank\">
-                                    ".StringHelper::truncate($file->origin,30,'...').".".$file->ext."
-                                </a><a href='#' onclick=\"deleteImg(".$file->id.",'bank',".$model->ticket_id.");\" ><svg aria-hidden=\"true\" style=\"display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path fill=\"currentColor\" d=\"M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z\"></path></svg></a></li>";
-                                    }
-                                    $str.= "</ul>";
-                                }
-                                return $str;
-                            }
-                        ],
-                        //'created_at',
-                        //'updated_at',
-                    ],
-                ]),
-
-            'active' => $i == 1 ?true : false
-        ];
-        $i++;
-    }
-    echo Tabs::widget([
-        'items' => $items,
-    ]);
-    ?>
+<!--    <h1>Сведения о счетха в банках и иных кредитных организациях</h1>-->
+<!---->
+<!--    --><?//
+//    $i = 1;
+//    $items = [];
+//    foreach ($bank as $key => $item){
+//        $items [] = [
+//            'label' => "№ ".$i,
+//            'content' =>
+//                "<br><p>".
+//                Html::a('Редактировать', ['bank/update', 'id' => $item->id ,'ticket_status_id' => $model->id], ['class' => 'btn btn-primary edit_button'])."
+//                </p>".
+//                DetailView::widget([
+//                    'model' => $item,
+//                    'attributes' => [
+//                        //'id',
+//                        //'ticket_id',
+//                        'name',
+//                        'post_address',
+//                        'number',
+//                        'bic',
+//                        [
+//                            'attribute' => 'type',
+//                            'value' => function($model)
+//                            {
+//                                return Bank::$type[$model->type];
+//                            }
+//                        ],
+//                        [
+//                            'attribute' => 'currency',
+//                            'value' => function($model)
+//                            {
+//                                return Bank::$currency[$model->currency];
+//                            }
+//                        ],
+//                        'date_open',
+//                        'balance',
+//                        [
+//                            'class' => 'kartik\grid\DataColumn',
+//                            'format'=>'html',
+//                            'contentOptions' => [
+//                                'style'=>'max-width:200px; overflow: auto; white-space: normal; word-wrap: break-word;'
+//                            ],
+//                            'attribute' => 'other',
+//                            'value' => function($model)
+//                            {
+//                                return $model->other;
+//                            }
+//                        ],
+//                        [
+//                            'label' => 'Скан выписки по операциям счета за 3 года',
+//                            'format' => 'raw',
+//                            'value' => function($model)
+//                            {
+//                                $str = "";
+//                                if($files = $model->getBankFiles()->all()){
+//                                    $str .= "<span>Файлы:</span><ul>";
+//                                    foreach ($files as $file){
+//                                        $str.= "<li id=\"".$file->id."\">
+//                                <a href=\"".$file->getLink(true,'bank',$model->ticket_id)."\" target=\"_blank\">
+//                                    ".StringHelper::truncate($file->origin,30,'...').".".$file->ext."
+//                                </a><a href='#' onclick=\"deleteImg(".$file->id.",'bank',".$model->ticket_id.");\" ><svg aria-hidden=\"true\" style=\"display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:.875em\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path fill=\"currentColor\" d=\"M32 464a48 48 0 0048 48h288a48 48 0 0048-48V128H32zm272-256a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zm-96 0a16 16 0 0132 0v224a16 16 0 01-32 0zM432 32H312l-9-19a24 24 0 00-22-13H167a24 24 0 00-22 13l-9 19H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z\"></path></svg></a></li>";
+//                                    }
+//                                    $str.= "</ul>";
+//                                }
+//                                return $str;
+//                            }
+//                        ],
+//                        //'created_at',
+//                        //'updated_at',
+//                    ],
+//                ]),
+//
+//            'active' => $i == 1 ?true : false
+//        ];
+//        $i++;
+//    }
+//    echo Tabs::widget([
+//        'items' => $items,
+//    ]);
+//    ?>
 
     <h1>Сведения о акциях и ценных бумагах</h1>
 
@@ -1778,7 +1792,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <h1>Информация об оплате</h1>
-
+    <?if($proxy):?>
     <?=
                 "<br><p>".
                 Html::a('Редактировать', ['proxy/update', 'id' => $proxy->id ,'ticket_status_id' => $model->id], ['class' => 'btn btn-primary edit_button'])."
@@ -1853,6 +1867,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         //'updated_at',
                     ],
                 ]);?>
+
+    <?endif;?>
 
 
 </div>

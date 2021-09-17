@@ -289,7 +289,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'property_other',['template' => '<div style="overflow: hidden;"><div style="float: left;width: 50px">{input}</div><div style="float: left;"><span>{label}</span></div></div>'])->checkbox([], false) ?>
 
-    <?= $form->field($model, 'property_own_dogovor',['template' => '<div style="overflow: hidden;"><div style="float: left;width: 50px">{input}</div><div style="float: left;"><span>{label}</span></div></div>'])->checkbox([], false) ?>
+    <?//= $form->field($model, 'property_own_dogovor',['template' => '<div style="overflow: hidden;"><div style="float: left;width: 50px">{input}</div><div style="float: left;"><span>{label}</span></div></div>'])->checkbox([], false) ?>
 
     <?= $form->field($model, 'property_zalog_inn',['template' => '<div style="overflow: hidden;"><div style="float: left;width: 50px">{input}</div><div style="float: left;"><span>{label}</span></div></div>'])->checkbox([], false) ?>
 
@@ -364,7 +364,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'valuable_property_other',['template' => '<div style="overflow: hidden;"><div style="float: left;width: 50px">{input}</div><div style="float: left;"><span>{label}</span></div></div>'])->checkbox([], false) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
