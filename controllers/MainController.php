@@ -89,11 +89,12 @@ class MainController extends Controller
 
                         //$ticket_id = ClientTicket::getActiveTicket();
                         if(!$ticket_id){
+                            $type = TicketStatus::getCureType();
                             //В зависимости от домена создаем необходимый статус
                             $ticket_status = new TicketStatus();
                             $ticket_status->ticket_id = $model->id;
                             $ticket_status->status = 0;
-                            $ticket_status->type = 1;
+                            $ticket_status->type = $type;
                             $ticket_status->save();
                         }
                         $passport_model->ticket_id = $model->id;
@@ -148,6 +149,8 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
+
+
         $model = new ClientTicket();
         $uploadForm = new UploadForm();
         $passport_model = new Passport();
@@ -188,10 +191,8 @@ class MainController extends Controller
             $proxy = new Proxy();
         }
 //
-//        $url = $_SERVER['REQUEST_URI'];
-//        $url = explode('?', $url);
-//        $url = $url[0];
-        $directory = Directory::findOne(1);
+        $type = TicketStatus::getCureType();
+        $directory = Directory::findOne($type);
 
         $model->user_id = Yii::$app->user->id;
         $model->facsimile = 1;

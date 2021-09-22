@@ -24,7 +24,7 @@ use yii\web\UploadedFile;
 class SiteController extends Controller
 {
 
-    public $layout = '/user';
+    public $layout = '/login';
 
     /**
      * {@inheritdoc}
@@ -34,13 +34,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'allow' => true,
+                        'actions' => ['login', 'signup'],
+                        'roles' => ['?'],
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+
                 ],
             ],
             'verbs' => [
@@ -75,6 +79,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = "/user";
         return $this->render('index');
     }
 

@@ -1,3 +1,3 @@
-<script>
-    window.location.href = "/main/tickets";
-</script>
+<!--<script>-->
+<!--    window.location.href = "/main/tickets";-->
+<!--</script>-->

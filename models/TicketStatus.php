@@ -79,4 +79,18 @@ class TicketStatus extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Service::className(), ['id' => 'type']);
     }
+
+    public static function getCureType(){
+        $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $url = explode('?', $url);
+        $url = $url[0];
+
+        if (strpos($url,"ufu") !== false) {
+            return 3;
+        }elseif(strpos($url,"sdfl") !== false) {
+            return 2;
+        }else{
+            return 1;
+        }
+    }
 }
