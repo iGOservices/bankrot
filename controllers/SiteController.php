@@ -98,7 +98,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->phone = preg_replace('~\D+~', '', $model->phone);
             if($model->login())
-                return $this->goBack();
+                return $this->redirect("/main/tickets");
+                //return $this->goBack();
         }
 
         $this->layout = 'login';
