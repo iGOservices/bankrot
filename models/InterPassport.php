@@ -33,7 +33,7 @@ class InterPassport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['series', 'number', 'given', 'date_given', 'period'], 'required'],
+//            [['series', 'number', 'given', 'date_given', 'period'], 'required'],
             [['date_given', 'period'], 'safe'],
             [['created_at', 'updated_at'], 'integer'],
             [['series'], 'string', 'max' => 2],

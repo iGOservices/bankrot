@@ -32,7 +32,7 @@ class Passport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['series', 'number', 'given', 'code'], 'required'],
+//            [['series', 'number', 'given', 'code'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
             [['series'], 'string', 'max' => 4],
             [['number', 'code'], 'string', 'max' => 6],
