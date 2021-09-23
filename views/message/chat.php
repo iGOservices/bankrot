@@ -15,20 +15,12 @@ $this->registerJsFile('js/chat.js', ['depends' => [yii\web\JqueryAsset::classNam
 
             <div class="dashboard-content-inner" >
 
-                <?if($type != "admin"):?>
-                <div class="dashboard-headline">
-                    <h3>Чат с администратором</h3>
+<!--                --><?//if($type != "admin"):?>
+<!--                <div class="dashboard-headline">-->
+<!--                    <h3>Чат с администратором</h3>-->
 <!---->
-<!---->
-<!--                    <nav id="breadcrumbs" class="dark">-->
-<!--                        <ul>-->
-<!--                            <li><a href="#">Home</a></li>-->
-<!--                            <li><a href="#">Dashboard</a></li>-->
-<!--                            <li>Messages</li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
-                </div>
-                <?endif?>
+<!--                </div>-->
+<!--                --><?//endif?>
 
                 <div class="messages-container margin-top-0">
 

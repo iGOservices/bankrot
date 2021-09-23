@@ -139,15 +139,15 @@ $ticket_id = ClientTicket::getActiveTicket();
 
                                             <!-- Buttons -->
                                             <div class="buttons-to-right always-visible">
-                                                <?if($let['status'] == 0):?>
-                                                    <a href="/main/index" class="button ripple-effect">Продолжить заполнение</a>
-                                                <?else:?>
-                                                    <a href="/main/ticket-detail?id=<?=$ticket->id?>" class="button ripple-effect"><i class="icon-feather-eye"></i> Посмотреть загруженые файлы</a>
-                                                <?endif;?>
+                                                <a href="/message/chat?type=user" class="button ripple-effect"><i class="icon-feather-message-circle"></i> Написать администратору</a>
 
-
-                                                <a href="/message/chat?type=user" class="button gray ripple-effect ico" title="Связаться с администратором" data-tippy-placement="top"><i class="icon-feather-message-circle"></i></a>
-                                                </div>
+                                                <!--                                                --><?//if($let['status'] == 0):?>
+<!--                                                    <a href="/main/index" class="button ripple-effect">Продолжить заполнение</a>-->
+<!--                                                --><?//else:?>
+<!--                                                    --><?//endif;?>
+<!--                                                <a href="/message/chat?type=user" class="button gray ripple-effect ico" title="Связаться с администратором" data-tippy-placement="top"><i class="icon-feather-message-circle"></i></a>-->
+<!--                                                -->
+                                            </div>
                                         </li>
                                         <?endforeach;?>
 

@@ -8,7 +8,7 @@ $url = $url[0];
 if (strpos($url,"помогузаполнить.рф") !== false):
 ?>
 <!-- Wrapper -->
-<div id="wrapper">
+
 
     <!-- Header Container
     ================================================== -->
@@ -274,7 +274,7 @@ if (strpos($url,"помогузаполнить.рф") !== false):
                         <!-- Messages -->
                         <div class="header-notifications user-menu">
                             <div class="header-notifications-trigger">
-                                <a href="#"><div class="user-avatar status-online"><img src="images/user-avatar-small-01.jpg" alt=""></div></a>
+                                <a href="#"><div class="user-avatar status-online"><img src="images/user_img.png" alt=""></div></a>
                             </div>
 
                             <!-- Dropdown -->
@@ -285,7 +285,7 @@ if (strpos($url,"помогузаполнить.рф") !== false):
 
                                     <!-- User Name / Avatar -->
                                     <div class="user-details">
-                                        <div class="user-avatar status-online"><img src="images/user-avatar-small-01.jpg" alt=""></div>
+                                        <div class="user-avatar status-online"><img src="images/user_img.png" alt=""></div>
                                         <div class="user-name">
                                             Tom Smith <span>Freelancer</span>
                                         </div>
@@ -1290,10 +1290,9 @@ if (strpos($url,"помогузаполнить.рф") !== false):
     </div>
     <!-- Footer / End -->
 
-</div>
 <!-- Wrapper / End -->
 <?else:?>
-    <div id="wrapper">
+
 
         <!-- Header Container
         ================================================== -->
@@ -1559,7 +1558,7 @@ if (strpos($url,"помогузаполнить.рф") !== false):
                             <!-- Messages -->
                             <div class="header-notifications user-menu">
                                 <div class="header-notifications-trigger">
-                                    <a href="#"><div class="user-avatar status-online"><img src="images/user-avatar-small-01.jpg" alt=""></div></a>
+                                    <a href="#"><div class="user-avatar status-online"><img src="images/user_img.png" alt=""></div></a>
                                 </div>
 
                                 <!-- Dropdown -->
@@ -1570,7 +1569,7 @@ if (strpos($url,"помогузаполнить.рф") !== false):
 
                                         <!-- User Name / Avatar -->
                                         <div class="user-details">
-                                            <div class="user-avatar status-online"><img src="images/user-avatar-small-01.jpg" alt=""></div>
+                                            <div class="user-avatar status-online"><img src="images/user_img.png" alt=""></div>
                                             <div class="user-name">
                                                 Tom Smith <span>Freelancer</span>
                                             </div>
@@ -2370,5 +2369,4 @@ if (strpos($url,"помогузаполнить.рф") !== false):
         </div>
         <!-- Footer / End -->
 
-    </div>
 <?endif;?>

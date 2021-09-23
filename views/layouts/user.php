@@ -48,7 +48,7 @@ $user = User::findOne(Yii::$app->user->id);
 				
 				<!-- Logo -->
 				<div id="logo">
-					<a href="index.html"><img src="<?=Yii::getAlias('@web')?>img/main_profile.jpg" alt=""></a>
+					<a href="#"><img src="/images/logo_bankrot.jpeg" alt=""></a>
 				</div>
 
 				<!-- Main Navigation -->
@@ -296,7 +296,7 @@ $user = User::findOne(Yii::$app->user->id);
 					<!-- Messages -->
 					<div class="header-notifications user-menu">
 						<div class="header-notifications-trigger">
-							<a href="#"><div class="user-avatar status-online"><img src="/img/main_profile.jpg" alt=""></div></a>
+							<a href="#"><div class="user-avatar status-online"><img src="/images/user_img.png" alt=""></div></a>
 						</div>
 
 						<!-- Dropdown -->
@@ -307,7 +307,7 @@ $user = User::findOne(Yii::$app->user->id);
 
 								<!-- User Name / Avatar -->
 								<div class="user-details">
-									<div class="user-avatar status-online"><img src="/img/main_profile.jpg" alt=""></div>
+									<div class="user-avatar status-online"><img src="/images/user_img.png" alt=""></div>
 									<div class="user-name">
                                         <?=$user->username?>
 <!--										<span>Freelancer</span>-->
@@ -440,8 +440,8 @@ $user = User::findOne(Yii::$app->user->id);
         <!-- Footer -->
 <!--        <div class="dashboard-footer-spacer"></div>-->
         <div class="small-footer margin-top-15">
-            <div class="small-footer-copyrights">
-                © 2021 <strong>Bankrot</strong>. All Rights Reserved.
+            <div class="small-footer-copyrights" style="margin-left: 40px">
+                © 2021 <strong>Bankrot</strong>. Все права соблюдены.
             </div>
 
             <div class="clearfix"></div>

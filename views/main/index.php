@@ -923,5 +923,3 @@ use yii\widgets\ActiveForm;
 			<!-- Row / End -->
 
 
-
-		</div>

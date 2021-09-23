@@ -13,7 +13,7 @@ use yii\helpers\StringHelper;
         ?>
         <li>
             <a href="#" onclick="selectChat(<?=$message->chat_id?>);" <?=$message->see == 0 ? "style=\"background-color: #ccccff\"" : ""  ?>>
-                <div class="message-avatar"><img src="/images/user-avatar-small-03.jpg" alt="" /></div>
+                <div class="message-avatar"><img src="/images/user_img.png" alt="" /></div>
 
                 <div class="message-by">
                     <div class="message-by-headline">

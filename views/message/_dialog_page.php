@@ -29,7 +29,7 @@
         <?if($message->user_id == Yii::$app->user->id): ?>
             <div class="message-bubble me">
                 <div class="message-bubble-inner">
-                    <div class="message-avatar"><img src="/images/user-avatar-small-03.jpg" alt="" /></div>
+                    <div class="message-avatar"><img src="/images/user_img.png" alt="" /></div>
                     <div class="message-text"><p><?=$message->text?></p></div>
                 </div>
                 <div class="clearfix"></div>
@@ -38,7 +38,7 @@
 
             <div class="message-bubble">
                 <div class="message-bubble-inner">
-                    <div class="message-avatar"><img src="/images/user-avatar-small-03.jpg" alt="" /></div>
+                    <div class="message-avatar"><img src="/images/admin_img.png" alt="" /></div>
                     <div class="message-text"><p><?=$message->text?></p></div>
                 </div>
                 <div class="clearfix"></div>
