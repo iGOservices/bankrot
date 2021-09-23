@@ -179,7 +179,7 @@ class SiteController extends Controller
             $model->phone = preg_replace('~\D+~', '', $model->phone);
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                    return $this->redirect("/main/tickets");
                 }
             }
         }
