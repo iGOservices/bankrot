@@ -1245,4 +1245,14 @@ function checkBoxes(){
 
 
 
+$(document).on('change','#clientticket-is_work',function(){
+    let num = document.getElementById('clientticket-is_work').value;
+    if(num == 0){
+        $('#is_work_file').html("Скан выписки о состоянии индивидуального лицевого счета ПФР");
+    }else{
+        $('#is_work_file').html("Решение о признание безработным");
+    }
+});
+
+
 

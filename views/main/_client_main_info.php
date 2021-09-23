@@ -125,7 +125,7 @@ use yii\widgets\MaskedInput;
 								<?= $form->field($model, 'phone',[
 									'enableClientValidation' => false,
 								])->widget(MaskedInput::className(), [
-									'mask' => '+7 (999) 999-99-99',
+									'mask' => $model->phone ? '+9 (999) 999-99-99' : '+7 (999) 999-99-99',
 									'options' => [
 										'class' => 'form-control placeholder-style with-border',
 										'id' => 'phone2',
@@ -410,7 +410,7 @@ use yii\widgets\MaskedInput;
 
                         <div class="col-xl-4">
                             <div class="submit-field">
-                                <h5>Справка безработного</h5>
+                                <h5 id="is_work_file">Скан выписки о состоянии индивидуального лицевого счета ПФР</h5>
                                 <?= $form->field($uploadForm, "is_work[]", [
                                     'template' => '<div class="uploadButton">{input}
 											<label class="uploadButton-button ripple-effect" for="is_work_upload">Загрузить файл</label>
