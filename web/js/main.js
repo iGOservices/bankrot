@@ -792,7 +792,8 @@ $('#creditor').on('beforeSubmit', function(e) {
     let x = document.getElementsByClassName("check_sum");
     // A loop that checks every input field in the current tab:
     for (i = 0; i < x.length; i++) {
-       sum += parseInt(x[i].value);
+        if(x[i].value)
+            sum += parseInt(x[i].value);
     }
     if(!sum)
         sum = 0;

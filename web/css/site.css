@@ -169,8 +169,10 @@ a.desc:after {
 
   .del_icon {
       float:left;
-      width:2%;
-      padding: 15px 8px 8px 8px;
+      color: white;
+      width:3%;
+      padding: 15px 8px 15px 8px;
+      background-color: #9237cb;
   }
 
     .del_icon:hover {
@@ -180,4 +182,7 @@ a.desc:after {
     .select_list{
         padding: 1px!important;
         padding-left: 20px!important;
+    }
+    .accordion__item{
+        width: 97% !important;
     }

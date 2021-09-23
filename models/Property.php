@@ -96,9 +96,9 @@ class Property extends \yii\db\ActiveRecord
     {
         return [
             [['ticket_id'], 'required'],
-            [['ticket_id', 'group', 'property_view', 'house', 'corpus', 'office', 'post_index', 'cost', 'active_status', 'zalog_post_index', 'created_at', 'updated_at','zalog_inn','zalog'], 'integer'],
+            [['ticket_id', 'group', 'property_view', 'house', 'corpus', 'office', 'post_index', 'cost', 'active_status', 'created_at', 'updated_at','zalog_inn','zalog'], 'integer'],
             [['date_sved'], 'safe'],
-            [['property_type', 'share', 'other_owners', 'active_name', 'square', 'reg_number', 'num_sved', 'coutry', 'region', 'district', 'city', 'street', 'zalog_name', 'zalog_dogovor','own_dogovor'], 'string', 'max' => 255],
+            [['property_type', 'share', 'other_owners', 'active_name', 'square', 'reg_number', 'num_sved', 'coutry', 'region', 'district', 'city', 'street', 'zalog_name', 'zalog_dogovor','own_dogovor', 'zalog_post_index'], 'string', 'max' => 255],
             [['vin_number'], 'string', 'max' => 17],
             [['other'], 'string', 'max' => 1000],
         ];

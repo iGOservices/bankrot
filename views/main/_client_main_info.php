@@ -410,7 +410,7 @@ use yii\widgets\MaskedInput;
 
                         <div class="col-xl-4">
                             <div class="submit-field">
-                                <h5 id="is_work_file">Скан выписки о состоянии индивидуального лицевого счета ПФР</h5>
+                                <h5 id="is_work_file"><?=$model->is_work ? "Скан выписки о состоянии индивидуального лицевого счета ПФР" : "Решение о признание безработным"?></h5>
                                 <?= $form->field($uploadForm, "is_work[]", [
                                     'template' => '<div class="uploadButton">{input}
 											<label class="uploadButton-button ripple-effect" for="is_work_upload">Загрузить файл</label>

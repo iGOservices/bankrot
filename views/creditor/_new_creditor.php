@@ -28,7 +28,7 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
-                <?= $form->field($creditor,"[$increment]id")->hiddenInput([])->label(false); ?>
+
 				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                     <? if($directory['creditor_group'] == 1):?>
                         <div class="submit-field ">
@@ -291,6 +291,8 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
+
+                <?= $form->field($creditor,"[$increment]id")->hiddenInput([])->label(false); ?>
 
 
 				<div class="col-xl-12">

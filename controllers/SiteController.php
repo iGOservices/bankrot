@@ -37,7 +37,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'signup'],
+                        'actions' => ['login','email-login', 'signup','index'],
                         'roles' => ['?'],
                     ],
                     [
@@ -79,7 +79,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = "/user";
+        $this->layout = "/landing";;
         return $this->render('index');
     }
 
@@ -91,7 +91,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect("/main/tickets");
         }
 
         $model = new LoginForm();
@@ -113,7 +113,7 @@ class SiteController extends Controller
     public function actionEmailLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect("/main/tickets");
         }
 
         $model = new LoginForm();

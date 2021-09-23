@@ -31,7 +31,7 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
-                <?= $form->field($family,"[$increment]id")->hiddenInput([])->label(false); ?>
+
                 <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                     <? if($directory['family_type'] == 1):?>
                         <div class="submit-field ">
@@ -118,6 +118,8 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
+
+                <?= $form->field($family,"[$increment]id")->hiddenInput([])->label(false); ?>
 
                 <div class="col-xl-12" >
                     <h5>Свидетельство о рождении: </h5>
