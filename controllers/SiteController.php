@@ -176,6 +176,7 @@ class SiteController extends Controller
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->phone = preg_replace('~\D+~', '', $model->phone);
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
