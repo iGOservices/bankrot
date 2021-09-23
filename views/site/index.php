@@ -6,7 +6,7 @@ $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP
 $url = explode('?', $url);
 $url = $url[0];
 
-if (strpos($url,"xn--80afmfoclcbdeg7bg7l.xn--p1ai") === false):
+if (strpos($url,"xn--80afmfoclcbdeg7bg7l.xn--p1ai") !== false):
 
     ?>
     <!-- Wrapper -->
