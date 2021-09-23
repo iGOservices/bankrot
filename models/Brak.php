@@ -26,7 +26,7 @@ class Brak extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Brak';
+        return 'brak';
     }
 
     /**

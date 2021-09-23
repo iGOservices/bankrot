@@ -163,7 +163,7 @@ class MainController extends Controller
             $passport_model = Passport::find()->where(['ticket_id' => $ticket_id])->one();
             $inter_passport_model = InterPassport::find()->where(['ticket_id' => $ticket_id])->one();
             $family = Family::find()->where(['ticket_id' => $ticket_id])->all();
-            //$brak =Brak::find()->where(['ticket_id' => $ticket_id])->all();
+            $brak =Brak::find()->where(['ticket_id' => $ticket_id])->all();
             $razvod = Razvod::find()->where(['ticket_id' => $ticket_id])->all();
             $creditor = Creditor::find()->where(['ticket_id' => $ticket_id])->all();
             $debitor = Debitor::find()->where(['ticket_id' => $ticket_id])->all();

@@ -384,7 +384,7 @@ class Property extends \yii\db\ActiveRecord
                             ],
                             "HouseNumber" => $item->house,
                             "KorpusNumber" => $item->corpus,
-                            "FlatNumber" => $item->flat
+                            "FlatNumber" => $item->office
                         ],
                         "name" => $item->active_name."",
                         "description" => $item->other."",
