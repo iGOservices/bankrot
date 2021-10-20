@@ -83,6 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['phone'], 'integer'],
             [['username','phone'], 'required'],
             [['email'], 'email'],
+            [['username'], 'unique', 'targetClass' => User::className(), 'message' => 'Пользователь уже существует'],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким email уже существует'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],

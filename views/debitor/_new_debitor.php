@@ -28,206 +28,182 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
-
-				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_group'] == 1):?>
+                <? if($directory[72]['active'] == 1):?>
+				    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Группа задолженности</h5>
+                            <h5>Группа задолженности <?=$directory[72]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[72]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]group")->dropDownList(Debitor::$group,[ 'class' => 'with-border select_list' ,'onchange' => 'changeDebitorStatment('.$increment.');'])->label(false)  ?>
                         </div>
-                    <?endif;?>
-				</div>
-
-				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_commitment'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[73]['active'] == 1):?>
+				    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <?if($debitor->group == 1 || !$debitor->group):?>
                         <div class="submit-field ">
-                            <h5>Содержание обязательства</h5>
+                            <h5>Содержание обязательства <?=$directory[73]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[73]['prompt']."\"></i>" : "" ?></h5>
                             <div id="debitor<?=$increment?>">
                                 <?= $form->field($debitor, "[$increment]commitment")->dropDownList(Debitor::$commitment,[ 'class' => 'with-border select_list'])->label(false)  ?>
                             </div>
                         </div>
                         <?else:?>
                         <div class="submit-field ">
-                            <h5>Содержание обязательства</h5>
+                            <h5>Содержание обязательства <?=$directory[73]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[73]['prompt']."\"></i>" : "" ?></h5>
                             <div id="creditor<?=$increment?>">
                                 <?= $form->field($debitor, "[$increment]commitment")->textInput([ 'class' => 'with-border'])->label(false)  ?>
                             </div>
                         </div>
                         <?endif;?>
-                    <?endif;?>
-				</div>
-
-				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_statment'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[75]['active'] == 1):?>
+				    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Физ лицо/орг.</h5>
+                            <h5>Физ лицо/орг. <?=$directory[75]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[75]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]statment")->dropDownList(Debitor::$statment,[ 'class' => 'with-border select_list'])->label(false)  ?>
                         </div>
-                    <?endif;?>
-				</div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <!--<div class="checkbox">
-                        <input type="checkbox" id="chekcbox1" checked="">
-                        <label for="chekcbox1"><span class="checkbox-icon"></span> Checkbox</label>
-                    </div>-->
-                    <? if($directory['debitor_is_predprin'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[74]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Обязательство возникло в результате предпринимательской деятельсноти</h5>
+                            <h5>Обязательство возникло в результате предпринимательской деятельсноти <?=$directory[74]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[74]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]is_predprin", [
                                 'template' => '<label class="switch" style="padding-bottom: 30px">{input}<span class="switch-button"></span></label>'])->checkbox([], false)?>
                         </div>
-                    <?endif;?>
-                </div>
-
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_name'] == 1):?>
+                    </div>
+                <?endif;?>
+                <? if($directory[76]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Наименование дебитора</h5>
+                            <h5>Наименование дебитора <?=$directory[76]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[76]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-				
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_inn'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[77]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>ИНН дебитора</h5>
+                            <h5>ИНН дебитора <?=$directory[77]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[77]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]inn")->textInput(['maxlength' => 12, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_base'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[90]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Тип подтверждающего документа</h5>
+                            <h5>Тип подтверждающего документа <?=$directory[90]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[90]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]base")->dropDownList(Debitor::$base,[ 'class' => 'with-border select_list'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
+				    </div>
+                <?endif;?>
 
-			
 				<div class="col-xl-12" >
 				<h5>Место нахождения дебитора: </h5>
 					<div style="border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;padding:10px;margin:10px;">
 						<div class="row">
-							<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_coutry'] == 1):?>
+                            <? if($directory[78]['active'] == 1):?>
+							    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Страна</h5>
+                                        <h5>Страна <?=$directory[78]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[78]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]coutry")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>		
-
-							<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_region'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[79]['active'] == 1):?>
+							    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Регион</h5>
+                                        <h5>Регион <?=$directory[79]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[79]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]region")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_district'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[80]['active'] == 1):?>
+							    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Район</h5>
+                                        <h5>Район <?=$directory[80]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[80]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]district")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_city'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[81]['active'] == 1):?>
+							    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Город</h5>
+                                        <h5>Город <?=$directory[81]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[81]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]city")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_street'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[82]['active'] == 1):?>
+							    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Улица</h5>
+                                        <h5>Улица <?=$directory[82]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[82]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]street")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_house'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[83]['active'] == 1):?>
+							    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Дом</h5>
+                                        <h5>Дом <?=$directory[83]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[83]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]house")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_corpus'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[84]['active'] == 1):?>
+							    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Корпус</h5>
+                                        <h5>Корпус <?=$directory[84]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[84]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]corpus")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_flat'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[85]['active'] == 1):?>
+							    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Квартира</h5>
+                                        <h5>Квартира <?=$directory[85]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[85]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]flat")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
-
-							<div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['debitor_post_index'] == 1):?>
+							    </div>
+                            <?endif;?>
+                            <? if($directory[86]['active'] == 1):?>
+							    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Почтовый индекс</h5>
+                                        <h5>Почтовый индекс <?=$directory[86]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[86]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($debitor, "[$increment]post_index")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-							</div>
+							    </div>
+                            <?endif;?>
 						</div>
 					</div>
 				</div>
-
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_sum_statment'] == 1):?>
+                <? if($directory[87]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Сумма обязательства Всего(руб.)</h5>
+                            <h5>Сумма обязательства Всего(руб.) <?=$directory[87]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[87]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]sum_statment")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_sum_dolg'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[88]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Сумма обязательства Задолженность(руб.)</h5>
+                            <h5>Сумма обязательства Задолженность(руб.) <?=$directory[88]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[88]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]sum_dolg")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_forfeit'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[89]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Штрафы,пени,иные санкции (руб.)</h5>
+                            <h5>Штрафы,пени,иные санкции (руб.) <?=$directory[89]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[89]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]forfeit")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-		
-				<div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_base_date'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[91]['active'] == 1):?>
+				    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field">
-                            <h5>Дата документа</h5>
+                            <h5>Дата документа <?=$directory[91]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[91]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]base_date")->widget(DatePicker::classname(), [
                                 'options' => [
                                     'placeholder' => 'Введите дату',
@@ -241,18 +217,17 @@ use kartik\date\DatePicker;
                                         ]
                             ])->label(false) ?>
                         </div>
-                    <?endif;?>
-				</div>
 
-				<div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['debitor_base_num'] == 1):?>
+				    </div>
+                <?endif;?>
+                <? if($directory[92]['active'] == 1):?>
+				    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номер документа</h5>
+                            <h5>Номер документа <?=$directory[92]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[92]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($debitor, "[$increment]base_num")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-				</div>
-
+				    </div>
+                <?endif;?>
                 <div class="col-xl-4">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
                         <h5>Скан документа</h5>
@@ -279,15 +254,14 @@ use kartik\date\DatePicker;
                 </div>
                 <?= $form->field($debitor,"[$increment]id")->hiddenInput([])->label(false); ?>
 
-
-				<div class="col-xl-12">
-                    <? if($directory['debitor_other'] == 1):?>
-                    <div class="submit-field" >
-					    <h5>Примечание</h5>
-					    <?= $form->field($debitor, "[$increment]other")->textArea(['maxlength' => true])->label(false); ?>
+                <? if($directory[93]['active'] == 1):?>
+                    <div class="col-xl-12">
+                        <div class="submit-field" >
+                            <h5>Примечание <?=$directory[93]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[93]['prompt']."\"></i>" : "" ?></h5>
+                            <?= $form->field($debitor, "[$increment]other")->textArea(['maxlength' => true])->label(false); ?>
+                        </div>
                     </div>
-                    <? endif; ?>
-				</div>
+                <? endif; ?>
 			</div>
 		</div>
 	</div>

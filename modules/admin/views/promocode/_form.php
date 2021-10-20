@@ -2,6 +2,7 @@
 
 use app\models\Promocode;
 use app\models\TicketStatus;
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,7 +21,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'service_id')->dropDownList(TicketStatus::$type) ?>
 
+    <?= $form->field($model, 'is_use')->dropDownList(Promocode::$is_use) ?>
+
+    <?= $form->field($model, 'period')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Введите дату ...', 'autocomplete' => 'off'],
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'todayHighlight' => true,
+            'format' => 'yyyy-mm-dd'
+        ]
+    ]); ?>
+
     <?= $form->field($model, 'active')->dropDownList(Promocode::$active) ?>
+
 
     <?//= $form->field($model, 'created_at')->textInput() ?>
 

@@ -1257,3 +1257,75 @@ $(document).on('change','#clientticket-is_work',function(){
 
 
 
+
+
+function sendCallRequest(type = false){
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    if(type){
+        $('#recall').html("Запрос отправлен!");
+    }
+    let phone = document.getElementById('phone2').value;
+    let username = document.getElementById('signupform-username').value;
+    let email = document.getElementById('signupform-email').value;
+    $.ajax({
+        url: '/user/send-call-request',
+        type: "POST",
+        data: {
+            _csrf : csrfToken,
+            phone : phone,
+            username : username,
+            email : email
+        },
+        success: function(data) {
+            let res = JSON.parse(data);
+            if (res.data == true) {
+                toggleByClass('call_block', 'block');
+            }else{
+                if(res.type == 1){
+                    $('#help_phone').html("Аккаунт с таким номером телефона уже существует");
+                }else if(res.type == 2){
+                    $('#help_username').html("Аккаунт с таким именем уже существует");
+                }else if(res.type == 3){
+                    $('#help_email').html("Аккаунт с таким Email уже существует");
+                }else{
+                    alert("Что-то пошло не так! Попробуйте снова!");
+                }
+            }
+
+        },
+        error: function(XMLHttpRequest){
+            console.log(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+function sendCallAnswer(){
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    let phone = document.getElementById('phone2').value;
+    let code = document.getElementById('call_code').value;
+    $.ajax({
+        url: '/user/send-call-answer',
+        type: "POST",
+        data: {
+            _csrf : csrfToken,
+            phone : phone,
+            code : code,
+        },
+        success: function(data) {
+            let res = JSON.parse(data);
+            if (res.data == true) {
+                var form = document.getElementById("register-account-form");
+                form.submit();
+            }else{
+                alert("Код введен неправильно! Попробуйте снова");
+            }
+
+        },
+        error: function(XMLHttpRequest){
+            console.log(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+
+

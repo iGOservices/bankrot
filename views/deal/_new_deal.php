@@ -29,28 +29,26 @@ use kartik\date\DatePicker;
 		<div class="accordion-body__contents">
             <?= $form->field($deal,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['deal_type'] == 1):?>
+                <?if($directory[94]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Предмет сделки</h5>
+                            <h5>Предмет сделки <?=$directory[94]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[94]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($deal, "[$increment]type")->dropDownList(Deal::$type,['maxlength' => true, 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['deal_description'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[95]['active'] == 1):?>
+                    <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Описание сделки</h5>
+                            <h5>Описание сделки <?=$directory[95]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[95]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($deal, "[$increment]description")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['deal_date'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[96]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Дата сделки</h5>
+                            <h5>Дата сделки <?=$directory[96]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[96]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($deal, "[$increment]date")->widget(DatePicker::classname(), [
                                 'options' => [
                                     'placeholder' => 'Введите дату',
@@ -64,26 +62,24 @@ use kartik\date\DatePicker;
                                 ]
                             ])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['deal_name'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[97]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Имя контрагента</h5>
+                            <h5>Имя контрагента <?=$directory[97]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[97]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($deal, "[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['deal_inn'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[98]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>ИНН контрагента</h5>
+                            <h5>ИНН контрагента <?=$directory[98]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[98]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($deal, "[$increment]inn")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
                 <div class="col-xl-4">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
                         <h5>Скан документа</h5>

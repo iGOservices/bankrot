@@ -13,6 +13,8 @@ use kartik\date\DatePicker;
 /* @var $uploadForm app\models\UploadForm*/
 /* @var $form yii\widgets\ActiveForm */
 /* @var $increment */
+/* @var $directory app\models\Directory */
+
 ?>
 <!-- Accordion Item -->
 <div id="<?="sp-".$increment?>">
@@ -28,125 +30,128 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
-                <div class="col-xl-6 col-md-6">
-                        <div class="section-headline">
-                            <h5> Свидетельство о браке</h5>
-                        </div>
-                        <!-- Accordion -->
-                        <div class="accordion js-accordion">
-                            <!-- Accordion Item -->
-                            <div class="accordion__item js-accordion-item">
-                                <div class="accordion-header js-accordion-header">Данные о браке</div>
-                                <!-- Accordtion Body -->
-                                <div class="accordion-body js-accordion-body">
-                                    <!-- Accordion Content -->
-                                    <div class="accordion-body__contents">
-                                        <div class="row">
-                                            <div class="col-xl-6">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Серия</h5>
-                                                    <?= $form->field($brak, "[$increment]series")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                <? if($directory[39]['active'] == 1):?>
+                    <div class="col-xl-6 col-md-6">
+                            <div class="section-headline">
+                                <h5> Свидетельство о браке  <?=$directory[39]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[39]['prompt']."\"></i>" : "" ?></h5>
+                            </div>
+                            <!-- Accordion -->
+                            <div class="accordion js-accordion">
+                                <!-- Accordion Item -->
+                                <div class="accordion__item js-accordion-item">
+                                    <div class="accordion-header js-accordion-header">Данные о браке</div>
+                                    <!-- Accordtion Body -->
+                                    <div class="accordion-body js-accordion-body">
+                                        <!-- Accordion Content -->
+                                        <div class="accordion-body__contents">
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Серия</h5>
+                                                        <?= $form->field($brak, "[$increment]series")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-xl-6">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Номер</h5>
-                                                    <?= $form->field($brak, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                <div class="col-xl-6">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Номер</h5>
+                                                        <?= $form->field($brak, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-xl-12">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Кем выдан</h5>
-                                                    <?= $form->field($brak, "[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                <div class="col-xl-12">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Кем выдан</h5>
+                                                        <?= $form->field($brak, "[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-xl-12">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Дата выдачи</h5>
-                                                    <?= $form->field($brak, "[$increment]date")->widget(DatePicker::classname(), [
-                                                        'options' => [
-                                                            'placeholder' => 'Введите дату',
-                                                            'autocomplete' => 'off',
-                                                            'class' => 'with-border',
-                                                        ],
-                                                        'pluginOptions' => [
-                                                            'autoclose'=>true,
-                                                            'todayHighlight' => true,
-                                                            'format' => 'yyyy-mm-dd'
-                                                        ]
-                                                    ])->label(false)?>
+                                                <div class="col-xl-12">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Дата выдачи</h5>
+                                                        <?= $form->field($brak, "[$increment]date")->widget(DatePicker::classname(), [
+                                                            'options' => [
+                                                                'placeholder' => 'Введите дату',
+                                                                'autocomplete' => 'off',
+                                                                'class' => 'with-border',
+                                                            ],
+                                                            'pluginOptions' => [
+                                                                'autoclose'=>true,
+                                                                'todayHighlight' => true,
+                                                                'format' => 'yyyy-mm-dd'
+                                                            ]
+                                                        ])->label(false)?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-xl-12">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Дата выдачи актовой записи</h5>
-                                                    <?= $form->field($brak, "[$increment]number_act_date")->widget(DatePicker::classname(), [
-                                                        'options' => [
-                                                            'placeholder' => 'Введите дату',
-                                                            'autocomplete' => 'off',
-                                                            'class' => 'with-border',
-                                                        ],
-                                                        'pluginOptions' => [
-                                                            'autoclose'=>true,
-                                                            'todayHighlight' => true,
-                                                            'format' => 'yyyy-mm-dd'
-                                                        ]
-                                                    ])->label(false)?>
+                                                <div class="col-xl-12">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Дата выдачи актовой записи</h5>
+                                                        <?= $form->field($brak, "[$increment]number_act_date")->widget(DatePicker::classname(), [
+                                                            'options' => [
+                                                                'placeholder' => 'Введите дату',
+                                                                'autocomplete' => 'off',
+                                                                'class' => 'with-border',
+                                                            ],
+                                                            'pluginOptions' => [
+                                                                'autoclose'=>true,
+                                                                'todayHighlight' => true,
+                                                                'format' => 'yyyy-mm-dd'
+                                                            ]
+                                                        ])->label(false)?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-xl-12">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Номер актовой записи</h5>
-                                                    <?= $form->field($brak, "[$increment]number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                <div class="col-xl-12">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Номер актовой записи</h5>
+                                                        <?= $form->field($brak, "[$increment]number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
-                                            <div class="col-xl-12">
-                                                <div class="submit-field" style="padding-left:30px;padding-right:30px;">
-                                                    <h5>Скан свидетельства о браке</h5>
-                                                    <?= $form->field($uploadForm, "[$increment]brak[]", [
-                                                        'template' => '<div class="uploadButton">{input}
-											<label class="uploadButton-button ripple-effect" for="brak_upload'.$increment.'">Загрузить файл</label>
-											<span class="uploadButton-file-name brak_upload'.$increment.'">Файл не выбран</span>
-										
-										        </div>'])->fileInput(['multiple' => true, 'id' => "brak_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
+                                                <div class="col-xl-12">
+                                                    <div class="submit-field" style="padding-left:30px;padding-right:30px;">
+                                                        <h5>Скан свидетельства о браке</h5>
+                                                        <?= $form->field($uploadForm, "[$increment]brak[]", [
+                                                            'template' => '<div class="uploadButton">{input}
+                                                <label class="uploadButton-button ripple-effect" for="brak_upload'.$increment.'">Загрузить файл</label>
+                                                <span class="uploadButton-file-name brak_upload'.$increment.'">Файл не выбран</span>
+                                            
+                                                    </div>'])->fileInput(['multiple' => true, 'id' => "brak_upload{$increment}", 'class' => 'uploadButton-input'], false)->label(false)?>
 
-                                                    <? if(isset($model) && $files = $brak->getBrakFiles()->all()): ?>
+                                                        <? if(isset($model) && $files = $brak->getBrakFiles()->all()): ?>
 
-                                                        <ul style="list-style: none;">
-                                                            <span>Загруженные файлы</span>
-                                                            <?foreach ($files as $file):?>
+                                                            <ul style="list-style: none;">
+                                                                <span>Загруженные файлы</span>
+                                                                <?foreach ($files as $file):?>
 
-                                                                <li id="<?=$file->id?>">
-                                                                    <a href="<?= $file->getLink(true,'sp',$brak->ticket_id) ?>" target="_blank">
-                                                                        <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
-                                                                    </a>
-                                                                    <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>',<?=$brak->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
-                                                                </li>
-                                                            <?endforeach;?>
-                                                        </ul>
-                                                    <? endif; ?>
+                                                                    <li id="<?=$file->id?>">
+                                                                        <a href="<?= $file->getLink(true,'sp',$brak->ticket_id) ?>" target="_blank">
+                                                                            <span class="icon-line-awesome-file"></span> <?=StringHelper::truncate($file->origin,10,'...');?>
+                                                                        </a>
+                                                                        <a href='#' onclick="deleteImg(<?=$file->id?>,'<?='sp'?>',<?=$brak->ticket_id?>);" ><span class="icon-feather-trash-2"></span></a>
+                                                                    </li>
+                                                                <?endforeach;?>
+                                                            </ul>
+                                                        <? endif; ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Accordion Body / End -->
+                                    <!-- Accordion Body / End -->
 
-                                <!-- Accordion Item / End -->
+                                    <!-- Accordion Item / End -->
+                                </div>
+                                <!-- Accordion / End -->
                             </div>
-                            <!-- Accordion / End -->
-                        </div>
-                </div>
+                    </div>
+                <?endif;?>
+                <? if($directory[40]['active'] == 1):?>
                 <div class="col-xl-6 col-md-6">
                     <div class="section-headline">
-                        <h5> Свидетельство о разводе</h5>
+                        <h5> Свидетельство о разводе  <?=$directory[40]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[40]['prompt']."\"></i>" : "" ?></h5>
                     </div>
                     <!-- Accordion -->
                     <div class="accordion js-accordion">
@@ -259,6 +264,7 @@ use kartik\date\DatePicker;
                         <!-- Accordion / End -->
                     </div>
                 </div>
+                <?endif;?>
                 <div class="col-xl-12">
                     <hr>
                 </div>

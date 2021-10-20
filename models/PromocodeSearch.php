@@ -17,8 +17,8 @@ class PromocodeSearch extends Promocode
     public function rules()
     {
         return [
-            [['id', 'discount', 'service_id', 'active', 'created_at', 'updated_at'], 'integer'],
-            [['code'], 'safe'],
+            [['id', 'discount', 'service_id', 'active', 'created_at', 'updated_at','is_use','user_activate'], 'integer'],
+            [['code','period'], 'safe'],
         ];
     }
 
@@ -61,6 +61,9 @@ class PromocodeSearch extends Promocode
             'id' => $this->id,
             'discount' => $this->discount,
             'service_id' => $this->service_id,
+            'is_use' => $this->is_use,
+            'user_activate' => $this->user_activate,
+            'period' => $this->period,
             'active' => $this->active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

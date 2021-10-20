@@ -2,21 +2,32 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Directory;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DirectorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Directories';
+if($type = 1){
+    $title = "Заполнение и формирование документов для обращения в суд";
+}elseif($type == 2){
+    $title = "Банкротство под ключ";
+}else{
+    $title = "Услуги арбитражных управляющих";
+}
+
+$this->title = 'Справочник по сайту: '.$title;
+$this->params['breadcrumbs'][] = ['label' => 'Выбор раздела', 'url' => ['/admin/directory/directory-list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="directory-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Directory', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>-->
+<!--        --><?//= Html::a('Create Directory', ['create'], ['class' => 'btn btn-success']) ?>
+<!--    </p>-->
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -26,184 +37,49 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
-            'surname',
-            'patronymic',
-            'gender',
-            //'birthday',
-            //'birth_place',
-            //'inn',
-            //'snils',
-            //'region',
-            //'district',
-            //'city',
-            //'street',
-            //'selo',
-            //'house',
-            //'corpus',
-            //'flat',
-            //'index',
-            //'fact_address',
-            //'passport_id',
-            //'inter_passsport_id',
-            //'mail',
-            //'phone',
-            //'is_ip',
-            //'is_work',
-            //'changed_fio',
-            //'facsimile',
-            //'family_type',
-            //'family_name',
-            //'family_surname',
-            //'family_patronymic',
-            //'family_birthday',
-            //'family_inn',
-            //'family_birth_country',
-            //'family_birth_series',
-            //'family_birth_number',
-            //'family_birth_date',
-            //'family_birth_number_act',
-            //'family_birth_number_act_date',
-            //'family_given',
-            //'brak',
-            //'razvod',
-            //'bank_name',
-            //'bank_post_address',
-            //'bank_number',
-            //'bank_bic',
-            //'bank_type',
-            //'bank_currency',
-            //'bank_date_open',
-            //'bank_balance',
-            //'bank_other',
-            //'creditor_group',
-            //'creditor_commitment',
-            //'creditor_is_predprin',
-            //'creditor_statment',
-            //'creditor_name',
-            //'creditor_inn',
-            //'creditor_coutry',
-            //'creditor_region',
-            //'creditor_district',
-            //'creditor_city',
-            //'creditor_street',
-            //'creditor_house',
-            //'creditor_corpus',
-            //'creditor_flat',
-            //'creditor_post_index',
-            //'creditor_sum_statment',
-            //'creditor_sum_dolg',
-            //'creditor_forfeit',
-            //'creditor_base',
-            //'creditor_base_date',
-            //'creditor_base_num',
-            //'creditor_other',
-            //'debitor_group',
-            //'debitor_commitment',
-            //'debitor_is_predprin',
-            //'debitor_statment',
-            //'debitor_name',
-            //'debitor_inn',
-            //'debitor_coutry',
-            //'debitor_region',
-            //'debitor_district',
-            //'debitor_city',
-            //'debitor_street',
-            //'debitor_house',
-            //'debitor_corpus',
-            //'debitor_flat',
-            //'debitor_post_index',
-            //'debitor_sum_statment',
-            //'debitor_sum_dolg',
-            //'debitor_forfeit',
-            //'debitor_base',
-            //'debitor_base_date',
-            //'debitor_base_num',
-            //'debitor_other',
-            //'deal_type',
-            //'deal_description',
-            //'deal_date',
-            //'deal_name',
-            //'deal_inn',
-            //'enforce_number',
-            //'enforce_date',
-            //'enforce_sum',
-            //'nalog_work',
-            //'nalog_year',
-            //'nalog_income',
-            //'nalog_nalog',
-            //'other_text',
-            //'other_shares_creater',
-            //'other_shares_type',
-            //'other_shares_total_count',
-            //'other_shares_nominal_cost',
-            //'other_shares_other',
-            //'property_group',
-            //'property_property_type',
-            //'property_property_view',
-            //'property_share',
-            //'property_other_owners',
-            //'property_active_name',
-            //'property_square',
-            //'property_reg_number',
-            //'property_vin_number',
-            //'property_date_sved',
-            //'property_num_sved',
-            //'property_coutry',
-            //'property_region',
-            //'property_district',
-            //'property_city',
-            //'property_street',
-            //'property_house',
-            //'property_corpus',
-            //'property_office',
-            //'property_post_index',
-            //'property_cost',
-            //'property_active_status',
-            //'property_zalog_name',
-            //'property_zalog_post_index',
-            //'property_zalog_dogovor',
-            //'property_other',
-            //'property_own_dogovor',
-            //'property_zalog_inn',
-            //'property_zalog',
-            //'share_name',
-            //'share_location',
-            //'share_inn',
-            //'share_company_capital',
-            //'share_share',
-            //'share_nominal_cost',
-            //'share_shares_count',
-            //'share_total_cost',
-            //'share_dogovor_number',
-            //'share_date',
-            //'share_other',
-            //'valuable_property_property_type',
-            //'valuable_property_name',
-            //'valuable_property_cost',
-            //'valuable_property_location',
-            //'valuable_property_coutry',
-            //'valuable_property_region',
-            //'valuable_property_district',
-            //'valuable_property_city',
-            //'valuable_property_street',
-            //'valuable_property_house',
-            //'valuable_property_corpus',
-            //'valuable_property_office',
-            //'valuable_property_post_index',
-            //'valuable_property_org_name',
-            //'valuable_property_dogovor_number',
-            //'valuable_property_dogovor_date',
-            //'valuable_property_active_status',
-            //'valuable_property_zalog_name',
-            //'valuable_property_zalog_type',
-            //'valuable_property_zalog_inn',
-            //'valuable_property_zalog_address',
-            //'valuable_property_zalog_dogovor',
-            //'valuable_property_other',
+            //'id',
+            //'type',
+            'title',
+            [
+                'attribute' => 'active',
+                'filter' => Directory::$active,
+                'value' => function($model)
+                {
+                    return Directory::$active[$model->active];
+                }
+            ],
+            [
+                'attribute' => 'prompt',
+                'value' => function($model)
+                {
+                    return StringHelper::truncate($model->prompt,20,'...');
+                }
+            ],
+            [
+                'attribute' => 'prompt_active',
+                'filter' => Directory::$active,
+                'value' => function($model)
+                {
+                    return Directory::$active[$model->prompt_active];
+                }
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update}',
+                'buttons' => [
+                    'view' => function ($url,$model) use ($type){
+                        return Html::a(
+                            '<svg aria-hidden="true" style="display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:1.125em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M573 241C518 136 411 64 288 64S58 136 3 241a32 32 0 000 30c55 105 162 177 285 177s230-72 285-177a32 32 0 000-30zM288 400a144 144 0 11144-144 144 144 0 01-144 144zm0-240a95 95 0 00-25 4 48 48 0 01-67 67 96 96 0 1092-71z"></path></svg>',
+                            "/admin/directory/view?id=".$model->id."&type_id=".$type);
+                    },
+                    'update' => function ($url,$model) use ($type){
+                        return Html::a(
+                            '<svg aria-hidden="true" style="display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em;width:1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M498 142l-46 46c-5 5-13 5-17 0L324 77c-5-5-5-12 0-17l46-46c19-19 49-19 68 0l60 60c19 19 19 49 0 68zm-214-42L22 362 0 484c-3 16 12 30 28 28l122-22 262-262c5-5 5-13 0-17L301 100c-4-5-12-5-17 0zM124 340c-5-6-5-14 0-20l154-154c6-5 14-5 20 0s5 14 0 20L144 340c-6 5-14 5-20 0zm-36 84h48v36l-64 12-32-31 12-65h36v48z"></path></svg>',
+                            "/admin/directory/update?id=".$model->id."&type_id=".$type);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 

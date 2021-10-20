@@ -2,6 +2,7 @@
 
 use app\models\Promocode;
 use app\models\TicketStatus;
+use app\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,12 +34,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             //'id',
             'code',
-            'discount',
+            [
+                'attribute' => 'discount',
+                'value' => function($model)
+                {
+                    return $model->discount."%";
+                }
+            ],
             [
                 'attribute' => 'service_id',
                 'value' => function($model)
                 {
                     return TicketStatus::$type[$model->service_id];
+                }
+            ],
+            [
+                'attribute' => 'is_use',
+                'value' => function($model)
+                {
+                    return Promocode::$is_use[$model->is_use];
+                }
+            ],
+            [
+                'attribute' => 'user_activate',
+                'value' => function($model)
+                {
+                    if($user = User::findOne($model->user_activate)){
+                        return $user->username ;
+                    }else
+                        return "";
+
+                }
+            ],
+            [
+                'attribute' => 'period',
+                'value' => function($model)
+                {
+                    return $model->period;
                 }
             ],
             [
@@ -48,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Promocode::$active[$model->active];
                 }
             ],
+
             //'created_at',
             //'updated_at',
         ],

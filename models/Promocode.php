@@ -12,6 +12,9 @@ use yii\behaviors\TimestampBehavior;
  * @property string $code
  * @property int $discount
  * @property int|null $service_id
+ * @property int|null is_use
+ * @property int|null user_activate
+ * @property string period
  * @property int|null $active
  * @property int $created_at
  * @property int $updated_at
@@ -22,6 +25,12 @@ class Promocode extends \yii\db\ActiveRecord
     public static $active = [
         1 => 'Активен',
         0 => 'Отключен'
+    ];
+
+    public static $is_use = [
+        0 => 'Не применен',
+        1 => 'Применен',
+
     ];
     /**
      * {@inheritdoc}
@@ -38,7 +47,8 @@ class Promocode extends \yii\db\ActiveRecord
     {
         return [
             [['code', 'discount'], 'required'],
-            [['discount', 'service_id', 'active', 'created_at', 'updated_at'], 'integer'],
+            [['discount', 'service_id', 'active', 'created_at', 'updated_at','is_use','user_activate'], 'integer'],
+            [['period'],'safe'],
             [['code'], 'string', 'max' => 20],
         ];
     }
@@ -53,6 +63,9 @@ class Promocode extends \yii\db\ActiveRecord
             'code' => 'Код',
             'discount' => 'Процент скидки',
             'service_id' => 'Тип услуги',
+            'is_use' => 'Применен',
+            'user_activate' => 'Кем применен',
+            'period' => 'Действителен до',
             'active' => 'Активность',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

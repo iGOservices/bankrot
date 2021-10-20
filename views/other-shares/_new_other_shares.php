@@ -30,39 +30,39 @@ use kartik\date\DatePicker;
             <?= $form->field($other_shares,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
 
-
-                <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['other_shares_creater'] == 1):?>
+                <?if($directory[107]['active'] == 1):?>
+                    <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Лицо выпустившее ценную бумагу</h5>
+                            <h5>Лицо выпустившее ценную бумагу <?=$directory[107]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[107]['prompt']."\"></i>" : "" ?> </h5>
                             <?= $form->field($other_shares, "[$increment]creater")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <? endif; ?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['other_shares_type'] == 1):?>
+                    </div>
+                <? endif; ?>
+                <?if($directory[108]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Вид ценной бумаги</h5>
+                            <h5>Вид ценной бумаги <?=$directory[108]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[108]['prompt']."\"></i>" : "" ?> </h5>
                             <?= $form->field($other_shares, "[$increment]type")->dropDownList(OtherShares::$type,['maxlength' => true, 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <? endif; ?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['other_shares_total_count'] == 1):?>
+                    </div>
+                <? endif; ?>
+                <?if($directory[109]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Общее количество</h5>
+                            <h5>Общее количество <?=$directory[109]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[109]['prompt']."\"></i>" : "" ?> </h5>
                             <?= $form->field($other_shares, "[$increment]total_count")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <? endif; ?>
-                </div>
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['other_shares_nominal_cost'] == 1):?>
+                    </div>
+                <? endif; ?>
+                <?if($directory[110]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номинальная величина обязательства руб.</h5>
+                            <h5>Номинальная величина обязательства руб. <?=$directory[110]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[110]['prompt']."\"></i>" : "" ?> </h5>
                             <?= $form->field($other_shares, "[$increment]nominal_cost")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <? endif; ?>
-                </div>
+                    </div>
+                <? endif; ?>
+
                 <div class="col-xl-6">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
                         <h5>Скан документа подтверждающего обязательство</h5>
@@ -88,14 +88,16 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
-                <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['other_shares_other'] == 1):?>
+
+                <?if($directory[111]['active'] == 1):?>
+                    <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Примечание</h5>
+                            <h5>Примечание <?=$directory[111]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[111]['prompt']."\"></i>" : "" ?> </h5>
                             <?= $form->field($other_shares, "[$increment]other")->textArea(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <? endif; ?>
-                </div>
+                    </div>
+                <? endif; ?>
+
 
 			</div>
 		</div>

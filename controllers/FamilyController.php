@@ -6,6 +6,7 @@ use app\models\Brak;
 use app\models\ClientTicket;
 use app\models\Directory;
 use app\models\Razvod;
+use app\models\TicketStatus;
 use app\models\UploadForm;
 use Yii;
 use app\models\Family;
@@ -149,6 +150,8 @@ class FamilyController extends Controller
      */
     public function actionAddNewSp(){
         {
+            $type = TicketStatus::getCureType();
+            $directory = Directory::find()->where(['type' => $type])->asArray()->all();
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
                 'fieldConfig' => [
@@ -159,7 +162,7 @@ class FamilyController extends Controller
             $razvod = new Razvod();
             $uploadForm = new UploadForm();
 
-            return $this->renderAjax('_new_sp', ['form' => $form, 'brak' => $brak,'razvod' => $razvod, 'uploadForm' => $uploadForm,'increment' => $i]);
+            return $this->renderAjax('_new_sp', ['form' => $form, 'brak' => $brak,'razvod' => $razvod, 'uploadForm' => $uploadForm,'increment' => $i,'directory' => $directory]);
         }
 
     }
@@ -170,7 +173,8 @@ class FamilyController extends Controller
      */
     public function actionAddNewFamily(){
         {
-            $directory = Directory::findOne(1);
+            $type = TicketStatus::getCureType();
+            $directory = Directory::find()->where(['type' => $type])->asArray()->all();
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
                 'id' => 'family',

@@ -28,80 +28,73 @@ use kartik\date\DatePicker;
 		<div class="accordion-body__contents">
             <?= $form->field($bank,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_name'] == 1):?>
+                <?if($directory[41]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Наименование кредитной организации</h5>
+                            <h5>Наименование кредитной организации <?=$directory[41]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[41]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_post_address'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[42]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Почтовый адрес</h5>
+                            <h5>Почтовый адрес <?=$directory[42]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[42]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]post_address")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_number'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[43]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номер счета</h5>
+                            <h5>Номер счета <?=$directory[43]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[43]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_bic'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[44]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>БИК</h5>
+                            <h5>БИК <?=$directory[44]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[44]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]bic")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_type'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[45]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Вид счета</h5>
+                            <h5>Вид счета <?=$directory[45]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[45]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]type")->dropDownList(Bank::$type,[ 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_currency'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[46]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Валюта счета</h5>
+                            <h5>Валюта счета <?=$directory[46]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[46]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]currency")->dropDownList(Bank::$currency,[ 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_date_open'] == 1):?>
-                    <div class="submit-field ">
-                        <h5>Дата открытия счета</h5>
-                        <?= $form->field($bank, "[$increment]date_open")->widget(DatePicker::classname(), [
-                            'options' => [
-                                'placeholder' => 'Введите дату',
-                                'autocomplete' => 'off',
-                                'class' => 'with-border',
-                            ],
-                            'pluginOptions' => [
-                                'autoclose'=>true,
-                                'todayHighlight' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ])->label(false) ?>
                     </div>
-                    <?endif;?>
-                </div>
-
+                <?endif;?>
+                <?if($directory[47]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
+                        <div class="submit-field ">
+                            <h5>Дата открытия счета <?=$directory[47]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[47]['prompt']."\"></i>" : "" ?></h5>
+                            <?= $form->field($bank, "[$increment]date_open")->widget(DatePicker::classname(), [
+                                'options' => [
+                                    'placeholder' => 'Введите дату',
+                                    'autocomplete' => 'off',
+                                    'class' => 'with-border',
+                                ],
+                                'pluginOptions' => [
+                                    'autoclose'=>true,
+                                    'todayHighlight' => true,
+                                    'format' => 'yyyy-mm-dd'
+                                ]
+                            ])->label(false) ?>
+                        </div>
+                    </div>
+                <?endif;?>
                 <div class="col-xl-4">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
                         <h5>Скан выписки по операциям счета за 3 года</h5>
@@ -127,25 +120,22 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_balance'] == 1):?>
+                <?if($directory[48]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Исходящий остаток в рублях</h5>
+                            <h5>Исходящий остаток в рублях <?=$directory[48]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[48]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]balance")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['bank_other'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[49]['active'] == 1):?>
+                    <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Примечание</h5>
+                            <h5>Примечание <?=$directory[49]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[49]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($bank, "[$increment]other")->textarea(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
+                    </div>
+                <?endif;?>
 
 
 			</div>

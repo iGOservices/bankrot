@@ -14,8 +14,6 @@ use yii\filters\VerbFilter;
  */
 class DirectoryController extends Controller
 {
-
-    //public $layout = '/admin';
     /**
      * {@inheritdoc}
      */
@@ -35,12 +33,13 @@ class DirectoryController extends Controller
      * Lists all Directory models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type_id)
     {
         $searchModel = new DirectorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$type_id);
 
         return $this->render('index', [
+            'type_id' => $type_id,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -52,10 +51,11 @@ class DirectoryController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id,$type_id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'type_id' => $type_id
         ]);
     }
 
@@ -84,16 +84,17 @@ class DirectoryController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$type_id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id,'type_id' => $type_id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'type_id' => $type_id
         ]);
     }
 
@@ -129,9 +130,7 @@ class DirectoryController extends Controller
 
     public function actionDirectoryList()
     {
-        $directory = Directory::find()->all();
         return $this->render('directory_list', [
-            'directory' => $directory,
         ]);
     }
 }

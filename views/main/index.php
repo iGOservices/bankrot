@@ -92,12 +92,12 @@ use yii\widgets\ActiveForm;
                     <div class="tab">
 
                         <div class="checkbox">
-                            <input type="checkbox" id="chekcbox1" checked="">
+                            <input type="checkbox" id="chekcbox1">
                             <label for="chekcbox1"><span class="checkbox-icon"></span>Согласие на использование и обработку персональных данных</label>
                         </div>
                         <br>
                         <div class="checkbox">
-                            <input type="checkbox" id="chekcbox2" checked="">
+                            <input type="checkbox" id="chekcbox2" >
                             <label for="chekcbox2"><span class="checkbox-icon"></span>Ответственность за непредставление или представление заведомо недостоверных и неполных сведений возлагается  на пользователя</label>
                         </div>
                         <div class="row" style="margin-top:30px;">
@@ -173,7 +173,6 @@ use yii\widgets\ActiveForm;
                         <!-- Accordion / End -->
 
                     </div>
-
                     <div class="tab">
                         <input id="sp-point" hidden value="0">
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -231,9 +230,7 @@ use yii\widgets\ActiveForm;
 
                         <?php ActiveForm::end(); ?>
                     </div>
-
-                <!-- One "tab" for each step in the form: -->
-				<div class="tab">
+				    <div class="tab">
                     <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                     <a href="#" id="add_creditor" class="button ripple-effect">
@@ -283,10 +280,7 @@ use yii\widgets\ActiveForm;
                     <?php ActiveForm::end(); ?>
 
 				</div>
-
-
-
-                  <div class="tab">
+                    <div class="tab">
                       <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
                       <a href="#" id="add_debitor" class="button ripple-effect">
@@ -337,7 +331,6 @@ use yii\widgets\ActiveForm;
                       </div>
                       <?php ActiveForm::end(); ?>
                   </div>
-
                     <div class="tab">
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
@@ -389,7 +382,6 @@ use yii\widgets\ActiveForm;
 
 
                     </div>
-
                     <div class="tab">
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
 
@@ -440,7 +432,6 @@ use yii\widgets\ActiveForm;
                         <?php ActiveForm::end(); ?>
 
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -493,9 +484,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
-
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -547,7 +535,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -598,7 +585,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -650,7 +636,6 @@ use yii\widgets\ActiveForm;
                         <?php ActiveForm::end(); ?>
 
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -702,7 +687,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -752,7 +736,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
                     <div class="tab">
 
                         <!--<a href="#small-dialog-1" class="popup-with-zoom-anim button ripple-effect" id="add_creditor"><i class="icon-feather-edit"></i>Добавить</a>-->
@@ -803,7 +786,6 @@ use yii\widgets\ActiveForm;
                         </div>
                         <?php ActiveForm::end(); ?>
                     </div>
-
                     <div class="tab">
 
 
@@ -817,91 +799,85 @@ use yii\widgets\ActiveForm;
                                             //'form' => $form,
                                         ]);?>
 
-
-
-
-
-                        </div>
-
                     </div>
-                    <div class="tab">
-                        <?if($ticket):?>
-                        <?$service = $ticket->getService()->one()?>
-                        <div class="pricing-plans-container"  style="width: 50%;margin: 0 auto" >
-                        <div class="pricing-plan">
-                            <h3><?=$service->title?></h3>
-                            <p class="margin-top-10"><?=$service->description?></p>
-                            <div class="pricing-plan-label billed-monthly-label" id="cost"><strong><?=$service->price?></strong>рублей</div>
-                            <div class="pricing-plan-label billed-yearly-label"><strong>$205</strong>/ yearly</div>
-                            <div class="pricing-plan-features">
+<!--                    <div class="tab">-->
+<!--                        --><?//if($ticket):?>
+<!--                        --><?//$service = $ticket->getService()->one()?>
+<!--                        <div class="pricing-plans-container"  style="width: 50%;margin: 0 auto" >-->
+<!--                        <div class="pricing-plan">-->
+<!--                            <h3>--><?//=$service->title?><!--</h3>-->
+<!--                            <p class="margin-top-10">--><?//=$service->description?><!--</p>-->
+<!--                            <div class="pricing-plan-label billed-monthly-label" id="cost"><strong>--><?//=$service->price?><!--</strong>рублей</div>-->
+<!--                            <div class="pricing-plan-label billed-yearly-label"><strong>$205</strong>/ yearly</div>-->
+<!--                            <div class="pricing-plan-features">-->
 <!--                                <strong>Features of Basic Plan</strong>-->
-                                <ul>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-xl-6 col-md-6">
-                                                <div class="section-headline margin-bottom-12">
-                                                    <h5>Промокод</h5>
-                                                </div>
-                                                <input class="with-border" placeholder="" id="promocode">
-                                            </div>
-                                            <div class="col-xl-6 col-md-6" style="margin-top: 42px">
-                                                <a href="#"  onclick="activatePromocode(<?=$service->id?>,<?=$service->price?>);" class=" button full-width button-sliding-icon">Применить <i class="icon-material-outline-arrow-right-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li id="promocode_message"></li>
-<!--                                    <li>Highlighted in Search Results</li>-->
-                                </ul>
-                            </div>
-                            <form method="post" action="https://pay.modulbank.ru/pay">
-
-                                <input type="hidden" name="testing" value="1">
-
-                                <input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI">
-
-                                <input type="hidden" name="order_id" value="14425840">
-
-                                <input type="hidden" name="amount" value="<?=$service->price?>">
-
-                                <input type="hidden" name="merchant" value="ad25ef06-1824-413f-8ef1-c08115b9b979">
-
-                                <input type="hidden" name="signature" value="9b28fa592922dc8a0c1ba2e40f2c0432aa617afd">
-
-                                <input type="hidden" name="description" value="Заказ №14425840">
-
-                                <input type="hidden" name="client_phone" value="+7 912 9876543">
-
-                                <input type="hidden" name="client_email" value="test@test.ru">
-
-                                <input type="hidden" name="success_url" value="http://myawesomesite.com/payment_success">
-
-                                <input type="hidden" name="receipt_contact" value="test@mail.com">
-
-                                <input type="hidden" name="unix_timestamp" value="1573451160">
-
-                                <input type="hidden" name="receipt_items"
-                                       value="[{&quot;discount_sum&quot;: 40, &quot;name&quot;: &quot;Товар 1&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
- &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 48, &quot;quantity&quot;: 10, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;},
- {&quot;name&quot;: &quot;Товар 2&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
- &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 533, &quot;quantity&quot;: 1, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;}]">
-
-<!--                                <input type="submit" value="Оплатить услугу" class="button full-width margin-top-20">-->
-                                <a href="/main/save-payment?ticket_id=<?=$model->id?>" onclick="setCookie('tab', 0);" class="button full-width margin-top-20">Оплатить услугу</a>
-
-                            </form>
-
-                        </div>
-                        </div>
-                            <div class="row" style="margin-top:30px;">
-                                <div class="center-block">
-                                    <div class="row" >
-                                        <a href="#" class="button ripple-effect" id="prevBtn" onclick="nextPrev(-1)" style="margin-right:5px;"><span class="icon-material-outline-keyboard-arrow-left"></span>Назад</a>
-                                    </div>
-                                </div>
-                            </div>
-                        <br>
-                        <?endif;?>
-                    </div>
+<!--                                <ul>-->
+<!--                                    <li>-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-xl-6 col-md-6">-->
+<!--                                                <div class="section-headline margin-bottom-12">-->
+<!--                                                    <h5>Промокод</h5>-->
+<!--                                                </div>-->
+<!--                                                <input class="with-border" placeholder="" id="promocode">-->
+<!--                                            </div>-->
+<!--                                            <div class="col-xl-6 col-md-6" style="margin-top: 42px">-->
+<!--                                                <a href="#"  onclick="activatePromocode(--><?//=$service->id?>//,<?//=$service->price?>//);" class=" button full-width button-sliding-icon">Применить <i class="icon-material-outline-arrow-right-alt"></i></a>
+//                                            </div>
+//                                        </div>
+//                                    </li>
+//                                    <li id="promocode_message"></li>
+//<!--                                    <li>Highlighted in Search Results</li>-->
+//                                </ul>
+//                            </div>
+//                            <form method="post" action="https://pay.modulbank.ru/pay">
+//
+//                                <input type="hidden" name="testing" value="1">
+//
+//                                <input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI">
+//
+//                                <input type="hidden" name="order_id" value="14425840">
+//
+//                                <input type="hidden" name="amount" value="<?//=$service->price?><!--">-->
+<!---->
+<!--                                <input type="hidden" name="merchant" value="ad25ef06-1824-413f-8ef1-c08115b9b979">-->
+<!---->
+<!--                                <input type="hidden" name="signature" value="9b28fa592922dc8a0c1ba2e40f2c0432aa617afd">-->
+<!---->
+<!--                                <input type="hidden" name="description" value="Заказ №14425840">-->
+<!---->
+<!--                                <input type="hidden" name="client_phone" value="+7 912 9876543">-->
+<!---->
+<!--                                <input type="hidden" name="client_email" value="test@test.ru">-->
+<!---->
+<!--                                <input type="hidden" name="success_url" value="http://myawesomesite.com/payment_success">-->
+<!---->
+<!--                                <input type="hidden" name="receipt_contact" value="test@mail.com">-->
+<!---->
+<!--                                <input type="hidden" name="unix_timestamp" value="1573451160">-->
+<!---->
+<!--                                <input type="hidden" name="receipt_items"-->
+<!--                                       value="[{&quot;discount_sum&quot;: 40, &quot;name&quot;: &quot;Товар 1&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,-->
+<!-- &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 48, &quot;quantity&quot;: 10, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;},-->
+<!-- {&quot;name&quot;: &quot;Товар 2&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,-->
+<!-- &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 533, &quot;quantity&quot;: 1, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;}]">-->
+<!---->
+<!--<!--                                <input type="submit" value="Оплатить услугу" class="button full-width margin-top-20">-->-->
+<!--                                <a href="/main/save-payment?ticket_id=--><?//=$model->id?><!--" onclick="setCookie('tab', 0);" class="button full-width margin-top-20">Оплатить услугу</a>-->
+<!---->
+<!--                            </form>-->
+<!---->
+<!--                        </div>-->
+<!--                        </div>-->
+<!--                            <div class="row" style="margin-top:30px;">-->
+<!--                                <div class="center-block">-->
+<!--                                    <div class="row" >-->
+<!--                                        <a href="#" class="button ripple-effect" id="prevBtn" onclick="nextPrev(-1)" style="margin-right:5px;"><span class="icon-material-outline-keyboard-arrow-left"></span>Назад</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        <br>-->
+<!--                        --><?//endif;?>
+<!--                    </div>-->
 
                     <div class="tab">
                         конец

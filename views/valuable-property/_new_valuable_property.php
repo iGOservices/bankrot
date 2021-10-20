@@ -29,140 +29,135 @@ use kartik\date\DatePicker;
 		<div class="accordion-body__contents">
             <?= $form->field($valuable_property,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_property_type'] == 1):?>
+                <?if($directory[151]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Вид имущества</h5>
+                            <h5>Вид имущества <?=$directory[151]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[151]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]property_type")->dropDownList(ValuableProperty::$property_type,[ 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_name'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[152]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Наименование</h5>
+                            <h5>Наименование <?=$directory[152]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[152]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_cost'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[153]['active'] == 1):?>
+                    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Сумма руб.</h5>
+                            <h5>Сумма руб. <?=$directory[153]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[153]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]cost")->textInput(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_location'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[154]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Место нахождения или хранения</h5>
+                            <h5>Место нахождения или хранения <?=$directory[154]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[154]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]location")->dropDownList(ValuableProperty::$location, [ 'class' => 'with-border select_list','onchange' => 'changeSocketView('.$increment.');'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
+
 
                 <div class="col-xl-12" >
                     <h5>Местонахождение хранения: </h5>
                     <div style="border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;padding:10px;margin:10px;">
                         <div class="row">
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_coutry'] == 1):?>
+
+                            <?if($directory[155]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Страна</h5>
+                                        <h5>Страна <?=$directory[155]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[155]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]coutry")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_region'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[156]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Субьект федерации</h5>
+                                        <h5>Субьект федерации <?=$directory[156]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[156]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]region")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_district'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[157]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Район</h5>
+                                        <h5>Район <?=$directory[157]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[157]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]district")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_city'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[158]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Город</h5>
+                                        <h5>Город <?=$directory[158]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[158]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]city")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_street'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[159]['active'] == 1):?>
+                                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Улица</h5>
+                                        <h5>Улица <?=$directory[159]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[159]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]street")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_house'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[160]['active'] == 1):?>
+                                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Дом</h5>
+                                        <h5>Дом <?=$directory[160]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[160]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]house")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_corpus'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[161]['active'] == 1):?>
+                                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Корпус</h5>
+                                        <h5>Корпус <?=$directory[161]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[161]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]corpus")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_office'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[162]['active'] == 1):?>
+                                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Офис</h5>
+                                        <h5>Офис <?=$directory[162]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[162]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]office")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-
-                            <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['valuable_property_post_index'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <?if($directory[163]['active'] == 1):?>
+                                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Почтовый индекс</h5>
+                                        <h5>Почтовый индекс <?=$directory[163]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[163]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($valuable_property, "[$increment]post_index")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                                     </div>
-                                <?endif;?>
-                            </div>
+                                </div>
+                            <?endif;?>
+
                         </div>
                     </div>
                 </div>
 
                 <?$display = ($valuable_property->location == 1 || !$valuable_property->location) ? "none" : "block"?>
 
-                <div class="col-xl-4 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
-                    <? if($directory['valuable_property_org_name'] == 1):?>
+                <?if($directory[164]['active'] == 1):?>
+                    <div class="col-xl-4 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
                         <div class="submit-field ">
-                            <h5>Наименование кредитной организации</h5>
+                            <h5>Наименование кредитной организации <?=$directory[164]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[164]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]org_name")->textInput([ 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
                 <div class="col-xl-3 socket" style="padding-left:30px;padding-right:30px;;display:<?=$display?>;">
                     <div class="submit-field" >
-                        <h5>Договор</h5>
+                        <h5>Договор </h5>
                         <?= $form->field($uploadForm, "[$increment]valuable_property[]", [
                             'template' => '<div class="uploadButton">{input}
 											<label class="uploadButton-button ripple-effect" for="valuable_property_upload'.$increment.'">Загрузить файл</label>
@@ -185,98 +180,99 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
-                <div class="col-xl-2 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
-                    <? if($directory['valuable_property_dogovor_number'] == 1):?>
+
+                <?if($directory[165]['active'] == 1):?>
+                    <div class="col-xl-2 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
                         <div class="submit-field ">
-                            <h5>Номер договора</h5>
+                            <h5>Номер договора <?=$directory[165]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[165]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]dogovor_number")->textInput([ 'class' => 'with-border '])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
-                    <? if($directory['valuable_property_dogovor_date'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[166]['active'] == 1):?>
+                    <div class="col-xl-3 socket" style="padding-left:30px;padding-right:30px;display:<?=$display?>;">
+                            <div class="submit-field ">
+                                <h5>Дата договора <?=$directory[166]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[166]['prompt']."\"></i>" : "" ?></h5>
+                                <?= $form->field($valuable_property, "[$increment]dogovor_date")->widget(DatePicker::classname(), [
+                                    'options' => [
+                                        'placeholder' => 'Введите дату',
+                                        'autocomplete' => 'off',
+                                        'class' => 'with-border',
+                                    ],
+                                    'pluginOptions' => [
+                                        'autoclose'=>true,
+                                        'todayHighlight' => true,
+                                        'format' => 'yyyy-mm-dd'
+                                    ]
+                                ])->label(false) ?>
+                            </div>
+                    </div>
+                <?endif;?>
+                <?if($directory[168]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Дата договора</h5>
-                            <?= $form->field($valuable_property, "[$increment]dogovor_date")->widget(DatePicker::classname(), [
-                                'options' => [
-                                    'placeholder' => 'Введите дату',
-                                    'autocomplete' => 'off',
-                                    'class' => 'with-border',
-                                ],
-                                'pluginOptions' => [
-                                    'autoclose'=>true,
-                                    'todayHighlight' => true,
-                                    'format' => 'yyyy-mm-dd'
-                                ]
-                            ])->label(false) ?>
-                        </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_zalog_name'] == 1):?>
-                        <div class="submit-field ">
-                            <h5>Имя залогодержателя</h5>
+                            <h5>Имя залогодержателя <?=$directory[168]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[168]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]zalog_name")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_zalog_type'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[169]['active'] == 1):?>
+                    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                          <div class="submit-field ">
-                            <h5>Залогодержатель</h5>
+                            <h5>Залогодержатель <?=$directory[169]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[169]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]zalog_type")->dropDownList(ValuableProperty::$zalog_type,['maxlength' => true, 'class' => 'with-border select_list'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_zalog_inn'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[170]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>ИНН залогодержателя</h5>
+                            <h5>ИНН залогодержателя <?=$directory[170]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[170]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]zalog_inn")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_active_status'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[167]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Статус актива В залоге</h5>
+                            <h5>Статус актива В залоге <?=$directory[167]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[167]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]active_status", [
                                 'template' => '<label class="switch" style="padding-bottom: 30px">{input}<span class="switch-button"></span></label>'])->checkbox([], false)?>
                         </div>
-                    <?endif;?>
-                </div>
-
-
+                    </div>
+                <?endif;?>
                 <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
 
                     <div class="row">
-                        <div class="col-xl-12">
-                            <? if($directory['valuable_property_zalog_dogovor'] == 1):?>
+
+                        <?if($directory[172]['active'] == 1):?>
+                            <div class="col-xl-12">
                                 <div class="submit-field ">
-                                    <h5>Договор залога или иная сделка</h5>
+                                    <h5>Договор залога или иная сделка <?=$directory[172]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[172]['prompt']."\"></i>" : "" ?></h5>
                                     <?= $form->field($valuable_property, "[$increment]zalog_dogovor")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                 </div>
-                            <?endif;?>
-                        </div>
-                        <div class="col-xl-12" >
-                            <? if($directory['valuable_property_zalog_address'] == 1):?>
+                            </div>
+                        <?endif;?>
+                        <?if($directory[171]['active'] == 1):?>
+                            <div class="col-xl-12" >
                                 <div class="submit-field ">
-                                    <h5>Почтовый адресс залогодержателя</h5>
+                                    <h5>Почтовый адресс залогодержателя <?=$directory[171]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[171]['prompt']."\"></i>" : "" ?></h5>
                                     <?= $form->field($valuable_property, "[$increment]zalog_address")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                                 </div>
-                            <?endif;?>
-                        </div>
+                            </div>
+                        <?endif;?>
                     </div>
                 </div>
-                <div class="col-xl-8" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['valuable_property_other'] == 1):?>
+
+                <?if($directory[173]['active'] == 1):?>
+                    <div class="col-xl-8" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Примечание</h5>
+                            <h5>Примечание <?=$directory[173]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[173]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($valuable_property, "[$increment]other")->textArea(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
+
 
 
 			</div>

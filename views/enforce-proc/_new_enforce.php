@@ -28,18 +28,18 @@ use kartik\date\DatePicker;
 		<div class="accordion-body__contents">
             <?= $form->field($enforce,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['enforce_number'] == 1):?>
+                <?if($directory[99]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номер исполнительного производства</h5>
+                            <h5>Номер исполнительного производства <?=$directory[99]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[99]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($enforce, "[$increment]number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['enforce_date'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[100]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field">
-                            <h5>Дата исполнительного производства</h5>
+                            <h5>Дата исполнительного производства <?=$directory[100]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[100]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($enforce, "[$increment]date")->widget(DatePicker::classname(), [
                                 'options' => [
                                     'placeholder' => 'Введите дату',
@@ -53,16 +53,16 @@ use kartik\date\DatePicker;
                                 ]
                             ])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['enforce_sum'] == 1):?>
+                        </div>
+                <?endif;?>
+                <?if($directory[101]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Сумма непогашенной задолженности</h5>
+                            <h5>Сумма непогашенной задолженности <?=$directory[101]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[101]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($enforce, "[$increment]sum")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
 			</div>
 		</div>
 	</div>

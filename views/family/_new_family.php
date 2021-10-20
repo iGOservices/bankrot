@@ -31,53 +31,50 @@ use kartik\date\DatePicker;
 		<!-- Accordion Content -->
 		<div class="accordion-body__contents">
 			<div class="row">
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_type'] == 1):?>
+                <? if($directory[26]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Тип родства</h5>
+                            <h5>Тип родства <?=$directory[26]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[26]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($family,"[$increment]type")->dropDownList(Family::$type, [ 'class' => 'with-border select_list'])->label(false)  ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_name'] == 1):?>
+                    </div>
+                <?endif;?>
+                <? if($directory[27]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Имя</h5>
+                            <h5>Имя <?=$directory[27]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[27]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($family,"[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_surname'] == 1):?>
+                    </div>
+                <?endif;?>
+                <? if($directory[28]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Фамилия</h5>
+                            <h5>Фамилия <?=$directory[28]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[28]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($family,"[$increment]surname")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_patronymic'] == 1):?>
-                    <div class="submit-field ">
-                        <h5>Отчество</h5>
-                        <?= $form->field($family,"[$increment]patronymic")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                     </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_inn'] == 1):?>
+                <?endif;?>
+                <? if($directory[29]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
+                        <div class="submit-field ">
+                            <h5>Отчество <?=$directory[29]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[29]['prompt']."\"></i>" : "" ?></h5>
+                            <?= $form->field($family,"[$increment]patronymic")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
+                        </div>
+                    </div>
+                <?endif;?>
+                <? if($directory[31]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field">
-                            <h5>ИНН</h5>
+                            <h5>ИНН <?=$directory[31]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[31]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($family,"[$increment]inn")->textInput(['maxlength' => 12, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['family_birthday'] == 1):?>
+                    </div>
+                <?endif;?>
+                <? if($directory[30]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field">
-                            <h5>Дата рождения</h5>
+                            <h5>Дата рождения <?=$directory[30]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[30]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($family, "[$increment]birthday")->widget(DatePicker::classname(), [
                                 'options' => [
                                     'placeholder' => 'Введите дату',
@@ -91,8 +88,8 @@ use kartik\date\DatePicker;
                                 ]
                             ])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
 
                 <div class="col-xl-6">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
@@ -125,35 +122,34 @@ use kartik\date\DatePicker;
                     <h5>Свидетельство о рождении: </h5>
                     <div style="border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;padding:10px;margin:10px;">
                         <div class="row">
-
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_country'] == 1):?>
+                            <? if($directory[32]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Страна выдачи</h5>
+                                        <h5>Страна выдачи <?=$directory[32]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[32]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($family,"[$increment]birth_country")->dropDownList(Family::$birth_country,[ 'class' => 'with-border select_list'])->label(false)  ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_series'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <? if($directory[33]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Серия</h5>
+                                        <h5>Серия <?=$directory[33]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[33]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($family,"[$increment]birth_series")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_number'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <? if($directory[34]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field ">
-                                        <h5>Номер</h5>
+                                        <h5>Номер <?=$directory[34]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[34]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($family,"[$increment]birth_number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                                     </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_date'] == 1):?>
+                                </div>
+                            <?endif;?>
+                            <? if($directory[35]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                                     <div class="submit-field">
-                                        <h5>Дата выдачи счидетельства</h5>
+                                        <h5>Дата выдачи счидетельства <?=$directory[35]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[35]['prompt']."\"></i>" : "" ?></h5>
                                         <?= $form->field($family,"[$increment]birth_date")->widget(DatePicker::classname(), [
                                             'options' => [
                                                 'placeholder' => 'Введите дату',
@@ -166,48 +162,45 @@ use kartik\date\DatePicker;
                                                 'format' => 'yyyy-mm-dd'
                                             ]
                                         ])->label(false) ?>
-
                                     </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_number_act'] == 1):?>
-                                <div class="submit-field ">
-                                    <h5>Номер актовой записи</h5>
-                                    <?= $form->field($family,"[$increment]birth_number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
                                 </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_birth_number_act_date'] == 1):?>
-                                <div class="submit-field ">
-                                    <h5>Дата актовой записи</h5>
-                                    <?= $form->field($family,"[$increment]birth_number_act_date")->widget(DatePicker::classname(), [
-                                        'options' => [
-                                            'placeholder' => 'Введите дату',
-                                            'autocomplete' => 'off',
-                                            'class' => 'with-border',
-                                        ],
-                                        'pluginOptions' => [
-                                            'autoclose'=>true,
-                                            'todayHighlight' => true,
-                                            'format' => 'yyyy-mm-dd'
-                                        ]
-                                    ])->label(false) ?>
+                            <?endif;?>
+                            <? if($directory[36]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
+                                    <div class="submit-field ">
+                                        <h5>Номер актовой записи <?=$directory[36]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[36]['prompt']."\"></i>" : "" ?></h5>
+                                        <?= $form->field($family,"[$increment]birth_number_act")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
+                                    </div>
                                 </div>
-                                <?endif;?>
-                            </div>
-                            <div class="col-xl-6" style="padding-left:30px;padding-right:30px;">
-                                <? if($directory['family_given'] == 1):?>
-                                <div class="submit-field ">
-                                    <h5>Кем выдан</h5>
-                                    <?= $form->field($family,"[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
+                            <?endif;?>
+                            <? if($directory[37]['active'] == 1):?>
+                                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
+                                    <div class="submit-field ">
+                                        <h5>Дата актовой записи <?=$directory[37]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[37]['prompt']."\"></i>" : "" ?></h5>
+
+                                        <?= $form->field($family,"[$increment]birth_number_act_date")->widget(DatePicker::classname(), [
+                                            'options' => [
+                                                'placeholder' => 'Введите дату',
+                                                'autocomplete' => 'off',
+                                                'class' => 'with-border',
+                                            ],
+                                            'pluginOptions' => [
+                                                'autoclose'=>true,
+                                                'todayHighlight' => true,
+                                                'format' => 'yyyy-mm-dd'
+                                            ]
+                                        ])->label(false) ?>
+                                    </div>
                                 </div>
-                                <?endif;?>
-                            </div>
-
-
-
+                            <?endif;?>
+                            <? if($directory[38]['active'] == 1):?>
+                                <div class="col-xl-6" style="padding-left:30px;padding-right:30px;">
+                                    <div class="submit-field ">
+                                        <h5>Кем выдан <?=$directory[38]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[38]['prompt']."\"></i>" : "" ?></h5>
+                                        <?= $form->field($family,"[$increment]given")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false)  ?>
+                                    </div>
+                                </div>
+                            <?endif;?>
                         </div>
                     </div>
                 </div>

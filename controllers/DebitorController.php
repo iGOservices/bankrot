@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ClientTicket;
 use app\models\Directory;
+use app\models\TicketStatus;
 use app\models\UploadForm;
 use Yii;
 use app\models\Debitor;
@@ -144,7 +145,8 @@ class DebitorController extends Controller
      */
     public function actionAddNewDebitor(){
         {
-            $directory = Directory::findOne(1);
+            $type = TicketStatus::getCureType();
+            $directory = Directory::find()->where(['type' => $type])->asArray()->all();
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
                 'fieldConfig' => [

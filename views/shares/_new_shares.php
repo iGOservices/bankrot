@@ -29,99 +29,97 @@ use kartik\date\DatePicker;
             <?= $form->field($shares,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
 
-
-                <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_name'] == 1):?>
+                <?if($directory[140]['active'] == 1):?>
+                    <div class="col-xl-5" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Наименование организации</h5>
+                            <h5>Наименование организации <?=$directory[140]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[140]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]name")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_location'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[141]['active'] == 1):?>
+                    <div class="col-xl-4" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Местонахождение организации</h5>
+                            <h5>Местонахождение организации <?=$directory[141]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[141]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]location")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_inn'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[142]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>ИНН общества</h5>
+                            <h5>ИНН общества <?=$directory[142]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[142]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]inn")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_company_capital'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[143]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Уставной капитал общества руб.</h5>
+                            <h5>Уставной капитал общества руб. <?=$directory[143]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[143]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]company_capital")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_share'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[144]['active'] == 1):?>
+                    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Доля участия</h5>
+                            <h5>Доля участия <?=$directory[144]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[144]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]share")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_nominal_cost'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[145]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номинальная стоимость акции</h5>
+                            <h5>Номинальная стоимость акции <?=$directory[145]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[145]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]nominal_cost")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_shares_count'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[146]['active'] == 1):?>
+                    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Количество акций</h5>
+                            <h5>Количество акций <?=$directory[146]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[146]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]shares_count")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-
-                <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_total_cost'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[147]['active'] == 1):?>
+                    <div class="col-xl-2" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Общая сумма акций</h5>
+                            <h5>Общая сумма акций <?=$directory[147]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[147]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]total_cost")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_dogovor_number'] == 1):?>
+                    </div>
+                <?endif;?>
+                <?if($directory[148]['active'] == 1):?>
+                    <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
-                            <h5>Номер договора участия</h5>
+                            <h5>Номер договора участия <?=$directory[148]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[148]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]dogovor_number")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
-                <div class="col-xl-" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_date'] == 1):?>
-                    <div class="submit-field ">
-                        <h5>Дата договора</h5>
-                        <?= $form->field($shares, "[$increment]date")->widget(DatePicker::classname(), [
-                            'options' => [
-                                'placeholder' => 'Введите дату',
-                                'autocomplete' => 'off',
-                                'class' => 'with-border',
-                            ],
-                            'pluginOptions' => [
-                                'autoclose'=>true,
-                                'todayHighlight' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ])->label(false) ?>
                     </div>
-                    <?endif;?>
-                </div>
+                <?endif;?>
+                <?if($directory[149]['active'] == 1):?>
+                    <div class="col-xl-" style="padding-left:30px;padding-right:30px;">
+                        <div class="submit-field ">
+                            <h5>Дата договора <?=$directory[149]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[149]['prompt']."\"></i>" : "" ?></h5>
+                            <?= $form->field($shares, "[$increment]date")->widget(DatePicker::classname(), [
+                                'options' => [
+                                    'placeholder' => 'Введите дату',
+                                    'autocomplete' => 'off',
+                                    'class' => 'with-border',
+                                ],
+                                'pluginOptions' => [
+                                    'autoclose'=>true,
+                                    'todayHighlight' => true,
+                                    'format' => 'yyyy-mm-dd'
+                                ]
+                            ])->label(false) ?>
+                        </div>
+                    </div>
+                <?endif;?>
 
                 <div class="col-xl-5">
                     <div class="submit-field" style="padding-left:30px;padding-right:30px;">
@@ -148,14 +146,15 @@ use kartik\date\DatePicker;
                         <? endif; ?>
                     </div>
                 </div>
-                <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
-                    <? if($directory['share_other'] == 1):?>
+
+                <?if($directory[150]['active'] == 1):?>
+                    <div class="col-xl-12" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field" >
-                            <h5>Примечание</h5>
+                            <h5>Примечание <?=$directory[150]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[150]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($shares, "[$increment]other")->textArea(['maxlength' => true, 'class' => 'with-border'])->label(false) ?>
                         </div>
-                    <?endif;?>
-                </div>
+                    </div>
+                <?endif;?>
 
 
 

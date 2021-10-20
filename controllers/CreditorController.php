@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ClientTicket;
 use app\models\Directory;
+use app\models\TicketStatus;
 use Yii;
 use app\models\Creditor;
 use app\models\CreditorSearch;
@@ -144,7 +145,8 @@ class CreditorController extends Controller
      */
     public function actionAddNewCreditor(){
         {
-            $directory = Directory::findOne(1);
+            $type = TicketStatus::getCureType();
+            $directory = Directory::find()->where(['type' => $type])->asArray()->all();
             $i = Yii::$app->request->post('num');
             $form = ActiveForm::begin([
                 'options' => ['enctype' => 'multipart/form-data'],

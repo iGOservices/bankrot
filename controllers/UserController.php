@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\ClientTicket;
 use app\models\ClientTicketSearch;
+use app\models\SignupForm;
 use app\models\UploadForm;
+use app\models\VerifyCode;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -153,4 +155,109 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionSendCallRequest()
+    {
+
+        $data = Yii::$app->request->post();
+
+        //ищем по номеру телефона
+        $phone = preg_replace('/[^0-9]/', '', $data['phone']);
+
+        if($phone){
+            if(User::findByPhone($phone)){
+                $array = [
+                    'data' => false,
+                    'type' => 1
+                ];
+                return json_encode($array);
+            }
+        }
+
+        if($data['username']){
+            if(User::find()->where(['username' => $data['username']])->one()){
+                $array = [
+                    'data' => false,
+                    'type' => 2
+                ];
+                return json_encode($array);
+            }
+        }
+
+        if($data['email']){
+            if(User::findByEmail($data['email'])){
+                $array = [
+                    'data' => false,
+                    'type' => 3
+                ];
+                return json_encode($array);
+            }
+        }
+
+
+        $model = VerifyCode::findByPhone($phone);
+        if($model)
+        {
+            if($model->count < 3)
+            {
+                $flag = VerifyCode::repeatCallRequest($model->ucaller_id);
+                $model->repeatRequest();
+            }else $flag = false;
+        }else
+        {
+
+            $code = rand(1000,9999);
+            $ucaller_id = VerifyCode::sendCallRequest($phone,$code);
+            if($ucaller_id)
+            {
+                $flag = VerifyCode::createRequest($phone, $code, $ucaller_id);
+            }else $flag = false;
+        }
+
+        $flag = true;
+        if($flag)
+        {
+            $array = [
+                'data' => true
+            ];
+        }else
+        {
+            $array = [
+                'data' => false,
+                'type' => 4
+            ];
+        }
+
+        return json_encode($array);
+    }
+
+
+    public function actionSendCallAnswer()
+    {
+        $data = Yii::$app->request->post();
+
+        //ищем по номеру телефона
+        $phone = preg_replace('/[^0-9]/', '', $data['phone']);
+        $code = $data['code'];
+
+        $model = VerifyCode::findByPhone($phone);
+        if($model && $model->code == $code) $flag = true;
+        else $flag = false;
+
+        if($flag)
+        {
+            $array = [
+                'data' => true,
+            ];
+        }else
+        {
+            $array = [
+                'data' => false,
+            ];
+        }
+
+        return json_encode($array);
+    }
+
+
 }

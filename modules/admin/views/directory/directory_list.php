@@ -3,14 +3,8 @@
 
     <h3>Справочник полей ввода:</h3>
     <ul>
-    <?foreach ($directory as $item):?>
-        <?if($item->id == 1):?>
-            <li><a href="/admin/directory/view?id=<?=$item->id?>">Заполнение и формирование документов для обращения в суд</li>
-        <?elseif($item->id == 2):?>
-            <li><a href="/admin/directory/view?id=<?=$item->id?>">Банкротство под ключ</li>
-        <?else:?>
-            <li><a href="/admin/directory/view?id=<?=$item->id?>">Услуги арбитражных управляющих</li>
-        <?endif;?>
-    <?endforeach;?>
+                <li><a href="/admin/directory/index?type_id=1">Заполнение и формирование документов для обращения в суд</li>
+                <li><a href="/admin/directory/index?type_id=2">Банкротство под ключ</li>
+                <li><a href="/admin/directory/index?type_id=3">Услуги арбитражных управляющих</li>
     </ul>
 </div>

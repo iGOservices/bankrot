@@ -79,6 +79,13 @@ class MainController extends Controller
                 //print_r($ticket_id);die();
             }
 
+            if(!$passport_model){
+                $passport_model = new Passport();
+            }
+            if(!$inter_passport_model){
+                $inter_passport_model = new InterPassport();
+            }
+
             if ($model->load(Yii::$app->request->post()) && $passport_model->load(Yii::$app->request->post()) && $inter_passport_model->load(Yii::$app->request->post())) {
                 //регуляркой убираем лишние символы из полей ввода
                 $model->phone = preg_replace('~\D+~', '', $model->phone);
@@ -185,12 +192,18 @@ class MainController extends Controller
         }
 
         if(!$proxy){
-
             $proxy = new Proxy();
+        }
+        if(!$passport_model){
+            $passport_model = new Passport();
+        }
+        if(!$inter_passport_model){
+            $inter_passport_model = new InterPassport();
         }
 //
         $type = TicketStatus::getCureType();
-        $directory = Directory::findOne($type);
+        $directory = Directory::find()->where(['type' => $type])->asArray()->all();
+        //echo"<pre>";print_r($directory);die();
 
         $model->user_id = Yii::$app->user->id;
         $model->facsimile = 1;
@@ -393,8 +406,8 @@ class MainController extends Controller
             if($ticket->type == 1){
                 //Отправялем администраторку на почту сообщение
                 $result = Yii::$app->mailer->compose()
-                    ->setFrom('sotsur@yandex.ru')
-                    ->setTo('sotsur@yandex.ru')
+                    ->setFrom('fedarbitr@mail.ru')
+                    ->setTo('fedarbitr@mail.ru')
                     ->setSubject('Новая услуга')
                     ->setTextBody('Новая услуга')
                     ->setHtmlBody("Создана новая услуга №".$ticket_id);
@@ -493,8 +506,8 @@ class MainController extends Controller
                 //echo"<pre>";print_r($_FILES['UploadForm']);die();
                 $user = User::findOne(Yii::$app->user->id);
                 $result = Yii::$app->mailer->compose()
-                    ->setFrom('sotsur@yandex.ru')
-                    ->setTo('sotsur@yandex.ru')
+                    ->setFrom('fedarbitr@mail.ru')
+                    ->setTo('fedarbitr@mail.ru')
                     ->setSubject('Заявка от пользователя')
                     ->setTextBody('Текст сообщения')
                     ->setHtmlBody("<h4>Телефон: ".$user->phone." ,email: ".$user->email."<h4>".$data['ClientTicket']['text']);

@@ -38,6 +38,7 @@ class SignupForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким именем уже существует'],
             [['email'], 'email'],
             [['email'], 'required'],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Аккаунт с таким email уже существует'],
@@ -50,6 +51,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 4],
         ];
     }
+
 
     /**
      * Signs user up.

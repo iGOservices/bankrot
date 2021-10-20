@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\VerifyCode;
 use Yii;
 
 use app\models\PasswordResetRequestForm;
@@ -253,5 +254,8 @@ class SiteController extends Controller
 
         return $this->render('upload', ['model' => $model]);
     }
+
+
+
 
 }

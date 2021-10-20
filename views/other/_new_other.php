@@ -29,12 +29,14 @@ use kartik\date\DatePicker;
             <?= $form->field($other,"[$increment]id")->hiddenInput([])->label(false); ?>
 			<div class="row">
 
-                <div class="col-xl-9" style="padding-left:30px;padding-right:30px;">
-                    <div class="submit-field ">
-                        <h5>Примечание</h5>
-                        <?= $form->field($other, "[$increment]text")->textarea(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
+                <?if($directory[106]['active'] == 1):?>
+                    <div class="col-xl-9" style="padding-left:30px;padding-right:30px;">
+                        <div class="submit-field ">
+                            <h5>Примечание <?=$directory[106]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[106]['prompt']."\"></i>" : "" ?></h5>
+                            <?= $form->field($other, "[$increment]text")->textarea(['maxlength' => true, 'class' => 'with-border '])->label(false) ?>
+                        </div>
                     </div>
-                </div>
+                <?endif;?>
 
 
                 <div class="col-xl-3">

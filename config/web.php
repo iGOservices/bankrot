@@ -50,9 +50,9 @@ $config = [
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.yandex.ru',
-                'username' => 'sotsur@yandex.ru',
-                'password' => 'IPad4856',
+                'host' => 'smtp.mail.ru',
+                'username' => 'fedarbitr@mail.ru',
+                'password' => 'gXBqRMYpwsnh6Uh7NQAc',
                 'port' => '465',
                 'encryption' => 'ssl',
             ],
