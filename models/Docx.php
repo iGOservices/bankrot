@@ -766,7 +766,7 @@ class Docx extends \yii\db\ActiveRecord
         $table->addCell(Converter::pixelToTwip(210), $cellVCentered)->addText('(расшифровка подписи)', $fontStyle, $cellHCentered);
 
 
-        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'creditor'])->one();
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'creditor_docx'])->one();
         if(!$upload)
             $upload = new Upload();
         $upload->model = "user_docs";
