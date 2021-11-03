@@ -1379,7 +1379,7 @@ class Docx extends \yii\db\ActiveRecord
 
 
     public static function  createPaymentSample($id){
-        //setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+        setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
         $client_ticket = ClientTicket::findOne($id);
         if(!$client_ticket){
             return false;
@@ -1394,7 +1394,7 @@ class Docx extends \yii\db\ActiveRecord
 
         $PHPWord = new PHPWord();
 
-        $document = $PHPWord->loadTemplate('web/sample/sample.docx'); //шаблон
+        $document = $PHPWord->loadTemplate('sample/sample.docx'); //шаблон
 
         $document->setValue('recipient', $result->recipient); //номер договора
 
@@ -1420,7 +1420,7 @@ class Docx extends \yii\db\ActiveRecord
 
         $document->setValue('address', "г. ".$client_ticket->city.", ул.".$client_ticket->street.", д.".$client_ticket->house." ".($client_ticket->corpuse ? "корп.".$client_ticket->surname : "")." кв.".$client_ticket->flat);// отчество
 
-        $document->setValue('date', "«".date("d")."»  ".date("Y"));// отчество
+        $document->setValue('date', "«".date("d")."» ".strftime("%B")." ".date("Y"));// отчество
 
 
 
@@ -1437,7 +1437,7 @@ class Docx extends \yii\db\ActiveRecord
         $upload->created_at = time();
         $upload->save();
 
-        $file = self::createEmptyDocxFile($id, 'property_docx');
+        $file = self::createEmptyDocxFile($id, 'sample_docx');
         $document->saveAs($file); //имя заполненного
     }
 }
