@@ -16,7 +16,7 @@ class Pdf extends \yii\db\ActiveRecord
      * @throws \Mpdf\MpdfException
      */
     public static function createEmptyPdfFile($id, $file){
-        $dir = 'web/upload/'. $id . '/user_docs/';
+        $dir = 'upload/'. $id . '/user_docs/';
         if(!is_dir($dir))
             mkdir($dir, 0777, true);
         file_put_contents($dir. $file .'.pdf', '');
