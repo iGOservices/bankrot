@@ -18,7 +18,7 @@ class CpoDirectorySearch extends CpoDirectory
     {
         return [
             [['id', 'recipient_inn', 'recipient_kpp', 'bik', 'oktmo', 'updated_at', 'created_at'], 'integer'],
-            [['recipient', 'checking_account', 'bank', 'correspondent_account', 'kbk', 'payment_name'], 'safe'],
+            [['recipient', 'checking_account', 'bank', 'correspondent_account', 'kbk', 'payment_name','region'], 'safe'],
         ];
     }
 
@@ -68,6 +68,7 @@ class CpoDirectorySearch extends CpoDirectory
         ]);
 
         $query->andFilterWhere(['like', 'recipient', $this->recipient])
+            ->andFilterWhere(['like', 'region', $this->region])
             ->andFilterWhere(['like', 'checking_account', $this->checking_account])
             ->andFilterWhere(['like', 'bank', $this->bank])
             ->andFilterWhere(['like', 'correspondent_account', $this->correspondent_account])

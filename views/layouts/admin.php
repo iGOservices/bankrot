@@ -44,7 +44,7 @@ AdminAsset::register($this);
         ['label' => 'Промокоды', 'url' => ['/admin/promocode/index']],
         ['label' => 'Услуги', 'url' => ['/ticket-status/index']],
         ['label' => 'Список пользователей', 'url' => ['/user/index']],
-        ['label' => 'Справочник СРО', 'url' => ['/admin/cpo-directory/index']],
+        ['label' => 'Справочник по реквизитам', 'url' => ['/admin/cpo-directory/index']],
         ['label' => 'Справочник полей', 'url' => ['/admin/directory/directory-list']],
     ];
     if (Yii::$app->user->isGuest) {

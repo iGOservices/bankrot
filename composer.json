@@ -21,7 +21,9 @@
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "mpdf/mpdf": "dev-master",
         "kartik-v/yii2-widget-select2": "^2.1",
-        "phpoffice/phpword": "v0.18.*"
+        "phpoffice/phpword": "v0.18.*",
+        "dompdf/dompdf": "~0.7",
+        "tecnickcom/tcpdf": "^6.2.13"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

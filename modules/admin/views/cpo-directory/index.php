@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CpoDirectorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Справочник СПО';
+$this->title = 'Справочник по платежным реквизитам арбитражных судов';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cpo-directory-index">
@@ -27,6 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
+            [
+                'attribute' => 'region',
+                'value' => function($model)
+                {
+                    return $model->region;
+                }
+            ],
             [
                 'attribute' => 'recipient',
                 'value' => function($model)

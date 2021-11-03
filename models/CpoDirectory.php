@@ -4,11 +4,13 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cpo_directory".
  *
  * @property int $id
+ * @property string $region
  * @property string $recipient
  * @property int $recipient_inn
  * @property int $recipient_kpp
@@ -40,7 +42,7 @@ class CpoDirectory extends \yii\db\ActiveRecord
         return [
             [['recipient', 'recipient_inn', 'recipient_kpp', 'checking_account', 'bik', 'bank', 'correspondent_account', 'kbk', 'oktmo'], 'required'],
             [['recipient_inn', 'recipient_kpp', 'bik', 'oktmo', 'updated_at', 'created_at'], 'integer'],
-            [['recipient', 'bank', 'payment_name'], 'string', 'max' => 500],
+            [['recipient', 'bank', 'payment_name','region'], 'string', 'max' => 500],
             [['checking_account', 'correspondent_account', 'kbk'], 'string', 'max' => 20],
         ];
     }
@@ -52,6 +54,7 @@ class CpoDirectory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'region' => "Регион",
             'recipient' => 'Получатель платежа',
             'recipient_inn' => 'ИНН получателя платежа',
             'recipient_kpp' => 'КПП получателя платежа',
@@ -72,5 +75,12 @@ class CpoDirectory extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public static function getRegionList(){
+        $list = [];
+        $list = ArrayHelper::getColumn(CpoDirectory::find()->orderBy('region')->all(), 'region');
+
+        return $list;
     }
 }

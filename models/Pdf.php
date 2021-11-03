@@ -16,13 +16,15 @@ class Pdf extends \yii\db\ActiveRecord
      * @throws \Mpdf\MpdfException
      */
     public static function createEmptyPdfFile($id, $file){
-        $dir = 'upload/'. $id . '/user_docs/';
+        $dir = 'web/upload/'. $id . '/user_docs/';
         if(!is_dir($dir))
             mkdir($dir, 0777, true);
         file_put_contents($dir. $file .'.pdf', '');
 
         return $dir. $file .'.pdf';
     }
+
+
 
     public static function createEmptyAsbFile($id){
         $file = "export_asb";
@@ -77,6 +79,9 @@ class Pdf extends \yii\db\ActiveRecord
         $mpdf->WriteHTML($html);
         //$mpdf->Output();
         $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
+
+
+
     }
 
     public function createBankrotBlank($id) {
@@ -289,7 +294,7 @@ class Pdf extends \yii\db\ActiveRecord
         $sectionStyle = array(
 
             'orientation' => 'landscape',
-            'marginTop' => \PhpOffice\PhpWord\Shared\Converter::pixelToTwip(10),
+            'marginTop' => Converter::pixelToTwip(10),
             'marginLeft' => 600,
             'marginRight' => 600,
             'colsNum' => 1,

@@ -7,6 +7,7 @@ use app\models\Brak;
 use app\models\Deal;
 use app\models\Debitor;
 use app\models\Directory;
+use app\models\Docx;
 use app\models\EnforceProc;
 use app\models\Family;
 use app\models\Nalog;
@@ -396,6 +397,9 @@ class MainController extends Controller
         Pdf::createPropertyPdf($ticket_id);
         Pdf::createCreditorPdf($ticket_id);
         Pdf::createBankrotBlank($ticket_id);
+        Docx::createCreditorDocx($ticket_id);
+        Docx::createPropertyDocx($ticket_id);
+        Docx::createPaymentSample($ticket_id);
 
         if($ticket->type != 1){
             $ticket->status = 3;

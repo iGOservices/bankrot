@@ -44,29 +44,29 @@ use app\models\ValuableProperty;
             <td>Основание приобретения и стоимость</td>
             <td>Сведения о залоге и залогодержателе</td>
         </tr>
-        <?$i = 1;?>
-        <?while($i<6):?>
+        <?php $i = 1;?>
+        <?php while($i<6):?>
             <tr>
                 <td style="border-bottom: none;">1.<?=$i?></td><td colspan="7"><?=Property::$property_type[$i]?></td>
             </tr>
-            <?$k = 1;?>
-            <?foreach($property as $prop):?>
-                <?if($prop->property_type == $i && $prop->group == 1):?>
+            <?php $k = 1;?>
+            <?php foreach($property as $prop):?>
+                <?php if($prop->property_type == $i && $prop->group == 1):?>
                     <tr>
                         <td style="border-bottom: none;border-top: none;"></td>
                         <td><?=$k?>)</td>
                         <td><?=Property::$property_view[$prop->property_view]?></td>
-                        <td><? echo $prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office?></td>
+                        <td><?php echo $prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office?></td>
                         <td><?=$prop->square?></td>
-                        <td><? echo "Основание:".$prop->own_dogovor." , стоимость-".$prop->cost?></td>
-                        <td><? echo "Договор №".$prop->zalog_dogovor.",<br> Залогодержатель:".Property::$zalog[$prop->zalog].",<br> Имя залогодержателя:".$prop->zalog_name.",<br> ИНН залогодержателя:".$prop->zalog_inn?></td>
+                        <td><?php echo "Основание:".$prop->own_dogovor." , стоимость-".$prop->cost?></td>
+                        <td><?php echo "Договор №".$prop->zalog_dogovor.",<br> Залогодержатель:".Property::$zalog[$prop->zalog].",<br> Имя залогодержателя:".$prop->zalog_name.",<br> ИНН залогодержателя:".$prop->zalog_inn?></td>
                     </tr>
-                    <?$k++;?>
-                <?endif;?>
-            <?endforeach;?>
-            <?$i++;?>
-        <?endwhile;?>
-        </tbody>
+                    <?php $k++;?>
+                <?php endif;?>
+            <?php endforeach;?>
+            <?php $i++;?>
+        <?php endwhile;?>
+
     </table>
 
 </div>
@@ -107,7 +107,7 @@ use app\models\ValuableProperty;
             <?endforeach;?>
             <?$i++;?>
         <?endwhile;?>
-        </tbody>
+
     </table>
 
 </div>
@@ -138,7 +138,7 @@ use app\models\ValuableProperty;
                     <?$k++;?>
             <?endforeach;?>
         <?endif;?>
-        </tbody>
+
     </table>
 
 </div>
@@ -172,7 +172,7 @@ use app\models\ValuableProperty;
                 <?$k++;?>
             <?endforeach;?>
         <?endif;?>
-        </tbody>
+
     </table>
 
 </div>
@@ -193,9 +193,9 @@ use app\models\ValuableProperty;
             <td>Общее количество</td>
             <td>Общая стоимость (руб.)</td>
         </tr>
-        <?if(isset($other_shares)):?>
-            <?$k = 1;?>
-            <?foreach($other_shares as $let):?>
+        <?php if(isset($other_shares)):?>
+            <?php $k = 1;?>
+            <?php foreach($other_shares as $let):?>
                 <tr>
                     <td><?="5.".$k?></td>
                     <td><?=OtherShares::$type[$let->type]?></td>
@@ -204,10 +204,10 @@ use app\models\ValuableProperty;
                     <td><?=$let->total_count?></td>
                     <td><?=$let->total_count*$let->nominal_cost?></td>
                 </tr>
-                <?$k++;?>
-            <?endforeach;?>
-        <?endif;?>
-        </tbody>
+                <?php $k++;?>
+            <?php endforeach;?>
+        <?php endif;?>
+
     </table>
 
 </div>
@@ -225,29 +225,29 @@ use app\models\ValuableProperty;
             <td>Место нахождения/место хранения (адрес)</td>
             <td>Сведения о залоге и залогодержателе</td>
         </tr>
-        <?if(isset($valuable_property)):?>
-            <?$i = 1;?>
-            <?while($i<6):?>
+        <?php if(isset($valuable_property)):?>
+            <?php $i = 1;?>
+            <?php while($i<6):?>
                 <tr>
                     <td style="border-bottom: none;">6.<?=$i?></td><td colspan="7"><?=ValuableProperty::$property_type[$i]?></td>
                 </tr>
-                <?$k = 1;?>
-                <?foreach($valuable_property as $prop):?>
-                    <?if($prop->property_type == $i):?>
+                <?php $k = 1;?>
+                <?php foreach($valuable_property as $prop):?>
+                    <?php if($prop->property_type == $i):?>
                         <tr>
                             <td style="border-bottom: none;border-top: none;"></td>
                             <td><?=$k?>)<?=$prop->name?></td>
                             <td><?=$prop->cost?></td>
-                            <td><? echo $prop->location == 1 ? "Место хранения: ".ValuableProperty::$location[$prop->location].", адресс:".$prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office : "Место хранения: Банковская ячейка. Кредитная организация:".$prop->org_name." , номер договора:".$prop->dogovor_number." ,дата договора:".$prop->dogovor_date?></td>
-                            <td><? echo "Договор №".$prop->zalog_dogovor.",<br> Залогодержатель:".ValuableProperty::$zalog_type[$prop->zalog_type].",<br> Имя залогодержателя:".$prop->zalog_name.",<br> ИНН залогодержателя:".$prop->zalog_inn?></td>
+                            <td><?php  echo $prop->location == 1 ? "Место хранения: ".ValuableProperty::$location[$prop->location].", адресс:".$prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office : "Место хранения: Банковская ячейка. Кредитная организация:".$prop->org_name." , номер договора:".$prop->dogovor_number." ,дата договора:".$prop->dogovor_date?></td>
+                            <td><?php  echo "Договор №".$prop->zalog_dogovor.",<br> Залогодержатель:".ValuableProperty::$zalog_type[$prop->zalog_type].",<br> Имя залогодержателя:".$prop->zalog_name.",<br> ИНН залогодержателя:".$prop->zalog_inn?></td>
                         </tr>
-                        <?$k++;?>
-                    <?endif;?>
-                <?endforeach;?>
-                <?$i++;?>
-            <?endwhile;?>
-        <?endif;?>
-        </tbody>
+                        <?php $k++;?>
+                    <?php endif;?>
+                <?php endforeach;?>
+                <?php $i++;?>
+            <?php endwhile;?>
+        <?php endif;?>
+
     </table>
 
 </div>

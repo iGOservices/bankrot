@@ -275,13 +275,21 @@ use yii\widgets\MaskedInput;
                     <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
                             <h5>Регион <?=$directory[8]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[8]['prompt']."\"></i>" : "" ?></h5>
-                            <?= $form->field($model , "region")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
-                        </div>
+                            <div class="form-group field-clientticket-region has-success">
+                                <select id="clientticket-region" class="with-border select_list" name="ClientTicket[region]" aria-invalid="false">
+                                    <?foreach (\app\models\CpoDirectory::getRegionList() as $item):?>
+                                        <option value="<?=$item?>" <?=$model->region == $item ? "selected" : ""?>><?=$item?></option>
+                                    <?endforeach;?>
+                                </select>
+                                <div class="help-block"></div>
+                            </div>
+                         </div>
                     </div>
                 <?endif;?>
                 <? if($directory[9]['active'] == 1):?>
                     <div class="col-xl-3" style="padding-left:30px;padding-right:30px;">
                         <div class="submit-field ">
+
                             <h5>Район <?=$directory[9]['prompt_active'] == 1 ? "<i style=\"margin-top: -10px;\"class=\"help-icon\" data-tippy-placement=\"top\" title=\"".$directory[9]['prompt']."\"></i>" : "" ?></h5>
                             <?= $form->field($model, "district")->textInput(['maxlength' => true, 'class' => 'with-border'])->label(false); ?>
                         </div>

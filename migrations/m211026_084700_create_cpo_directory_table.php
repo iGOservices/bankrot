@@ -14,6 +14,7 @@ class m211026_084700_create_cpo_directory_table extends Migration
     {
         $this->createTable('cpo_directory', [
             'id' => $this->primaryKey(),
+            'region' => $this->string(255)->notNull(),
             'recipient' => $this->string(500)->notNull(),
             'recipient_inn' => $this->bigInteger()->notNull(),
             'recipient_kpp' => $this->bigInteger()->notNull(),

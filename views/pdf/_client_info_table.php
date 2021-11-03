@@ -87,7 +87,6 @@
         <tr>
             <td>номер квартиры (офиса)</td><td>при наличии</td><td><?=$client_ticket->flat?></td>
         </tr>
-        </tbody>
     </table>
 
 </div>

@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'region')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'recipient')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'recipient_inn')->textInput(['maxlength' => 12]) ?>
