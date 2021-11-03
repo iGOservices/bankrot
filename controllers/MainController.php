@@ -399,7 +399,7 @@ class MainController extends Controller
         Pdf::createBankrotBlank($ticket_id);
         Docx::createCreditorDocx($ticket_id);
         Docx::createPropertyDocx($ticket_id);
-        Docx::createPaymentSample($ticket_id);
+       // Docx::createPaymentSample($ticket_id);
 
         if($ticket->type != 1){
             $ticket->status = 3;
