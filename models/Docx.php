@@ -771,8 +771,8 @@ class Docx extends \yii\db\ActiveRecord
             $upload = new Upload();
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Список кредиторов и должников гражданина";
-        $upload->name = "creditor";
+        $upload->origin = "Список кредиторов и должников гражданина(docx)";
+        $upload->name = "creditor_docx";
         $upload->folder = "user_docs";
         $upload->ext = "docx";
         $upload->user_id = Yii::$app->user->id;
@@ -1364,7 +1364,7 @@ class Docx extends \yii\db\ActiveRecord
             $upload = new Upload();
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Опись имущества гражданина";
+        $upload->origin = "Опись имущества гражданина(docx)";
         $upload->name = "property_docx";
         $upload->folder = "user_docs";
         $upload->ext = "docx";
@@ -1379,7 +1379,7 @@ class Docx extends \yii\db\ActiveRecord
 
 
     public static function  createPaymentSample($id){
-        setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+        //setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
         $client_ticket = ClientTicket::findOne($id);
         if(!$client_ticket){
             return false;
@@ -1420,7 +1420,7 @@ class Docx extends \yii\db\ActiveRecord
 
         $document->setValue('address', "г. ".$client_ticket->city.", ул.".$client_ticket->street.", д.".$client_ticket->house." ".($client_ticket->corpuse ? "корп.".$client_ticket->surname : "")." кв.".$client_ticket->flat);// отчество
 
-        $document->setValue('date', "«".date("d")."» ".strftime("%B")." ".date("Y"));// отчество
+        $document->setValue('date', "«".date("d")."»  ".date("Y"));// отчество
 
 
 
@@ -1429,7 +1429,7 @@ class Docx extends \yii\db\ActiveRecord
             $upload = new Upload();
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Квитанция на оплату";
+        $upload->origin = "Квитанция на оплату(docx)";
         $upload->name = "sample_docx";
         $upload->folder = "user_docs";
         $upload->ext = "docx";
