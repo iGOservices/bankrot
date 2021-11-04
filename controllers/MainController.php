@@ -14,6 +14,7 @@ use app\models\Nalog;
 use app\models\Other;
 use app\models\OtherShares;
 use app\models\Pdf;
+use app\models\Promocode;
 use app\models\Property;
 use app\models\Proxy;
 use app\models\Razvod;
@@ -392,11 +393,51 @@ class MainController extends Controller
     }
 
     public function actionSavePayment(){
-        $ticket_id = ClientTicket::getActiveTicket();
-        $ticket = TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
+        if(\Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+
+            $ticket_id = ClientTicket::getActiveTicket();
+            $ticket =  TicketStatus::find()->where(['ticket_id' => $ticket_id])->one();
+
+            if(!$ticket){
+                return json_encode([
+                    'success' => false,
+                    'message' => "<p>Оплата в данный момент невозможна!</p>",
+                ]);
+            }
+
+            $service = Service::findOne($ticket->type);
+
+            if(!$service){
+                return json_encode([
+                    'success' => false,
+                    'message' => "<p>Оплата в данный момент невозможна!</p>",
+                ]);
+            }
+
+
+            if($data['promocode']){
+                $promocode = Promocode::find()
+                    ->where(['code' => $data['promocode']])
+                    ->andWhere(['active' => 1])
+                    ->one();
+                if($promocode){
+                    $cost = $service->price-($service->price*$promocode->discount)/100;
+                    $promocode->is_use = 1;
+                    $promocode->user_activate = Yii::$app->user->id;
+                    $promocode->save();
+                }else{
+                    $cost = $service->price;
+                }
+            }else{
+                $cost = $service->price;
+            }
+        }
+
         Pdf::createPropertyPdf($ticket_id);
         Pdf::createCreditorPdf($ticket_id);
         Pdf::createBankrotBlank($ticket_id);
+        Pdf::createSamplePdf($ticket_id);
         Docx::createCreditorDocx($ticket_id);
         Docx::createPropertyDocx($ticket_id);
         Docx::createPaymentSample($ticket_id);
@@ -407,7 +448,6 @@ class MainController extends Controller
             $ticket->status = 1;
         }
         if($ticket->save()){
-            if($ticket->type == 1){
                 //Отправялем администраторку на почту сообщение
                 $result = Yii::$app->mailer->compose()
                     ->setFrom('fedarbitr@mail.ru')
@@ -416,9 +456,17 @@ class MainController extends Controller
                     ->setTextBody('Новая услуга')
                     ->setHtmlBody("Создана новая услуга №".$ticket_id);
                 $result->send();
-            }
+                return json_encode([
+                    'success' => true,
+                    'message' => "<p>Оплата произведена!</p>",
+                ]);
         }
-        return $this->redirect("/main/tickets");
+
+        return json_encode([
+            'success' => false,
+            'message' => "<p>Оплата в данный момент невозможна!</p>",
+        ]);
+
     }
 
     /**
@@ -535,5 +583,6 @@ class MainController extends Controller
 
 
     }
+
 
 }

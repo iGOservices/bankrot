@@ -7,6 +7,7 @@
 
 use app\models\Bank;
 use app\models\Creditor;
+use app\models\Debitor;
 use app\models\OtherShares;
 use app\models\Property;
 use app\models\ValuableProperty;
@@ -31,7 +32,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="8" align="center">
+            <td colspan="8"  align="center" style="font-weight: bold">
                 I. Сведения о кредиторах гражданина
                 (по денежным обязательствам и (или) обязанности по уплате обязательных платежей, за исключением возникших в результате осуществления гражданином предпринимательской деятельности)</td>
         </tr>
@@ -85,7 +86,7 @@ use app\models\ValuableProperty;
             if($let->is_predprin == 0 && $let->group == 2){
                 echo "<tr><td>2.".($key+1)."</td>".
                     "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
-                    "<td colspan='2'></td>".
+                    "<td colspan='2'>".$let->sum_statment."</td>".
                     "<td colspan='2'>".$let->forfeit."</td></tr>";
             }
         }?>
@@ -95,6 +96,19 @@ use app\models\ValuableProperty;
     <br>
     Сведения о неденежных обязательствах гражданина, за исключением возникших в результате осуществления гражданином предпринимательской деятельности (в том числе о передаче имущества в собственность, выполнении работ и оказании услуг и так далее):
 
+    <table>
+        <?foreach ($creditor as $key => $let):?>
+            <?if($let->is_predprin == 0 && $let->group == 3):?>
+                <tr>
+                    <td><?=$let->commitment?></td>
+                </tr>
+            <?endif;?>
+        <?endforeach;?>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
 </div>
 
 <br><br>
@@ -102,7 +116,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="8" align="center">
+            <td colspan="8" align="center" style="font-weight: bold">
                 II. Сведения о кредиторах гражданина
 
                 (по денежным обязательствам и (или) обязанности по уплате обязательных платежей,
@@ -160,7 +174,7 @@ use app\models\ValuableProperty;
             if($let->is_predprin == 1 && $let->group == 2){
                 echo "<tr><td>2.".($key+1)."</td>".
                     "<td colspan='3'>".Creditor::$commitment_ob[$let->commitment].": ".$let->name."</td>".
-                    "<td colspan='2'></td>".
+                    "<td colspan='2'>".$let->sum_statment."</td>".
                     "<td colspan='2'>".$let->forfeit."</td></tr>";
             }
         }?>
@@ -170,6 +184,18 @@ use app\models\ValuableProperty;
      <br>
     Сведения о неденежных обязательствах гражданина, которые возникли в результате осуществления гражданином предпринимательской деятельности (в том числе о передаче имущества в собственность, выполнении работ и оказании услуг и так далее):
 
+    <table>
+        <?foreach ($creditor as $key => $let):?>
+            <?if($let->is_predprin == 1 && $let->group == 3):?>
+                <tr>
+                    <td><?=$let->commitment?></td>
+                </tr>
+            <?endif;?>
+        <?endforeach;?>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 
 </div>
 
@@ -178,7 +204,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="8" align="center">
+            <td colspan="8" align="center" style="font-weight: bold">
                 III. Сведения о должниках гражданина
 
                 (по денежным обязательствам и (или) обязанности по уплате обязательных платежей, за исключением возникших в результате осуществления гражданином предпринимательской деятельности)</tr>
@@ -206,10 +232,10 @@ use app\models\ValuableProperty;
             /* @var $let app\models\Debitor*/
             if($let->is_predprin == 0 && $let->group == 1){
                 echo "<tr><td>1.".($key+1)."</td>".
-                    "<td>".Creditor::$commitment[$let->commitment]."</td>".
-                    "<td>".Creditor::$statment[$let->statment].": ".$let->name."</td>".
+                    "<td>".Debitor::$commitment[$let->commitment]."</td>".
+                    "<td>".Debitor::$statment[$let->statment].": ".$let->name."</td>".
                     "<td>".$let->coutry.",".$let->region." ".$let->district." район, г.".$let->city."  ул.".$let->street." ".$let->house.",".$let->corpus." ".$let->flat.", индекс: ".$let->post_index."</td>".
-                    "<td>Основание: " .Creditor::$base[$let->base].", номер договора:".$let->base_num." , дата договора:".$let->base_date."</td>".
+                    "<td>Основание: " .Debitor::$base[$let->base].", номер договора:".$let->base_num." , дата договора:".$let->base_date."</td>".
                     "<td>".$let->sum_statment."</td>".
                     "<td>".$let->sum_dolg."</td>".
                     "<td>".$let->forfeit."</td></tr>";
@@ -245,6 +271,18 @@ use app\models\ValuableProperty;
     <br>
 
     Сведения о неденежных обязательствах перед гражданином, за исключением возникших в результате осуществления гражданином предпринимательской деятельности (в том числе о передаче имущества в собственность, выполнении работ и оказании услуг и так далее):
+    <table>
+        <?foreach ($debitor as $key => $let):?>
+            <?if($let->is_predprin == 0 && $let->group == 3):?>
+                <tr>
+                    <td><?=$let->commitment?></td>
+                </tr>
+            <?endif;?>
+        <?endforeach;?>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 </div>
 
 <br><br>
@@ -253,7 +291,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="8" align="center">
+            <td colspan="8" align="center" style="font-weight: bold">
                 IV. Сведения о должниках гражданина
 
                 (по денежным обязательствам и (или) обязанности по уплате обязательных платежей, которые возникли в результате осуществления гражданином предпринимательской деятельности)<tr>
@@ -280,10 +318,10 @@ use app\models\ValuableProperty;
             /* @var $let app\models\Debitor*/
             if($let->is_predprin == 1 && $let->group == 1){
                 echo "<tr><td>1.".($key+1)."</td>".
-                    "<td>".Creditor::$commitment[$let->commitment]."</td>".
-                    "<td>".Creditor::$statment[$let->statment].": ".$let->name."</td>".
+                    "<td>".Debitor::$commitment[$let->commitment]."</td>".
+                    "<td>".Debitor::$statment[$let->statment].": ".$let->name."</td>".
                     "<td>".$let->coutry.",".$let->region." ".$let->district." район, г.".$let->city."  ул.".$let->street." ".$let->house.",".$let->corpus." ".$let->flat.", индекс: ".$let->post_index."</td>".
-                    "<td>Основание: " .Creditor::$base[$let->base].", номер договора:".$let->base_num." , дата договора:".$let->base_date."</td>".
+                    "<td>Основание: " .Debitor::$base[$let->base].", номер договора:".$let->base_num." , дата договора:".$let->base_date."</td>".
                     "<td>".$let->sum_statment."</td>".
                     "<td>".$let->sum_dolg."</td>".
                     "<td>".$let->forfeit."</td></tr>";
@@ -319,6 +357,18 @@ use app\models\ValuableProperty;
     <br>
 
     Сведения о неденежных обязательствах перед гражданином, которые возникли в результате осуществления гражданином предпринимательской деятельности (в том числе о передаче имущества в собственность, выполнении работ и оказании услуг и так далее):</div>
+    <table>
+        <?foreach ($debitor as $key => $let):?>
+            <?if($let->is_predprin == 1 && $let->group == 3):?>
+                <tr>
+                    <td><?=$let->commitment?></td>
+                </tr>
+            <?endif;?>
+        <?endforeach;?>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 <br><br>
 Достоверность и полноту настоящих сведений подтверждаю.
 "   " ____________ 21    г. ____________________ ________________________

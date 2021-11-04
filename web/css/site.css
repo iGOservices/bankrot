@@ -170,8 +170,8 @@ a.desc:after {
   .del_icon {
       float:left;
       color: white;
-      width:3%;
-      padding: 15px 8px 15px 8px;
+      width:10%;
+      padding: 1.8% 8px 1.4% 8px;
       background-color: #9237cb;
   }
 
@@ -183,6 +183,20 @@ a.desc:after {
         padding: 1px!important;
         padding-left: 20px!important;
     }
-    .accordion__item{
-        width: 97% !important;
+    /*.accordion__item{*/
+    /*    width: 90% !important;*/
+    /*}*/
+
+@media(max-width:600px) {
+    .del_icon {
+        float:left;
+        color: white;
+        width:10%;
+        padding: 10% 8px 10% 8px;
+        background-color: #9237cb;
     }
+}
+
+.delete_item:hover{
+    cursor: pointer;
+}

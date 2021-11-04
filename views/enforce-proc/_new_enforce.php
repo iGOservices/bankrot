@@ -16,10 +16,9 @@ use kartik\date\DatePicker;
 ?>
 <!-- Accordion Item -->
 <div id="<?="enforce-".$increment?>">
-    <div class="del_icon">
-        <span class="icon-feather-trash-2" onclick='deleteItem(<?=$increment?>,"enforce",<?=isset($enforce->id) ? $enforce->id : null?>);'></span>
-    </div>
-    <div class="accordion__item js-accordion-item" style="float:left;width:98%">
+    <p class="delete_item" onclick='deleteItem(<?=$increment?>,"enforce",<?=isset($enforce->id) ? $enforce->id : null?>);'><span class="icon-feather-trash-2" ></span> Удалить данные</p>
+
+    <div class="accordion__item js-accordion-item">
 	<div class="accordion-header js-accordion-header">Данные по исполнительному производству №<?=$increment+1?>
 	</div> 
 	<!-- Accordtion Body -->

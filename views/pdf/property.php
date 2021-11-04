@@ -33,7 +33,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">I. Недвижимое имущество</td>
+            <td colspan="7" align="center" style="font-weight: bold">I. Недвижимое имущество</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -74,7 +74,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">II. Движимое имущество</td>
+            <td colspan="7" align="center" style="font-weight: bold">II. Движимое имущество</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -116,7 +116,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">III. Сведения о счетах в банках и иных кредитных организациях</td>
+            <td colspan="7" align="center" style="font-weight: bold">III. Сведения о счетах в банках и иных кредитных организациях</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -147,7 +147,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">IV. Акции и иное участие в коммерческих организациях</td>
+            <td colspan="7" align="center" style="font-weight: bold">IV. Акции и иное участие в коммерческих организациях</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -163,7 +163,7 @@ use app\models\ValuableProperty;
             <?foreach($shares as $let):?>
                 <tr>
                     <td><?="4.".$k?></td>
-                    <td><? echo "Наименвоание:".$let->name.", ИНН общества:".$let->inn?></td>
+                    <td><? echo "Наименование:".$let->name.", ИНН общества:".$let->inn?></td>
                     <td><? echo $let->location?></td>
                     <td><? echo $let->company_capital?></td>
                     <td><? echo $let->share?></td>
@@ -183,7 +183,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">V. Иные ценные бумаги</td>
+            <td colspan="7" align="center" style="font-weight: bold">V. Иные ценные бумаги</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -216,7 +216,7 @@ use app\models\ValuableProperty;
 <div>
     <table>
         <tr>
-            <td colspan="7">VI. Сведения о наличных денежных средствах и ином ценном имуществе</td>
+            <td colspan="7" align="center" style="font-weight: bold">VI. Сведения о наличных денежных средствах и ином ценном имуществе</td>
         </tr>
         <tr>
             <td>N п/п</td>
@@ -238,7 +238,7 @@ use app\models\ValuableProperty;
                             <td style="border-bottom: none;border-top: none;"></td>
                             <td><?=$k?>)<?=$prop->name?></td>
                             <td><?=$prop->cost?></td>
-                            <td><?php  echo $prop->location == 1 ? "Место хранения: ".ValuableProperty::$location[$prop->location].", адресс:".$prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office : "Место хранения: Банковская ячейка. Кредитная организация:".$prop->org_name." , номер договора:".$prop->dogovor_number." ,дата договора:".$prop->dogovor_date?></td>
+                            <td><?php  echo $prop->location == 1 ? "Место хранения: ".ValuableProperty::$location[$prop->location].", адрес:".$prop->coutry.",".$prop->region." ".$prop->district." район, г.".$prop->city."  ул.".$prop->street." ".$prop->house.",".$prop->corpus." ".$prop->office : "Место хранения: Банковская ячейка. Кредитная организация:".$prop->org_name." , номер договора:".$prop->dogovor_number." ,дата договора:".$prop->dogovor_date?></td>
                             <td><?php  echo "Договор №".$prop->zalog_dogovor.",<br> Залогодержатель:".ValuableProperty::$zalog_type[$prop->zalog_type].",<br> Имя залогодержателя:".$prop->zalog_name.",<br> ИНН залогодержателя:".$prop->zalog_inn?></td>
                         </tr>
                         <?php $k++;?>

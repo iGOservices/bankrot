@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ClientTicket;
+use app\models\Docx;
 use app\models\Passport;
 use app\models\Pdf;
 use app\models\Property;
@@ -23,6 +24,10 @@ class PdfController extends Controller
         Pdf::createPropertyPdf($id);
         Pdf::createCreditorPdf($id);
         Pdf::createBankrotBlank($id);
+        Pdf::createSamplePdf($id);
+        Docx::createCreditorDocx($id);
+        Docx::createPropertyDocx($id);
+        Docx::createPaymentSample($id);
         if($ticket_status_id){
             $this->redirect(['ticket-status/view', 'id' => $ticket_status_id]);
         }

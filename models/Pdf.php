@@ -66,7 +66,7 @@ class Pdf extends \yii\db\ActiveRecord
 
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Опись имущества гражданина";
+        $upload->origin = "Опись имущества гражданина(pdf)";
         $upload->name = "property";
         $upload->folder = "user_docs";
         $upload->ext = "pdf";
@@ -102,7 +102,7 @@ class Pdf extends \yii\db\ActiveRecord
             $upload = new Upload();
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Заявление о признании гражданина банкротом";
+        $upload->origin = "Заявление о признании гражданина банкротом(pdf)";
         $upload->name = "bankrot_blank";
         $upload->folder = "user_docs";
         $upload->ext = "pdf";
@@ -135,7 +135,7 @@ class Pdf extends \yii\db\ActiveRecord
             $upload = new Upload();
         $upload->model = "user_docs";
         $upload->model_id = $id;
-        $upload->origin = "Список кредиторов и должников гражданина";
+        $upload->origin = "Список кредиторов и должников гражданина(pdf)";
         $upload->name = "creditor";
         $upload->folder = "user_docs";
         $upload->ext = "pdf";
@@ -147,6 +147,51 @@ class Pdf extends \yii\db\ActiveRecord
         $mpdf->WriteHTML($html);
         //$mpdf->Output();
         $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
+    }
+
+    public static function createSamplePdf($id) {
+        $client_ticket = ClientTicket::findOne($id);
+        if(!$client_ticket){
+            return false;
+        }
+        $region = $client_ticket->region;
+
+        $result = CpoDirectory::find()->where(['region' => $region])->one();
+
+        if(!$result){
+            return false;
+        }
+
+        $file = Pdf::createEmptyPdfFile($id, 'sample');
+        $html = Yii::$app->controller->renderPartial('/pdf/sample',[
+            'client_ticket' => $client_ticket,
+            'result' => $result,
+
+        ]);
+        //echo $html;die();
+
+        $upload = Upload::find()->where(['model_id' => $id])->andWhere(['model' => 'user_docs'])->andWhere(['name' => 'sample'])->one();
+        if(!$upload)
+            $upload = new Upload();
+
+        $upload->model = "user_docs";
+        $upload->model_id = $id;
+        $upload->origin = "Квитанция на оплату(pdf)";
+        $upload->name = "sample";
+        $upload->folder = "user_docs";
+        $upload->ext = "pdf";
+        $upload->user_id = Yii::$app->user->id;
+        $upload->created_at = time();
+        $upload->save();
+
+
+        $mpdf = new mPDF;
+        $mpdf->WriteHTML($html);
+        //$mpdf->Output();
+        $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
+
+
+
     }
 
 
@@ -279,216 +324,5 @@ class Pdf extends \yii\db\ActiveRecord
     }
 
 
-    public static function createDocx(){
-
-
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-        $phpWord->setDefaultFontName('Times New Roman');
-        $phpWord->setDefaultFontSize(14);
-
-        $section = $phpWord->addSection();
-
-
-
-        $sectionStyle = array(
-
-            'orientation' => 'landscape',
-            'marginTop' => Converter::pixelToTwip(10),
-            'marginLeft' => 600,
-            'marginRight' => 600,
-            'colsNum' => 1,
-            'pageNumberingStart' => 1,
-            'borderBottomSize'=>100,
-            'borderBottomColor'=>'C0C0C0'
-
-        );
-        $section = $phpWord->addSection($sectionStyle);
-
-
-// Adding Text element with font customized inline...
-
-        $section->addText('Приложение №1', ['size'=>8], [ 'align' => 'right' ]);
-        $section->addText('К приказу Министерства', ['size'=>8], [ 'align' => 'right' ]);
-        $section->addText('экономического развития РФ ', ['size'=>8], [ 'align' => 'right' ]);
-        $section->addText('от 5 августа 2015 г.№530', ['size'=>8], [ 'align' => 'right' ]);
-
-
-        $section->addTextBreak(1);
-
-        $center = $phpWord->addParagraphStyle('p2Style', array('align'=>'center','marginTop' => 1));
-
-        $section->addText('Список кредиторов и должников гражданина',array('bold' => true,'name'=>'Times New Roman','size' => 16),$center);
-
-
-        $section->addTextBreak(1); // перенос строки
-
-        $styleTable = array('borderSize' => 1, 'borderColor' => '999999');
-        $cellRowSpan = array('vMerge' => 'restart', 'valign' => 'center');
-        $cellRowContinue = array('vMerge' => 'continue');
-        $cellColSpan2 = array('gridSpan' => 2, 'valign' => 'center');
-        $cellColSpan3 = array('gridSpan' => 3, 'valign' => 'center');
-
-        $cellHCentered = array('align' => 'center');
-        $cellVCentered = array('valign' => 'center');
-
-        $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
-        $table = $section->addTable('Colspan Rowspan');
-        $table->addRow(null, array('tblHeader' => true));
-        $table->addCell(2000, $cellColSpan3)->addText('Информация о гражданине', array('bold' => true), $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(1000, $cellVCentered)->addText('фамилия', null, $cellHCentered);
-        $table->addCell(3000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('имя', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('отчество', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText("в случае изменения фамилии,\n имени, отчества указать прежние фамилии, имена, отчества", null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('дата рождения', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('место рождения', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('СНИЛС', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('ИНН', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow(null);
-        $table->addCell(2000, $cellColSpan3)->addText('документ, удостоверяющий личность', [], []);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('вид документа', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('серия (при наличии) и номер', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-
-        $table->addRow(null);
-        $table->addCell(2000, $cellColSpan3)->addText('адрес регистрации по месту жительства в Российской Федерации', [], []);
-
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('субъект Российской Федерации', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('обязательно', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('район', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('город', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('населенный пункт (село, поселок и так далее)', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('улица (проспект, переулок и так далее)', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('номер дома (владения)', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('номер корпуса (строения)', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-        $table->addRow();
-        $table->addCell(2000, $cellVCentered)->addText('номер квартиры (офиса)', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('при наличии', null, $cellHCentered);
-        $table->addCell(2000, $cellVCentered)->addText('1234123', null, $cellHCentered);
-
-
-        $section->addPageBreak();
-
-
-
-//        $table->addRow();
-//        $table->addCell(2000, $cellRowSpan)->addText('rowspan=2 '
-//            . '(need one null cell under)', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellRowSpan)->addText('rowspan=3 '
-//            . '(nedd 2 null celss under)', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//
-//        $table->addRow();
-//        $table->addCell(null, $cellRowContinue); // 1 пустая в колонке 1
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(null, $cellRowContinue); // 1 пустая в колонке 3
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//
-//
-//        $table->addRow();
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(null, $cellRowContinue);  // 2 пустая в колонке 3
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//
-//
-//        $table->addRow();
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-//        $table->addCell(2000, $cellVCentered)->addText('Т', null, $cellHCentered);
-
-
-
-
-// Saving the document as OOXML file...
-//        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-//        $objWriter->save('helloWorld.docx');
-
-// Saving the document as ODF file...
-//        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
-//        $objWriter->save('helloWorld.odt');
-
-// Saving the document as HTML file...
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-        $objWriter->save("php://output");
-        //$objWriter->save('helloWorld.html');
-
-    }
 
 }

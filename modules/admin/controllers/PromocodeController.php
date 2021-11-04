@@ -130,13 +130,32 @@ class PromocodeController extends Controller
 
             $data = Yii::$app->request->post();
             //print_r($data);die();
-            $promocode = Promocode::find()->where(['code' => $data['promocode']])->andWhere(['service_id' => $data['service_id']])->one();
+            $promocode = Promocode::find()
+                ->where(['code' => $data['promocode']])
+                ->andWhere(['service_id' => $data['service_id']])
+                ->andWhere(['active' => 1])
+                ->one();
             if($promocode){
                 $result = [
                     'success' => true,
                     'message' => "<p>Промокод успешно применен!</p>",
-                    'discount' => $promocode->discount
+                    'discount' => $promocode->discount,
+                    'code' => $data['promocode'],
                 ];
+                if($promocode->period < date("Y-m-d")){
+                    $result = [
+                        'success' => false,
+                        'message' => "<p>Период действия промокода закончился!</p>",
+                        'discount' => $promocode->discount
+                    ];
+                }
+                if($promocode->is_use){
+                    $result = [
+                        'success' => false,
+                        'message' => "<p>Промокод уже был применен!</p>",
+                        'discount' => $promocode->discount
+                    ];
+                }
             }else{
                 $result = [
                     'success' => false,

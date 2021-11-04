@@ -33,22 +33,7 @@
 
             <p><span style="font-size: 20px;color: black;">Описание услуги: </span><?=$service->description?></p>
 
-
-
-                        <div class="row">
-                            <div class="col-xl-4 col-md-4">
-                                <div class="section-headline margin-bottom-12">
-                                    <h5>Промокод</h5>
-                                </div>
-                                <input class="with-border" placeholder="" id="promocode">
-                            </div>
-                            <div class="col-xl-4 col-md-4" style="margin-top: 42px">
-                                <a href="#"  onclick="activatePromocode(<?=$service->id?>,<?=$service->price?>);" class=" button full-width button-sliding-icon">Применить <i class="icon-material-outline-arrow-right-alt"></i></a>
-                            </div>
-                    </div>
-
-                        <a href="/main/save-payment" onclick="setCookie('tab', 0);" class="button big ripple-effect margin-top-40 margin-bottom-65">Оплатить услугу</a>
-            </div>
+        </div>
 
 
         <!-- Summary -->
@@ -74,6 +59,27 @@
                 <input type="checkbox" id="two-step">
                 <label for="two-step"><span class="checkbox-icon"></span>Я согласен с условиями <a href="#">оплаты</a></label>
             </div>
+        </div>
+
+        <div class="col-xl-8 col-lg-8 content-right-offset">
+
+            <div class="row">
+                <div class="col-xl-4 col-md-4">
+                    <div class="section-headline margin-bottom-12">
+                        <h5>Промокод</h5>
+                    </div>
+                    <input class="with-border" placeholder="" id="promocode">
+                </div>
+                <div class="col-xl-4 col-md-4" style="margin-top: 42px">
+                    <a href="#"  onclick="activatePromocode(<?=$service->id?>,<?=$service->price?>);" class=" button full-width button-sliding-icon">Применить <i class="icon-material-outline-arrow-right-alt"></i></a>
+                </div>
+                <div class="col-xl-12 col-md-12">
+                    <p id="promocode_message" ></p>
+                    <input type="hidden" id="code_id" value="">
+                </div>
+            </div>
+
+            <a href="#" onclick="payment();" class="button big ripple-effect margin-top-40 margin-bottom-65">Оплатить услугу</a>
         </div>
 
     </div>

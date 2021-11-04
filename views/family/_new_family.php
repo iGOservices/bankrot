@@ -20,10 +20,9 @@ use kartik\date\DatePicker;
 ?>
 <!-- Accordion Item -->
 <div id="<?="family-".$increment?>">
-    <div class="del_icon">
-        <span class="icon-feather-trash-2" onclick='deleteItem(<?=$increment?>,"family",<?=isset($family->id) ? $family->id : null?>);'></span>
-    </div>
-    <div class="accordion__item js-accordion-item" style="float:left;width:98%">
+    <p class="delete_item" onclick='deleteItem(<?=$increment?>,"family",<?=isset($family->id) ? $family->id : null?>);'><span class="icon-feather-trash-2" ></span> Удалить данные</p>
+
+    <div class="accordion__item js-accordion-item">
 	<div class="accordion-header js-accordion-header">Данные по Родственным отношениям №<?=$increment+1?>
 	</div> 
 	<!-- Accordtion Body -->

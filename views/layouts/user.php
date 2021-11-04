@@ -343,13 +343,13 @@ $user = User::findOne(Yii::$app->user->id);
 				<!-- User Menu / End -->
 
 				<!-- Mobile Navigation Button -->
-				<span class="mmenu-trigger">
-					<button class="hamburger hamburger--collapse" type="button">
-						<span class="hamburger-box">
-							<span class="hamburger-inner"></span>
-						</span>
-					</button>
-				</span>
+<!--				<span class="mmenu-trigger">-->
+<!--					<button class="hamburger hamburger--collapse" type="button">-->
+<!--						<span class="hamburger-box">-->
+<!--							<span class="hamburger-inner"></span>-->
+<!--						</span>-->
+<!--					</button>-->
+<!--				</span>-->
 
 			</div>
 			<!-- Right Side Content / End -->
@@ -379,7 +379,7 @@ $user = User::findOne(Yii::$app->user->id);
 							<span class="hamburger-inner"></span>
 						</span>
 					</span>
-					<span class="trigger-title">Dashboard Navigation</span>
+					<span class="trigger-title">Меню</span>
 				</a>
 				
 				<!-- Navigation -->
@@ -439,13 +439,13 @@ $user = User::findOne(Yii::$app->user->id);
         <?= $content ?>
         <!-- Footer -->
 <!--        <div class="dashboard-footer-spacer"></div>-->
-        <div class="small-footer margin-top-15">
-            <div class="small-footer-copyrights" style="margin-left: 40px">
-                © 2021 <strong>Bankrot</strong>. Все права соблюдены.
-            </div>
-
-            <div class="clearfix"></div>
-        </div>
+<!--        <div class="small-footer margin-top-15">-->
+<!--            <div class="small-footer-copyrights" style="margin-left: 40px">-->
+<!--                © 2021 <strong>Bankrot</strong>. Все права соблюдены.-->
+<!--            </div>-->
+<!---->
+<!--            <div class="clearfix"></div>-->
+<!--        </div>-->
         <!-- Footer / End -->
 	</div>
 	<!-- Dashboard Content / End -->

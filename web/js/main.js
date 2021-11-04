@@ -1195,7 +1195,12 @@ function activatePromocode(service_id,price){
             //console.log(data.message);
             if(data.success == true){
                 $('#discount').html("Скидка по промокоду: <span>"+data.discount+" % </span>");
-                $('#total').html("Всего к оплате <span>"+(price*data.discount)/100+" рублей</span>");
+                $('#total').html("Всего к оплате <span>"+(price-(price*data.discount)/100)+" рублей</span>");
+                document.getElementById('code_id').value=data.code;
+            }else{
+                $('#discount').html("");
+                $('#total').html("Всего к оплате <span>"+price+" рублей</span>");
+                document.getElementById('code_id').value="";
             }
             $('#promocode_message').html(data.message);
         },
@@ -1318,6 +1323,39 @@ function sendCallAnswer(){
                 form.submit();
             }else{
                 alert("Код введен неправильно! Попробуйте снова");
+            }
+
+        },
+        error: function(XMLHttpRequest){
+            console.log(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+
+function payment(){
+    setCookie('tab', 0);
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    let promocode = document.getElementById('code_id').value;
+
+    if($("#two-step").prop('checked') === false){
+        alert("Нужно согласиться с условиями оплаты!");
+        return false;
+    }
+    $.ajax({
+        url: '/main/save-payment',
+        type: "POST",
+        data: {
+            _csrf : csrfToken,
+            promocode : promocode,
+        },
+        success: function(res) {
+            var data = JSON.parse(res);
+            //console.log(data.message);
+            if(data.success == true){
+                window.location.href = "/main/tickets";
+            }else{
+                alert(data.message);
             }
 
         },

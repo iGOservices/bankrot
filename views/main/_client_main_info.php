@@ -443,7 +443,7 @@ use yii\widgets\MaskedInput;
                                 <div class="accordion js-accordion">
                                     <!-- Accordion Item -->
                                     <div class="accordion__item js-accordion-item">
-                                        <div class="accordion-header js-accordion-header">Пасспортные данные</div>
+                                        <div class="accordion-header js-accordion-header">Паспортные данные</div>
                                             <!-- Accordtion Body -->
                                             <div class="accordion-body js-accordion-body">
                                                 <!-- Accordion Content -->
@@ -555,7 +555,7 @@ use yii\widgets\MaskedInput;
                                 <div class="accordion js-accordion">
                                     <!-- Accordion Item -->
                                     <div class="accordion__item js-accordion-item">
-                                        <div class="accordion-header js-accordion-header">Данные загран-пасспорта</div>
+                                        <div class="accordion-header js-accordion-header">Данные загран-паспорта</div>
                                         <!-- Accordtion Body -->
                                         <div class="accordion-body js-accordion-body">
                                             <!-- Accordion Content -->
